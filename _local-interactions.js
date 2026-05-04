@@ -46,7 +46,27 @@
     }
   };
 
+  const enhanceLogoLinks = () => {
+    document.querySelectorAll('header [role="link"]').forEach((el) => {
+      el.classList.add('local-logo-link');
+      el.dataset.localHref = '/';
+      el.setAttribute('aria-label', el.getAttribute('aria-label') || 'Home');
+      el.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        navigate({ href: '/', external: false });
+      });
+      el.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        navigate({ href: '/', external: false });
+      });
+    });
+  };
+
   const enhance = async () => {
+    enhanceLogoLinks();
+
     const page = pageFromPath();
     const response = await fetch(`${JSON_ROOT}/${page}.json`);
     if (!response.ok) return;
@@ -67,6 +87,7 @@
     elements.forEach((el, index) => {
       const action = actions[index];
       if (!action?.href) return;
+      el.classList.add('local-card-link');
       el.dataset.localHref = action.href;
       el.setAttribute('aria-label', el.getAttribute('aria-label') || action.href);
       el.addEventListener('click', (event) => {
