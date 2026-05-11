@@ -1,0 +1,460 @@
+@font-face {
+  font-family: "Redaction";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/redaction@latest/latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Redaction";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/redaction@latest/latin-700-normal.woff2") format("woff2");
+}
+
+:root {
+  --paper: #f4e6d2;
+  --paper-hot: #fff1b8;
+  --ink: #141313;
+  --muted: #5f564b;
+  --maroon: #6f1210;
+  --nav-frame: #101010;
+  --cream: #fff8ea;
+  --card: rgba(255, 253, 246, 0.88);
+  --display: "Redaction", Georgia, serif;
+  --sans: Inter, Arial, sans-serif;
+  --mono: "IBM Plex Mono", "Courier New", monospace;
+  color: var(--ink);
+  font-family: var(--sans);
+  background: var(--paper);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: 0;
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+}
+
+.start {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(42px, 6.4vh, 84px) 18px 30px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 34%),
+    linear-gradient(135deg, #f1dcc1 0%, #fbefd9 46%, #f4dfc8 100%);
+}
+
+.start::before {
+  content: none;
+}
+
+.top-mark {
+  position: relative;
+  z-index: 4;
+  width: min(100%, 980px);
+  display: flex;
+  justify-content: center;
+}
+
+.top-mark a {
+  display: block;
+  width: clamp(84px, 6vw, 110px);
+  color: var(--ink);
+  filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.12));
+  transition: transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 220ms ease;
+}
+
+.top-mark a:hover,
+.top-mark a:focus-visible {
+  transform: rotate(-7deg) scale(1.08);
+  filter: drop-shadow(0 14px 0 rgba(45, 5, 4, 0.16));
+}
+
+.hero {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 980px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: clamp(16px, 4vh, 42px);
+  text-align: center;
+}
+
+.prompt-line {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: clamp(12px, 1.4vw, 16px);
+  font-weight: 600;
+  line-height: 1.4;
+  text-transform: lowercase;
+}
+
+.hero h1 {
+  min-height: clamp(132px, 14vw, 186px);
+  max-width: 920px;
+  margin: 12px 0 10px;
+  color: var(--maroon);
+  font-family: var(--display);
+  font-size: clamp(76px, 8.4vw, 136px);
+  font-weight: 700;
+  line-height: 0.84;
+  letter-spacing: 0;
+  color: var(--ink);
+  text-shadow: 0 6px 0 rgba(20, 19, 19, 0.08);
+  text-wrap: balance;
+}
+
+.card-field {
+  position: relative;
+  width: min(100%, 520px);
+  height: clamp(280px, 34vh, 370px);
+  margin-top: clamp(44px, 7vh, 86px);
+}
+
+.note-card,
+.polaroid-card {
+  position: absolute;
+  display: block;
+  border-radius: 24px;
+  box-shadow:
+    0 8px 0 rgba(45, 5, 4, 0.12),
+    0 24px 56px rgba(45, 5, 4, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(18px);
+  text-align: left;
+  transition: transform 210ms cubic-bezier(.2,.8,.2,1), box-shadow 210ms ease, opacity 180ms ease;
+}
+
+.note-card:hover,
+.note-card:focus-visible,
+.polaroid-card:hover,
+.polaroid-card:focus-visible {
+  transform: translateY(-10px) rotate(var(--hover-rotate, 0deg)) scale(1.025);
+  box-shadow:
+    0 12px 0 rgba(45, 5, 4, 0.14),
+    0 32px 72px rgba(45, 5, 4, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.polaroid-card {
+  --hover-rotate: -2deg;
+  z-index: 1;
+  left: clamp(2px, 3vw, 22px);
+  bottom: 26px;
+  width: 190px;
+  min-height: 232px;
+  padding: 10px 10px 42px;
+  border-radius: 12px;
+  background: #fffdf6;
+  cursor: grab;
+  transform: rotate(-4deg);
+  touch-action: none;
+  user-select: none;
+}
+
+.polaroid-handle {
+  position: absolute;
+  left: clamp(2px, 3vw, 22px);
+  bottom: 26px;
+  z-index: 7;
+  width: 112px;
+  height: 232px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: grab;
+  transform: rotate(-4deg);
+  touch-action: none;
+}
+
+.polaroid-handle::after {
+  content: "drag me around";
+  position: absolute;
+  right: calc(100% + 12px);
+  bottom: 34px;
+  padding: 7px 10px 8px;
+  border-radius: 10px;
+  background: var(--nav-frame);
+  color: var(--cream);
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow:
+    0 5px 0 rgba(16, 16, 16, 0.18),
+    0 14px 24px rgba(20, 19, 19, 0.14);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(8px, 0) rotate(2deg);
+  transition: opacity 150ms ease, transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.polaroid-handle:hover::after,
+.polaroid-handle:focus-visible::after,
+.polaroid-handle.is-hovered::after {
+  opacity: 1;
+  transform: translate(0, 0) rotate(-1deg);
+}
+
+.polaroid-handle.is-dragging {
+  cursor: grabbing;
+}
+
+.polaroid-handle.is-pulled {
+  z-index: 9;
+  width: 190px;
+}
+
+.polaroid-card::after {
+  content: none;
+}
+
+.polaroid-card.is-dragging {
+  z-index: 8;
+  cursor: grabbing;
+  transition: box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.polaroid-card.is-pulled {
+  z-index: 8;
+}
+
+.polaroid-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.polaroid-card span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: block;
+  color: var(--ink);
+  font-family: "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  transform: rotate(-2deg);
+}
+
+.note-card {
+  --hover-rotate: 2deg;
+  right: 20px;
+  top: 0;
+  z-index: 5;
+  width: clamp(250px, 58vw, 345px);
+  min-height: 318px;
+  padding: 32px 34px 26px;
+  background:
+    linear-gradient(rgba(20, 19, 19, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 19, 19, 0.038) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 38%),
+    var(--card);
+  background-size: 18px 18px, 18px 18px, auto, auto;
+  transform: rotate(4deg);
+}
+
+.note-card[data-card="notes"] {
+  z-index: 2;
+  opacity: 0.54;
+  transform: rotate(8deg) translate(20px, -18px);
+}
+
+.card-field[data-active-card="notes"] .note-card[data-card="work"] {
+  z-index: 2;
+  opacity: 0.54;
+  transform: rotate(8deg) translate(20px, -18px);
+}
+
+.card-field[data-active-card="notes"] .note-card[data-card="notes"] {
+  z-index: 6;
+  opacity: 1;
+  transform: rotate(4deg) translate(0, 0);
+}
+
+.card-field[data-active-card="photo"] .polaroid-card {
+  z-index: 7;
+}
+
+.note-type {
+  display: inline-block;
+  color: #8b7b70;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.note-card h2 {
+  margin: 12px 0 0;
+  font-family: var(--display);
+  font-size: clamp(31px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.note-card p {
+  margin: 22px 0 0;
+  color: #403630;
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1.22;
+}
+
+.note-card small {
+  display: block;
+  margin-top: 28px;
+  color: #8f837a;
+  font-size: 14px;
+  font-weight: 750;
+  text-transform: lowercase;
+}
+
+.dock {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(22px, 4vh, 42px);
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  width: 260px;
+  min-height: 42px;
+  padding: 5px;
+  border-radius: 18px;
+  background: var(--nav-frame);
+  box-shadow:
+    0 7px 0 rgba(16, 16, 16, 0.22),
+    0 18px 26px rgba(20, 19, 19, 0.14);
+  transform: translateX(-50%) rotate(-0.4deg);
+}
+
+.dock-item {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: block;
+  padding: 9px 12px;
+  border-radius: 13px;
+  background: transparent;
+  color: var(--cream);
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+  transition: color 180ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dock-item:hover,
+.dock-item:focus-visible {
+  transform: translateY(-1px);
+}
+
+.dock-item.is-selected {
+  color: var(--nav-frame);
+}
+
+.dock-thumb {
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  left: 5px;
+  width: calc((100% - 10px) / 3);
+  height: calc(100% - 10px);
+  border-radius: 13px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), transparent 42%),
+    var(--cream);
+  box-shadow:
+    inset 0 -4px 0 rgba(16, 16, 16, 0.1),
+    0 4px 0 rgba(16, 16, 16, 0.18);
+  transition: transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dock[data-selected="work"] .dock-thumb {
+  transform: translateX(100%);
+}
+
+.dock[data-selected="about"] .dock-thumb {
+  transform: translateX(200%);
+}
+
+@media (max-width: 760px) {
+  .start {
+    padding-top: 58px;
+  }
+
+  .hero h1 {
+    min-height: 112px;
+    font-size: clamp(56px, 13.5vw, 88px);
+  }
+}
+
+@media (max-width: 640px) {
+  .start {
+    padding-inline: 18px;
+  }
+
+  .top-mark a {
+    width: 84px;
+  }
+
+  .hero {
+    padding-top: clamp(44px, 8vh, 72px);
+    min-height: calc(100svh - 88px);
+  }
+
+  .card-field {
+    width: min(100%, 360px);
+    margin-top: 44px;
+  }
+
+  .note-card {
+    right: 0;
+  }
+
+  .polaroid-card {
+    left: 0;
+    width: 148px;
+  }
+}
