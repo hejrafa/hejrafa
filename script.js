@@ -8,18 +8,18 @@ const draggableCard = document.querySelector("[data-draggable-card]");
 const draggableHandle = document.querySelector("[data-polaroid-handle]");
 
 const heroLines = [
-  ["still collecting the good bits", "open a card or pull the photo."],
-  ["make yourself nosy", "click around a little."],
-  ["a small public shelf", "start with work, notes, or about."],
-  ["things worth keeping nearby", "pick a card to begin."],
-  ["not everything needs a menu", "use the stack or the dock."],
-  ["welcome to the soft launch", "start wherever you like."],
-  ["half portfolio, half pocket", "open the stack."],
-  ["a homepage with loose pockets", "click the top card."],
-  ["carefully kept, casually placed", "choose a way in."],
-  ["a few doors, no hallway", "use the small index below."],
-  ["useful things first", "work, notes, about."],
-  ["everything here is a handle", "hover, pull, click."],
+  ["still collecting the good bits", "open a card or pull the photo"],
+  ["make yourself nosy", "click around a little"],
+  ["a small public shelf", "start with work notes or about"],
+  ["things worth keeping nearby", "pick a card to begin"],
+  ["not everything needs a menu", "use the stack or the dock"],
+  ["welcome to the soft launch", "start wherever you like"],
+  ["half portfolio half pocket", "open the stack"],
+  ["a homepage with loose pockets", "click the top card"],
+  ["carefully kept casually placed", "choose a way in"],
+  ["a few doors no hallway", "use the small index below"],
+  ["useful things first", "work notes about"],
+  ["everything here is a handle", "hover pull click"],
 ];
 
 function setRandomHeroLine() {

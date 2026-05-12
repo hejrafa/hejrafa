@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>hejrafa Interactive Landing Sketch</title>
+  <link rel="stylesheet" href="./interactive-landing.css">
+  <script src="./interactive-landing.js" defer></script>
+</head>
+<body>
+  <main class="landing-sketch">
+    <section class="desk" aria-label="Interactive landing page sketch">
+      <div class="grain" aria-hidden="true"></div>
+
+      <header class="identity">
+        <p class="identity__kicker">personal archive / workbench / notebook</p>
+        <h1>hejrafa</h1>
+        <p>Objects from the table open work, notes, curiosities, inventories, and the person behind them.</p>
+      </header>
+
+      <a class="object project-card" href="/cv/" data-object data-title="Selected Work">
+        <span class="object-label">work</span>
+        <span class="screen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <strong>portfolio</strong>
+        <em>case studies, systems, product thinking</em>
+      </a>
+
+      <a class="object polaroid-stack" href="/curiosities/" data-object data-title="Visual Archive">
+        <span class="polaroid polaroid-back">
+          <img src="/assets/images/switzerland.jpg" alt="">
+        </span>
+        <span class="polaroid polaroid-front">
+          <img src="/assets/images/portrait.jpg" alt="">
+          <span>photography</span>
+        </span>
+      </a>
+
+      <button class="object note-folder" type="button" data-object data-title="Open Notes" aria-expanded="false">
+        <span class="paper paper-back">half thoughts</span>
+        <span class="paper paper-front">
+          <strong>notes</strong>
+          <em>things I want to remember</em>
+        </span>
+      </button>
+
+      <a class="object receipt" href="/inventory/" data-object data-title="Inventory">
+        <span>inventory</span>
+        <strong>tools, goods, costs</strong>
+        <i></i>
+        <i></i>
+        <i></i>
+      </a>
+
+      <a class="object passport" href="/about/" data-object data-title="About Rafa">
+        <span>about</span>
+        <strong>rafael<br>polutta</strong>
+      </a>
+
+      <a class="object envelope" href="mailto:contact@hejrafa.com" data-object data-title="Contact">
+        <span class="stamp">hej</span>
+        <strong>contact</strong>
+      </a>
+
+      <aside class="drawer" aria-live="polite">
+        <p class="drawer__kicker">currently touching</p>
+        <h2 id="drawer-title">the table</h2>
+        <p id="drawer-copy">Hover objects to see how the homepage could feel: tactile, personal, and a little playful.</p>
+      </aside>
+    </section>
+
+    <section class="scroll-strip" aria-label="Page structure preview">
+      <article>
+        <span>01</span>
+        <h2>Selected Work</h2>
+        <p>Project artifacts, screenshots, annotations, and a few strong stories instead of a generic card grid.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h2>Curiosities</h2>
+        <p>References, objects, links, notes, photos, and tiny observations collected like a shelf.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h2>About / Contact</h2>
+        <p>A warm ending note with enough personality to feel like a person, not a footer.</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
