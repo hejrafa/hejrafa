@@ -5,50 +5,287 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <title>hejrafa</title>
-  <link rel="stylesheet" href="/style.css">
-  <script src="/script.js" defer></script>
+  <link rel="icon" href="/favicon.ico?v=20260526a" sizes="any">
+  <link rel="shortcut icon" href="/favicon.ico?v=20260526a">
+  <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
+  <link rel="stylesheet" href="/style.css?v=20260526-wow-text-update">
+  <script src="/script.js?v=20260526-cta-link-guard" defer></script>
 </head>
 <body>
-  <main class="start" aria-label="hejrafa home">
+  <main class="start" data-view="home" aria-label="Hej Rafa home">
     <header class="top-mark">
-      <a href="/" aria-label="hejrafa home">
+      <a href="/" aria-label="Hej Rafa home">
         <img src="/assets/icons/hej-logo.svg" alt="">
       </a>
     </header>
 
-    <section class="hero" aria-label="Landing introduction">
-      <h1 id="hero-line">still collecting the good bits</h1>
-      <p class="prompt-line" id="prompt-line">choose a card to open work notes or the person behind them</p>
+    <div class="view-stage" aria-live="polite">
+      <section class="view-panel hero is-active" data-page="home" aria-label="Landing introduction">
+        <h1 id="hero-line">Still collecting the good bits</h1>
 
-      <div class="card-field" aria-label="Featured cards" data-active-card="work">
-        <a class="polaroid-card" href="/about/" data-card="photo" data-draggable-card data-tooltip="drag me around" aria-label="About Rafa">
-          <img src="/assets/images/portrait.jpg" alt="" draggable="false">
-          <span>rafa</span>
-        </a>
-        <button class="polaroid-handle" type="button" data-polaroid-handle aria-label="Drag Rafa polaroid"></button>
+        <div class="card-field" aria-label="Featured cards" data-active-card="work">
+          <a class="polaroid-card" href="/about/" data-card="photo" data-draggable-card data-tooltip="Drag me around" aria-label="About Rafa">
+            <img src="/assets/images/portrait.jpg" alt="" draggable="false">
+            <span>Rafa</span>
+          </a>
+          <button class="polaroid-handle" type="button" data-polaroid-handle aria-label="Drag Rafa polaroid"></button>
 
-        <a class="note-card" href="/cv/" data-card="work">
-          <span class="note-type">work</span>
-          <h2>selected things, carefully kept.</h2>
-          <p>projects, systems, interfaces, and the thinking behind them.</p>
-          <small>open portfolio</small>
-        </a>
+          <a class="note-card" href="/cv/" data-card="work">
+            <span class="note-type">Field note 01</span>
+            <h2>What this place is for.</h2>
+            <p>A home base for useful work: projects, experiments, writing, and the thinking behind them. I want it to make my taste visible, show how I work, and give unfinished ideas somewhere to grow.</p>
+            <small>Open the work</small>
+          </a>
 
-        <a class="note-card" href="/curiosities/" data-card="notes">
-          <span class="note-type">notes</span>
-          <h2>kardamom buns</h2>
-          <p class="recipe-copy">warm milk butter yeast flour sugar salt cardamom<br>rest until soft<br>roll with butter brown sugar and more cardamom<br>twist bake glaze eat warm</p>
-          <small>from the field notes</small>
-        </a>
-      </div>
+          <a class="note-card" href="/curiosities/" data-card="notes">
+            <h2>Kardamom buns</h2>
+            <ul class="recipe-copy">
+              <li>250 ml warm milk</li>
+              <li>90 gr butter</li>
+              <li>7 gr yeast</li>
+              <li>500 gr flour</li>
+              <li>80 gr sugar</li>
+              <li>5 gr salt</li>
+              <li>10 gr cardamom</li>
+              <li>120 gr brown sugar</li>
+            </ul>
+          </a>
+        </div>
+      </section>
 
-      <nav class="dock" aria-label="Main sections" data-selected="work">
-        <a class="dock-item is-selected" href="/" data-nav-link="home" aria-current="page">home</a>
-        <a class="dock-item" href="/cv/" data-nav-link="work">work</a>
-        <a class="dock-item" href="/about/" data-nav-link="about">about</a>
-        <span class="dock-thumb" aria-hidden="true"></span>
-      </nav>
-    </section>
+      <section class="view-panel work-page" data-page="work" aria-label="Portfolio" aria-hidden="true">
+        <article class="work-story">
+          <header class="work-story-hero">
+            <h1><span>Selected</span><span>Projects</span></h1>
+          </header>
+
+          <div class="project-grid" aria-label="Project cards">
+            <article class="project-card" data-layout="wow" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <div class="wow-icons" aria-hidden="true">
+                    <img class="wow-icon wow-icon--carpenter" src="/assets/images/carpenter_icon.png" alt="">
+                    <img class="wow-icon wow-icon--storymode" src="/assets/images/storymode_icon.png" alt="">
+                  </div>
+                  <div class="project-summary">
+                    <span>Side Project</span>
+                    <h2>Carpenter &amp; Story Mode</h2>
+                    <p>Two World of Warcraft addons about making the game easier to read without sanding off its character.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-back-copy">
+                    <p>Story Mode turns quest chains into readable chapters, with progress, recaps, and a journal that helps you continue the right adventure without becoming an autopilot route.</p>
+                    <p>Carpenter keeps Blizzard’s UI familiar, but quieter: cleaner chat, more readable combat information, less visual noise, and small quality-of-life chores handled in the background.</p>
+                    <a class="project-link" href="https://www.curseforge.com/members/hejrafa/projects" target="_blank" rel="noreferrer"><span class="project-link-label">See the addons</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-layout="hejhub" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <div class="project-summary">
+                    <span>Side Project</span>
+                    <h2>hejhub</h2>
+                    <p>A personal start page about digital wellbeing, attention, and choosing create over consume.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-back-copy">
+                    <p>A bookmark page built like a tiny operating system for everyday life: widgets, shortcuts, and soft constraints that make the internet feel a little less like quicksand.</p>
+                    <a class="project-link" href="https://hejhub.com/" target="_blank" rel="noreferrer"><span class="project-link-label">Open Hejhub</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-layout="youtube" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <div class="project-summary">
+                    <span>Side Project</span>
+                    <h2>YouTube</h2>
+                    <p>Filming, editing, color grading, writing, and learning how to tell stories in motion.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-back-copy">
+                    <p>A character piece as much as a channel: motorcycles, travel, photography, voice, timing, and the practice of showing up in front of the camera with a point of view.</p>
+                    <a class="project-link" href="https://www.youtube.com/@hejrafa" target="_blank" rel="noreferrer"><span class="project-link-label">Watch the channel</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-layout="daumenkino" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <img class="project-cover" src="/assets/images/daumenkino_cover_04_a.png" alt="Daumenkino podcast cover">
+                  <div class="project-info">
+                    <span>2019–2025</span>
+                    <h2>Daumenkino</h2>
+                    <p>It was a podcast about film, the theater, and sometimes TV shows at home.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-info project-info--back">
+                    <p>For more than six years, my friend <a class="inline-project-link" href="https://frauraenger.de/" target="_blank" rel="noreferrer">Ann-Sophie</a> and I recorded 190 episodes together. It became a weekly routine that defined our Mondays.</p>
+                    <p>We still keep the tradition alive: Sneak Preview, 11 years and counting. Just not on record anymore.</p>
+                    <a class="project-cta" href="https://podcasts.apple.com/de/podcast/daumenkino/id1476457786?l=en-GB" target="_blank" rel="noreferrer"><span class="cta-label">Give it a listen</span> <span class="cta-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-layout="leadership" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <div class="project-summary">
+                    <span>2020–2026</span>
+                    <h2>UI Design Lead</h2>
+                    <p>Hiring, mentoring, and shaping the visual quality of a product organization in motion.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-back-copy">
+                    <p>Redefined design hiring around team fit, personality, and diversity instead of meaningless portfolio hurdles. Helped steer visual changes from brand refinements to product feel and marketing presence.</p>
+                    <a class="project-link" href="https://phrase.com/resources/forrester-wave-translation-management-systems-q3-2025/" target="_blank" rel="noreferrer"><span class="project-link-label">Read the report</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-layout="system" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <div class="project-summary">
+                    <span>2020–2026</span>
+                    <h2>Syntax Design System</h2>
+                    <p>From almost no design direction to a dedicated team building shared product foundations.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-back-copy">
+                    <p>A long arc from chaos to craft: components, tokens, collaboration rituals, and enough trust with engineering to turn design system work into a real product capability.</p>
+                    <a class="project-link" href="https://phrase.com/" target="_blank" rel="noreferrer"><span class="project-link-label">Visit Phrase</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-layout="merge" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <div class="project-summary">
+                    <span>2019–2020</span>
+                    <h2>Share Now Merger</h2>
+                    <p>Redesigning and merging two mobility products without making loyal users feel lost.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-back-copy">
+                    <p>Guiding principles, careful iteration, and interface decisions that made a complex product merge feel understandable across cities, habits, and existing mental models.</p>
+                    <a class="project-link" href="https://www.share-now.com/" target="_blank" rel="noreferrer"><span class="project-link-label">Visit Share Now</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-layout="award" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <div class="project-summary">
+                    <span>2015–2019</span>
+                    <h2>car2go App</h2>
+                    <p>Every screen, every platform, and a product that landed in Time’s top apps of 2017.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-back-copy">
+                    <p>Worked across iOS, Android, Windows Phone, and BlackBerry on the everyday details of a carsharing app that had to feel fast, clear, and trustworthy on the street.</p>
+                    <a class="project-link" href="https://time.com/5037753/top-10-apps-2017/" target="_blank" rel="noreferrer"><span class="project-link-label">See the Time list</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </article>
+      </section>
+
+      <section class="view-panel about-page" data-page="about" aria-label="About Rafa" aria-hidden="true">
+        <article class="about-story">
+          <header class="about-story-hero">
+            <figure class="about-polaroid about-polaroid--hero" data-draggable-card data-tooltip="Drag me around">
+              <img src="/_assets/v11/35d77dbc12496bff6c119e019b2dc034ba12fe94.png" alt="Rafa naturally going through his note">
+              <figcaption>going through notes</figcaption>
+            </figure>
+            <h1>Capturing what I can’t see</h1>
+          </header>
+
+          <div class="about-text about-text--lead">
+            <p>My name is Rafael Polutta, and my goal is to tell stories that inspire — this is why.</p>
+            <p>I never thought much about it, but living with no mental images (<a href="https://aphantasia.com/what-is-aphantasia/" target="_blank" rel="noreferrer">aphantasia</a>) makes the past feel unimportant. I don’t dwell on what was. Details fade quickly, and all that’s left are broad strokes: growing up in a small village, helping my parents renovate the house, school days, bike rides through the forest. Moving to the city, <strong>studying art direction and design</strong> simply because I was always in front of a computer. Mesmerised by moving graphics in video games and the internet. Learning the rules in order to break them. Finding a calling in user experiences and interfaces — without realising it, telling stories through buttons and typefaces.</p>
+            <p>Those broad strokes shaped my eye for detail and taste. I consume media and can only recall the big picture. I love rewatching movies and shows, seeing the story unfold again almost as if for the first time. This makes the present so important to me. <strong>The only way to relive a past moment visually is through photography and video.</strong></p>
+          </div>
+
+          <figure class="about-wide-image" data-draggable-card data-tooltip="Drag me around">
+            <img src="/_assets/v11/385d6613243a7ae9ee0016d5724b42a981b83a69.png" alt="Rafa somewhere in Switzerland">
+            <figcaption>(me somewhere in Switzerland)</figcaption>
+          </figure>
+
+          <div class="about-text">
+            <p>It wasn’t because of that, but somehow I began documenting certain aspects of my life — trying to make them cinematic. This became my only way to look back. The older I get, the more important it becomes to have these memories in physical form. I enjoy picking up a vinyl, knowing a friend gifted it to me because she thought I’d like it. Holding it reminds me of her. Even writing my to-dos in a physical notebook and crossing them off just feels real. I’m working on finding balance in every aspect of life — <strong>enjoying the moment now, while being able to look back at a life well lived.</strong></p>
+            <p>The act of creating is what drives me. I don’t idle well. Having nothing to do might sound wonderful, but without a project I grow restless. I guess it works both ways: calming a restless mind, or focusing an empty one, by giving it something to work on.</p>
+            <p>I wasn’t always curious. I took a lot for granted. That changed when I heard Steve Jobs say:</p>
+          </div>
+
+          <blockquote class="about-quote">
+            <p>“Everything around you that you call ‘life’ was made up by people who were no smarter than you.”</p>
+            <cite>— Steve Jobs</cite>
+          </blockquote>
+
+          <div class="about-media-row">
+            <figure class="about-polaroid about-polaroid--tall" data-draggable-card data-tooltip="Drag me around">
+              <img src="/_assets/v11/b63f35a64f38fc1787e66d531ac091dd6263c810.png" alt="Rafa totally not posing">
+              <figcaption>totally not posing</figcaption>
+            </figure>
+
+            <div class="about-text">
+              <p>Now, I ask myself <strong>“why”</strong> a lot, and <strong>“what if”</strong>. With curiosity comes a beginner’s mind — a desire to learn and understand, and no fear of looking stupid. Asking questions brings answers, and answers keep you moving.</p>
+              <p>I always want to be learning and improving myself: travel, read, play, write, watch, ask, be curious, and share my perspective. And above all, <strong>tell stories that inspire.</strong></p>
+            </div>
+          </div>
+
+          <aside class="about-note about-beliefs" aria-label="Things I believe">
+            <span>Things I believe</span>
+            <ol>
+              <li>Touch grass.</li>
+              <li>Move your body first thing in the morning.</li>
+              <li>Do one thing at a time.</li>
+              <li>Let cleaning and cooking become meditation.</li>
+              <li>Read something every day.</li>
+              <li>Don’t ever put your happiness in someone else’s hands.</li>
+              <li>Your “normal” day is someone’s dream — be thankful.</li>
+              <li>Treat everyone with respect.</li>
+              <li>Time you enjoy wasting isn’t wasted.</li>
+              <li>Just go for it.</li>
+              <li>Be private. Vibe alone. Grow in silence.</li>
+              <li>Every second counts.</li>
+            </ol>
+          </aside>
+        </article>
+      </section>
+    </div>
+
+    <nav class="dock" aria-label="Main sections" data-selected="home">
+      <a class="dock-item is-selected" href="/" data-nav-link="home" aria-current="page">Home</a>
+      <a class="dock-item" href="/cv/" data-nav-link="work">Work</a>
+      <a class="dock-item" href="/about/" data-nav-link="about">About</a>
+      <span class="dock-thumb" aria-hidden="true"></span>
+    </nav>
   </main>
 </body>
 </html>

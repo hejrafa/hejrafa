@@ -1,37 +1,156 @@
 const heroLine = document.querySelector("#hero-line");
-const promptLine = document.querySelector("#prompt-line");
+const start = document.querySelector(".start");
 const cardField = document.querySelector(".card-field");
 const dock = document.querySelector(".dock");
 const dockItems = document.querySelectorAll("[data-nav-link]");
+const viewPanels = document.querySelectorAll("[data-page]");
 const stackCards = document.querySelectorAll(".card-field [data-card]");
-const draggableCard = document.querySelector("[data-draggable-card]");
-const draggableHandle = document.querySelector("[data-polaroid-handle]");
+const draggableCards = document.querySelectorAll("[data-draggable-card]");
+const projectCards = document.querySelectorAll(".project-card");
+let scrollBounceFrame = null;
+let scrollBounce = 0;
+let touchStartY = null;
 
 const heroLines = [
-  ["still collecting the good bits", "open a card or pull the photo"],
-  ["make yourself nosy", "click around a little"],
-  ["a small public shelf", "start with work notes or about"],
-  ["things worth keeping nearby", "pick a card to begin"],
-  ["not everything needs a menu", "use the stack or the dock"],
-  ["welcome to the soft launch", "start wherever you like"],
-  ["half portfolio half pocket", "open the stack"],
-  ["a homepage with loose pockets", "click the top card"],
-  ["carefully kept casually placed", "choose a way in"],
-  ["a few doors no hallway", "use the small index below"],
-  ["useful things first", "work notes about"],
-  ["everything here is a handle", "hover pull click"],
+  "Still collecting the good bits",
+  "Make yourself nosy",
+  "A small public shelf",
+  "Things worth keeping nearby",
+  "Not everything needs a menu",
+  "Welcome to the soft launch",
+  "Half portfolio, half pocket",
+  "A homepage with loose pockets",
+  "Carefully kept, casually placed",
+  "A few doors, no hallway",
+  "Useful things first",
+  "Everything here is a handle",
 ];
 
 function setRandomHeroLine() {
-  const [line, prompt] = heroLines[Math.floor(Math.random() * heroLines.length)];
-  heroLine.textContent = line;
-  promptLine.textContent = prompt;
+  heroLine.textContent = heroLines[Math.floor(Math.random() * heroLines.length)];
+}
+
+function setActiveView(view) {
+  setScrollBounce(0);
+  start.dataset.view = view;
+  dock.dataset.selected = view;
+  start.scrollTo({ top: 0, behavior: "instant" });
+
+  dockItems.forEach((item) => {
+    const isSelected = item.dataset.navLink === view;
+    item.classList.toggle("is-selected", isSelected);
+
+    if (isSelected) {
+      item.setAttribute("aria-current", "page");
+    } else {
+      item.removeAttribute("aria-current");
+    }
+  });
+
+  viewPanels.forEach((panel) => {
+    const isSelected = panel.dataset.page === view;
+    panel.classList.toggle("is-active", isSelected);
+    panel.setAttribute("aria-hidden", String(!isSelected));
+  });
+}
+
+function getActivePanel() {
+  return document.querySelector(".view-panel.is-active");
+}
+
+function setScrollBounce(value) {
+  scrollBounce = value;
+  const activePanel = getActivePanel();
+
+  if (activePanel) {
+    activePanel.style.setProperty("--scroll-bounce", `${value}px`);
+  }
+}
+
+function releaseScrollBounce() {
+  if (scrollBounceFrame) {
+    cancelAnimationFrame(scrollBounceFrame);
+  }
+
+  const startBounce = scrollBounce;
+  const duration = 340;
+  const startedAt = performance.now();
+
+  function settle(now) {
+    const progress = Math.min((now - startedAt) / duration, 1);
+    const decay = Math.pow(1 - progress, 3);
+    const wobble = Math.sin(progress * Math.PI * 2.6) * (1 - progress) * 2.2;
+
+    setScrollBounce(startBounce * decay + wobble * Math.sign(startBounce));
+
+    if (progress < 1) {
+      scrollBounceFrame = requestAnimationFrame(settle);
+    } else {
+      scrollBounceFrame = null;
+      setScrollBounce(0);
+    }
+  }
+
+  scrollBounceFrame = requestAnimationFrame(settle);
+}
+
+function nudgeScrollBounce(delta) {
+  const activePanel = getActivePanel();
+
+  if (!activePanel || !activePanel.matches(".work-page, .about-page")) {
+    return;
+  }
+
+  const maxScroll = start.scrollHeight - start.clientHeight;
+  const atTop = start.scrollTop <= 0 && delta < 0;
+  const atBottom = start.scrollTop >= maxScroll - 1 && delta > 0;
+
+  if (!atTop && !atBottom) {
+    return;
+  }
+
+  if (scrollBounceFrame) {
+    cancelAnimationFrame(scrollBounceFrame);
+    scrollBounceFrame = null;
+  }
+
+  const direction = atTop ? 1 : -1;
+  const strength = Math.min(24, Math.abs(delta) * 0.14);
+  setScrollBounce(direction * Math.min(28, Math.abs(scrollBounce) * 0.42 + strength));
+  releaseScrollBounce();
 }
 
 dockItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    dock.dataset.selected = item.dataset.navLink;
+  item.addEventListener("click", (event) => {
+    event.preventDefault();
+    setActiveView(item.dataset.navLink);
   });
+});
+
+start.addEventListener("wheel", (event) => {
+  nudgeScrollBounce(event.deltaY);
+}, { passive: true });
+
+start.addEventListener("touchstart", (event) => {
+  touchStartY = event.touches[0]?.clientY ?? null;
+}, { passive: true });
+
+start.addEventListener("touchmove", (event) => {
+  if (touchStartY === null) {
+    return;
+  }
+
+  const currentY = event.touches[0]?.clientY ?? touchStartY;
+  nudgeScrollBounce(touchStartY - currentY);
+  touchStartY = currentY;
+}, { passive: true });
+
+start.addEventListener("touchend", () => {
+  touchStartY = null;
+});
+
+start.addEventListener("touchcancel", () => {
+  touchStartY = null;
 });
 
 stackCards.forEach((card) => {
@@ -51,81 +170,180 @@ stackCards.forEach((card) => {
   });
 });
 
-let drag = null;
-let didDrag = false;
+draggableCards.forEach((card) => {
+  const handle = card.matches(".polaroid-card")
+    ? document.querySelector("[data-polaroid-handle]")
+    : card;
+  let drag = null;
+  let didDrag = false;
+  let releaseFrame = null;
 
-draggableHandle.addEventListener("pointerdown", (event) => {
-  event.preventDefault();
-  drag = {
-    pointerId: event.pointerId,
-    startX: event.clientX,
-    startY: event.clientY,
-    x: Number(draggableCard.dataset.x || 0),
-    y: Number(draggableCard.dataset.y || 0),
-  };
-  didDrag = false;
-
-  draggableCard.classList.add("is-dragging");
-  draggableHandle.classList.add("is-dragging");
-  draggableHandle.setPointerCapture(event.pointerId);
-});
-
-draggableHandle.addEventListener("pointerenter", () => {
-  draggableHandle.classList.add("is-hovered");
-});
-
-draggableHandle.addEventListener("pointerleave", () => {
-  draggableHandle.classList.remove("is-hovered");
-});
-
-document.addEventListener("pointermove", (event) => {
-  const bounds = draggableHandle.getBoundingClientRect();
-  const isOverHandle = event.clientX >= bounds.left
-    && event.clientX <= bounds.right
-    && event.clientY >= bounds.top
-    && event.clientY <= bounds.bottom;
-
-  draggableHandle.classList.toggle("is-hovered", isOverHandle);
-});
-
-draggableHandle.addEventListener("pointermove", (event) => {
-  if (!drag || drag.pointerId !== event.pointerId) {
+  if (!handle) {
     return;
   }
 
-  const x = drag.x + event.clientX - drag.startX;
-  const y = drag.y + event.clientY - drag.startY;
-  didDrag = Math.abs(x - drag.x) > 3 || Math.abs(y - drag.y) > 3;
+  function setDragPosition(x, y) {
+    card.dataset.x = String(x);
+    card.dataset.y = String(y);
+    card.style.setProperty("--drag-x", `${x}px`);
+    card.style.setProperty("--drag-y", `${y}px`);
 
-  if (Math.abs(x) > 8 || Math.abs(y) > 8) {
-    draggableCard.classList.add("is-pulled");
-    draggableHandle.classList.add("is-pulled");
+    if (handle !== card) {
+      handle.style.setProperty("--drag-x", `${x}px`);
+      handle.style.setProperty("--drag-y", `${y}px`);
+    }
   }
 
-  draggableCard.dataset.x = String(x);
-  draggableCard.dataset.y = String(y);
-  draggableCard.style.translate = `${x}px ${y}px`;
-  draggableHandle.style.translate = `${x}px ${y}px`;
-});
+  function animateRelease(velocityX, velocityY) {
+    const startX = Number(card.dataset.x || 0);
+    const startY = Number(card.dataset.y || 0);
+    const distanceX = Math.max(-95, Math.min(95, velocityX * 150));
+    const distanceY = Math.max(-95, Math.min(95, velocityY * 150));
+    const duration = 520;
+    const startedAt = performance.now();
 
-function stopDrag(event) {
-  if (!drag || drag.pointerId !== event.pointerId) {
-    return;
+    function settle(now) {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const eased = 1 + 2.2 * Math.pow(progress - 1, 3) + 1.2 * Math.pow(progress - 1, 2);
+      const wobble = Math.sin(progress * Math.PI * 2.4) * (1 - progress) * 10;
+
+      setDragPosition(
+        startX + distanceX * eased + wobble * Math.sign(distanceX || velocityX),
+        startY + distanceY * eased + wobble * Math.sign(distanceY || velocityY),
+      );
+
+      if (progress < 1) {
+        releaseFrame = requestAnimationFrame(settle);
+      } else {
+        releaseFrame = null;
+      }
+    }
+
+    releaseFrame = requestAnimationFrame(settle);
   }
 
-  draggableCard.classList.remove("is-dragging");
-  draggableHandle.classList.remove("is-dragging");
-  drag = null;
-}
-
-draggableHandle.addEventListener("pointerup", stopDrag);
-draggableHandle.addEventListener("pointercancel", stopDrag);
-draggableHandle.addEventListener("click", (event) => {
-  if (didDrag) {
+  handle.addEventListener("pointerdown", (event) => {
     event.preventDefault();
+
+    if (releaseFrame) {
+      cancelAnimationFrame(releaseFrame);
+      releaseFrame = null;
+    }
+
+    drag = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      x: Number(card.dataset.x || 0),
+      y: Number(card.dataset.y || 0),
+      lastX: event.clientX,
+      lastY: event.clientY,
+      lastTime: performance.now(),
+      velocityX: 0,
+      velocityY: 0,
+    };
+    didDrag = false;
+
+    card.classList.add("is-dragging");
+    handle.classList.add("is-dragging");
+    handle.setPointerCapture(event.pointerId);
+  });
+
+  handle.addEventListener("pointerenter", () => {
+    handle.classList.add("is-hovered");
+  });
+
+  handle.addEventListener("pointerleave", () => {
+    handle.classList.remove("is-hovered");
+  });
+
+  handle.addEventListener("pointermove", (event) => {
+    if (!drag || drag.pointerId !== event.pointerId) {
+      return;
+    }
+
+    const x = drag.x + event.clientX - drag.startX;
+    const y = drag.y + event.clientY - drag.startY;
+    const now = performance.now();
+    const elapsed = Math.max(now - drag.lastTime, 16);
+
+    drag.velocityX = (event.clientX - drag.lastX) / elapsed;
+    drag.velocityY = (event.clientY - drag.lastY) / elapsed;
+    drag.lastX = event.clientX;
+    drag.lastY = event.clientY;
+    drag.lastTime = now;
+    didDrag = Math.abs(x - drag.x) > 3 || Math.abs(y - drag.y) > 3;
+
+    if (Math.abs(x) > 8 || Math.abs(y) > 8) {
+      card.classList.add("is-pulled");
+      handle.classList.add("is-pulled");
+    }
+
+    setDragPosition(x, y);
+  });
+
+  function stopDrag(event) {
+    if (!drag || drag.pointerId !== event.pointerId) {
+      return;
+    }
+
+    card.classList.remove("is-dragging");
+    handle.classList.remove("is-dragging");
+    animateRelease(drag.velocityX, drag.velocityY);
+    drag = null;
   }
+
+  handle.addEventListener("pointerup", stopDrag);
+  handle.addEventListener("pointercancel", stopDrag);
+  handle.addEventListener("click", (event) => {
+    if (didDrag) {
+      event.preventDefault();
+    }
+  });
+});
+
+projectCards.forEach((card) => {
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-pressed", "false");
+
+  function eventStartedOnLink(event) {
+    const path = event.composedPath?.() || [];
+
+    return path.some((target) => target instanceof HTMLAnchorElement)
+      || event.target.closest?.("a");
+  }
+
+  card.querySelectorAll("a").forEach((link) => {
+    ["pointerdown", "pointerup", "mousedown", "mouseup", "touchstart", "touchend", "click"].forEach((eventName) => {
+      link.addEventListener(eventName, (event) => {
+        event.stopPropagation();
+      }, { capture: true });
+    });
+  });
+
+  function toggleCard() {
+    const isFlipped = card.classList.toggle("is-flipped");
+    card.setAttribute("aria-pressed", String(isFlipped));
+  }
+
+  card.addEventListener("click", (event) => {
+    if (eventStartedOnLink(event)) {
+      event.stopPropagation();
+      return;
+    }
+
+    toggleCard();
+  });
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    event.preventDefault();
+    toggleCard();
+  });
 });
 
 cardField.dataset.activeCard = "work";
-dock.dataset.selected = "home";
+setActiveView("home");
 setRandomHeroLine();
