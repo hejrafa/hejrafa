@@ -287,6 +287,99 @@ img {
   --project-shadow: rgba(60, 4, 2, 0.34);
 }
 
+.hejhub-bento {
+  position: absolute;
+  top: clamp(18px, 3vw, 34px);
+  left: 50%;
+  z-index: 1;
+  display: grid;
+  width: min(76%, 320px);
+  aspect-ratio: 1.54 / 1;
+  grid-template-columns: 1.15fr 0.92fr 0.86fr;
+  grid-template-rows: 1.05fr 0.8fr 0.72fr;
+  gap: 8px;
+  transform: translateX(-50%) rotate(-1.5deg);
+}
+
+.hejhub-tile {
+  display: block;
+  border-radius: 12px;
+  background: #faedd7;
+  box-shadow:
+    0 5px 0 rgba(60, 4, 2, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.42);
+  opacity: 0.96;
+  transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease;
+}
+
+.hejhub-tile--large {
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
+  background: #ff5738;
+}
+
+.hejhub-tile--tall {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  background: #e9a0bd;
+}
+
+.hejhub-tile--wide {
+  grid-column: 1;
+  grid-row: 3;
+  background: #3aa0e6;
+}
+
+.hejhub-tile--small {
+  grid-column: 2;
+  grid-row: 3;
+  background: #c8eb14;
+}
+
+.hejhub-tile--short {
+  grid-column: 3;
+  grid-row: 3;
+  background: #ffc63a;
+}
+
+.project-card[data-layout="hejhub"]:hover .hejhub-tile,
+.project-card[data-layout="hejhub"]:focus-visible .hejhub-tile,
+.project-card[data-layout="hejhub"]:focus-within .hejhub-tile {
+  box-shadow:
+    0 7px 0 rgba(60, 4, 2, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.project-card[data-layout="hejhub"]:hover .hejhub-tile--large,
+.project-card[data-layout="hejhub"]:focus-visible .hejhub-tile--large,
+.project-card[data-layout="hejhub"]:focus-within .hejhub-tile--large {
+  transform: translate(-3px, -5px) rotate(-1.4deg);
+}
+
+.project-card[data-layout="hejhub"]:hover .hejhub-tile--tall,
+.project-card[data-layout="hejhub"]:focus-visible .hejhub-tile--tall,
+.project-card[data-layout="hejhub"]:focus-within .hejhub-tile--tall {
+  transform: translate(5px, -3px) rotate(1.8deg);
+}
+
+.project-card[data-layout="hejhub"]:hover .hejhub-tile--wide,
+.project-card[data-layout="hejhub"]:focus-visible .hejhub-tile--wide,
+.project-card[data-layout="hejhub"]:focus-within .hejhub-tile--wide {
+  transform: translate(-4px, 4px) rotate(1.2deg);
+}
+
+.project-card[data-layout="hejhub"]:hover .hejhub-tile--small,
+.project-card[data-layout="hejhub"]:focus-visible .hejhub-tile--small,
+.project-card[data-layout="hejhub"]:focus-within .hejhub-tile--small {
+  transform: translate(1px, 6px) rotate(-1deg);
+}
+
+.project-card[data-layout="hejhub"]:hover .hejhub-tile--short,
+.project-card[data-layout="hejhub"]:focus-visible .hejhub-tile--short,
+.project-card[data-layout="hejhub"]:focus-within .hejhub-tile--short {
+  transform: translate(5px, 5px) rotate(1.4deg);
+}
+
 .project-card[data-layout="youtube"] {
   --project-bg: #000000;
   --project-text: #ffd600;
