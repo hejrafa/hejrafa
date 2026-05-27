@@ -9,13 +9,13 @@
   <link rel="shortcut icon" href="/favicon.ico?v=20260526a">
   <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
-  <link rel="stylesheet" href="/style.css?v=20260526-hejhub-bento-up">
-  <script src="/script.js?v=20260526-cta-link-guard" defer></script>
+  <link rel="stylesheet" href="/style.css?v=20260527-share-now-bg">
+  <script src="/script.js?v=20260527-view-routes" defer></script>
 </head>
 <body>
   <main class="start" data-view="home" aria-label="Hej Rafa home">
     <header class="top-mark">
-      <a href="/" aria-label="Hej Rafa home">
+      <a href="/#home" aria-label="Hej Rafa home">
         <img src="/assets/icons/hej-logo.svg" alt="">
       </a>
     </header>
@@ -109,24 +109,6 @@
               </div>
             </article>
 
-            <article class="project-card" data-layout="youtube" tabindex="0">
-              <div class="project-card-inner">
-                <div class="project-face project-face--front">
-                  <div class="project-summary">
-                    <span>Side Project</span>
-                    <h2>YouTube</h2>
-                    <p>Filming, editing, color grading, writing, and learning how to tell stories in motion.</p>
-                  </div>
-                </div>
-                <div class="project-face project-face--back">
-                  <div class="project-back-copy">
-                    <p>A character piece as much as a channel: motorcycles, travel, photography, voice, timing, and the practice of showing up in front of the camera with a point of view.</p>
-                    <a class="project-link" href="https://www.youtube.com/@hejrafa" target="_blank" rel="noreferrer"><span class="project-link-label">Watch the channel</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
-                  </div>
-                </div>
-              </div>
-            </article>
-
             <article class="project-card" data-layout="daumenkino" tabindex="0">
               <div class="project-card-inner">
                 <div class="project-face project-face--front">
@@ -142,6 +124,25 @@
                     <p>For more than six years, my friend <a class="inline-project-link" href="https://frauraenger.de/" target="_blank" rel="noreferrer">Ann-Sophie</a> and I recorded 190 episodes together. It became a weekly routine that defined our Mondays.</p>
                     <p>We still keep the tradition alive: Sneak Preview, 11 years and counting. Just not on record anymore.</p>
                     <a class="project-cta" href="https://podcasts.apple.com/de/podcast/daumenkino/id1476457786?l=en-GB" target="_blank" rel="noreferrer"><span class="cta-label">Give it a listen</span> <span class="cta-arrow" aria-hidden="true">➔</span></a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-layout="youtube" tabindex="0">
+              <div class="project-card-inner">
+                <div class="project-face project-face--front">
+                  <img class="youtube-thumb" src="/assets/images/youtube_--cbM0G5ffU.jpg" alt="">
+                  <div class="project-summary">
+                    <span>Side Project</span>
+                    <h2>YouTube</h2>
+                    <p>Filming, editing, color grading, writing, and learning how to tell stories in motion.</p>
+                  </div>
+                </div>
+                <div class="project-face project-face--back">
+                  <div class="project-back-copy">
+                    <p>A character piece as much as a channel: motorcycles, travel, photography, voice, timing, and the practice of showing up in front of the camera with a point of view.</p>
+                    <a class="project-link" href="https://www.youtube.com/@hejrafa" target="_blank" rel="noreferrer"><span class="project-link-label">Watch the channel</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
                   </div>
                 </div>
               </div>
@@ -186,16 +187,17 @@
             <article class="project-card" data-layout="merge" tabindex="0">
               <div class="project-card-inner">
                 <div class="project-face project-face--front">
+                  <img class="share-now-image" src="/assets/images/share_now_background.png" alt="">
                   <div class="project-summary">
                     <span>2019–2020</span>
-                    <h2>Share Now Merger</h2>
+                    <h2>Share Now App</h2>
                     <p>Redesigning and merging two mobility products without making loyal users feel lost.</p>
                   </div>
                 </div>
                 <div class="project-face project-face--back">
                   <div class="project-back-copy">
                     <p>Guiding principles, careful iteration, and interface decisions that made a complex product merge feel understandable across cities, habits, and existing mental models.</p>
-                    <a class="project-link" href="https://www.share-now.com/" target="_blank" rel="noreferrer"><span class="project-link-label">Visit Share Now</span> <span class="project-link-arrow" aria-hidden="true">➔</span></a>
+                    <p>I also spoke about the design approach in Berlin: how to bring two well-known mobility brands together without losing what people already trusted.</p>
                   </div>
                 </div>
               </div>
@@ -204,6 +206,7 @@
             <article class="project-card" data-layout="award" tabindex="0">
               <div class="project-card-inner">
                 <div class="project-face project-face--front">
+                  <img class="car2go-gif" src="/assets/images/car2go_cities.gif" alt="">
                   <div class="project-summary">
                     <span>2015–2019</span>
                     <h2>car2go App</h2>
@@ -288,9 +291,9 @@
     </div>
 
     <nav class="dock" aria-label="Main sections" data-selected="home">
-      <a class="dock-item is-selected" href="/" data-nav-link="home" aria-current="page">Home</a>
-      <a class="dock-item" href="/cv/" data-nav-link="work">Work</a>
-      <a class="dock-item" href="/about/" data-nav-link="about">About</a>
+      <a class="dock-item is-selected" href="/#home" data-nav-link="home" aria-current="page">Home</a>
+      <a class="dock-item" href="/#work" data-nav-link="work">Work</a>
+      <a class="dock-item" href="/#about" data-nav-link="about">About</a>
       <span class="dock-thumb" aria-hidden="true"></span>
     </nav>
   </main>

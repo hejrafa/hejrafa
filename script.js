@@ -25,19 +25,41 @@ const heroLines = [
   "Useful things first",
   "Everything here is a handle",
 ];
+const validViews = new Set(["home", "work", "about"]);
 
 function setRandomHeroLine() {
   heroLine.textContent = heroLines[Math.floor(Math.random() * heroLines.length)];
 }
 
-function setActiveView(view) {
+function getViewFromLocation() {
+  const hashView = window.location.hash.replace("#", "");
+
+  return validViews.has(hashView) ? hashView : "home";
+}
+
+function updateRoute(view) {
+  const url = new URL(window.location.href);
+  url.hash = view === "home" ? "home" : view;
+
+  if (url.href !== window.location.href) {
+    window.history.pushState({ view }, "", url);
+  }
+}
+
+function setActiveView(view, { updateUrl = false } = {}) {
+  const nextView = validViews.has(view) ? view : "home";
+
+  if (updateUrl) {
+    updateRoute(nextView);
+  }
+
   setScrollBounce(0);
-  start.dataset.view = view;
-  dock.dataset.selected = view;
+  start.dataset.view = nextView;
+  dock.dataset.selected = nextView;
   start.scrollTo({ top: 0, behavior: "instant" });
 
   dockItems.forEach((item) => {
-    const isSelected = item.dataset.navLink === view;
+    const isSelected = item.dataset.navLink === nextView;
     item.classList.toggle("is-selected", isSelected);
 
     if (isSelected) {
@@ -48,7 +70,7 @@ function setActiveView(view) {
   });
 
   viewPanels.forEach((panel) => {
-    const isSelected = panel.dataset.page === view;
+    const isSelected = panel.dataset.page === nextView;
     panel.classList.toggle("is-active", isSelected);
     panel.setAttribute("aria-hidden", String(!isSelected));
   });
@@ -123,8 +145,16 @@ function nudgeScrollBounce(delta) {
 dockItems.forEach((item) => {
   item.addEventListener("click", (event) => {
     event.preventDefault();
-    setActiveView(item.dataset.navLink);
+    setActiveView(item.dataset.navLink, { updateUrl: true });
   });
+});
+
+window.addEventListener("popstate", () => {
+  setActiveView(getViewFromLocation());
+});
+
+window.addEventListener("hashchange", () => {
+  setActiveView(getViewFromLocation());
 });
 
 start.addEventListener("wheel", (event) => {
@@ -345,5 +375,5 @@ projectCards.forEach((card) => {
 });
 
 cardField.dataset.activeCard = "work";
-setActiveView("home");
+setActiveView(getViewFromLocation());
 setRandomHeroLine();
