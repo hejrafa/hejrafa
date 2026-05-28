@@ -254,6 +254,7 @@ draggableCards.forEach((card) => {
 
   handle.addEventListener("pointerdown", (event) => {
     event.preventDefault();
+    event.stopPropagation();
 
     if (releaseFrame) {
       cancelAnimationFrame(releaseFrame);
@@ -291,6 +292,7 @@ draggableCards.forEach((card) => {
     if (!drag || drag.pointerId !== event.pointerId) {
       return;
     }
+    event.stopPropagation();
 
     const x = drag.x + event.clientX - drag.startX;
     const y = drag.y + event.clientY - drag.startY;
@@ -316,6 +318,7 @@ draggableCards.forEach((card) => {
     if (!drag || drag.pointerId !== event.pointerId) {
       return;
     }
+    event.stopPropagation();
 
     card.classList.remove("is-dragging");
     handle.classList.remove("is-dragging");
@@ -326,6 +329,8 @@ draggableCards.forEach((card) => {
   handle.addEventListener("pointerup", stopDrag);
   handle.addEventListener("pointercancel", stopDrag);
   handle.addEventListener("click", (event) => {
+    event.stopPropagation();
+
     if (didDrag) {
       event.preventDefault();
     }
@@ -340,7 +345,8 @@ projectCards.forEach((card) => {
     const path = event.composedPath?.() || [];
 
     return path.some((target) => target instanceof HTMLAnchorElement)
-      || event.target.closest?.("a");
+      || path.some((target) => target instanceof Element && target.matches("[data-draggable-card]"))
+      || event.target.closest?.("a, [data-draggable-card]");
   }
 
   card.querySelectorAll("a").forEach((link) => {

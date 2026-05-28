@@ -9,7 +9,7 @@
   <link rel="shortcut icon" href="/favicon.ico?v=20260526a">
   <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
-  <link rel="stylesheet" href="/style.css?v=20260527-share-now-bg">
+  <link rel="stylesheet" href="/style.css?v=20260528-syntax-hover-edge">
   <script src="/script.js?v=20260527-view-routes" defer></script>
 </head>
 <body>
@@ -169,9 +169,14 @@
             <article class="project-card" data-layout="system" tabindex="0">
               <div class="project-card-inner">
                 <div class="project-face project-face--front">
+                  <span class="syntax-logo" aria-hidden="true"></span>
+                  <div class="syntax-components" aria-hidden="true">
+                    <img class="syntax-component syntax-component--select" src="/assets/images/syntax_select.png" alt="">
+                    <img class="syntax-component syntax-component--radio" src="/assets/images/syntax_radio.png" alt="">
+                  </div>
                   <div class="project-summary">
-                    <span>2020–2026</span>
-                    <h2>Syntax Design System</h2>
+                    <span>2020–Present</span>
+                    <h2>Design System</h2>
                     <p>From almost no design direction to a dedicated team building shared product foundations.</p>
                   </div>
                 </div>
@@ -183,6 +188,15 @@
                 </div>
               </div>
             </article>
+
+            <div class="syntax-outside" aria-label="Draggable design system examples">
+              <div class="syntax-outside-item syntax-outside-item--empty" data-draggable-card data-tooltip="Drag me out">
+                <img src="/assets/images/syntax_empty_state.png" alt="" draggable="false">
+              </div>
+              <div class="syntax-outside-item syntax-outside-item--form" data-draggable-card data-tooltip="Drag me out">
+                <img src="/assets/images/syntax_form_preset.png" alt="" draggable="false">
+              </div>
+            </div>
 
             <article class="project-card" data-layout="merge" tabindex="0">
               <div class="project-card-inner">
