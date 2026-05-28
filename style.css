@@ -403,8 +403,13 @@ img {
 
 .project-card[data-layout="youtube"] {
   --project-bg: #000000;
-  --project-text: #ffd600;
+  --project-text: #ffffff;
+  --project-cta: #ffd600;
   --project-shadow: rgba(0, 0, 0, 0.36);
+}
+
+.project-card[data-layout="youtube"] .project-link {
+  color: var(--project-cta);
 }
 
 .youtube-thumb {
@@ -498,7 +503,7 @@ img {
 
 .syntax-outside {
   position: absolute;
-  top: calc((clamp(460px, 48vw, 540px) + clamp(18px, 2.4vw, 28px)) * 2 + 24px);
+  top: calc((clamp(460px, 48vw, 540px) + clamp(18px, 2.4vw, 28px)) * 2 + 46px);
   right: 0;
   z-index: 1;
   width: calc((100% - clamp(18px, 2.4vw, 28px)) / 2);
@@ -1006,6 +1011,11 @@ img {
   transform: rotate(-8deg) translateY(10px) scale(0.96);
 }
 
+.project-card[data-layout="daumenkino"].is-flipped .episode-cover {
+  opacity: 0;
+  transform: translateY(10px) scale(0.96) rotate(var(--cover-rotate));
+}
+
 .project-card[data-layout="daumenkino"]:hover .project-cover,
 .project-card[data-layout="daumenkino"]:focus-visible .project-cover,
 .project-card[data-layout="daumenkino"]:focus-within .project-cover {
@@ -1013,6 +1023,12 @@ img {
     0 10px 0 rgba(75, 7, 24, 0.2),
     0 28px 48px rgba(75, 7, 24, 0.28);
   transform: translateY(-4px) rotate(-7deg);
+}
+
+.project-card[data-layout="daumenkino"]:hover .episode-cover,
+.project-card[data-layout="daumenkino"]:focus-visible .episode-cover,
+.project-card[data-layout="daumenkino"]:focus-within .episode-cover {
+  transform: translateY(-3px) rotate(var(--cover-hover-rotate));
 }
 
 .project-card[data-layout="daumenkino"] .project-face--back {
@@ -1027,6 +1043,70 @@ img {
     inset 0 1px 0 rgba(255, 255, 255, 0.32),
     inset 0 0 0 1px rgba(255, 255, 255, 0.18),
     inset 0 -34px 60px rgba(80, 20, 10, 0.1);
+}
+
+.episode-covers {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.episode-cover {
+  position: absolute;
+  display: block;
+  width: min(var(--cover-width), var(--cover-max));
+  aspect-ratio: 1 / 1;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow:
+    0 6px 0 rgba(75, 7, 24, 0.16),
+    0 18px 32px rgba(75, 7, 24, 0.22);
+  transform: rotate(var(--cover-rotate));
+  transition: opacity 180ms ease, transform 220ms ease;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.episode-cover--156 {
+  --cover-width: 38%;
+  --cover-max: 166px;
+  --cover-rotate: -8deg;
+  --cover-hover-rotate: -9deg;
+  top: 14px;
+  left: 92px;
+  z-index: 4;
+}
+
+.episode-cover--96 {
+  --cover-width: 36%;
+  --cover-max: 158px;
+  --cover-rotate: 2deg;
+  --cover-hover-rotate: 1deg;
+  top: 36px;
+  left: 162px;
+  z-index: 3;
+}
+
+.episode-cover--171 {
+  --cover-width: 34%;
+  --cover-max: 150px;
+  --cover-rotate: 12deg;
+  --cover-hover-rotate: 11deg;
+  top: 58px;
+  left: 232px;
+  z-index: 2;
+}
+
+.episode-cover--148 {
+  --cover-width: 32%;
+  --cover-max: 142px;
+  --cover-rotate: 22deg;
+  --cover-hover-rotate: 21deg;
+  top: 80px;
+  left: 302px;
+  z-index: 1;
 }
 
 .project-cover {
