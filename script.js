@@ -1,4 +1,5 @@
 const heroLine = document.querySelector("#hero-line");
+const timezoneLabel = document.querySelector("[data-timezone-label]");
 const start = document.querySelector(".start");
 const cardField = document.querySelector(".card-field");
 const dock = document.querySelector(".dock");
@@ -12,23 +13,35 @@ let scrollBounce = 0;
 let touchStartY = null;
 
 const heroLines = [
-  "Still collecting the good bits",
-  "Make yourself nosy",
-  "A small public shelf",
-  "Things worth keeping nearby",
-  "Not everything needs a menu",
-  "Welcome to the soft launch",
-  "Half portfolio, half pocket",
-  "A homepage with loose pockets",
-  "Carefully kept, casually placed",
-  "A few doors, no hallway",
-  "Useful things first",
-  "Everything here is a handle",
+  "Touch grass",
+  "Move first thing",
+  "One thing at a time",
+  "Cooking can be meditation",
+  "Read every day",
+  "Hold your own happiness",
+  "Be thankful",
+  "Respect everyone",
+  "Wasted time can count",
+  "Just go for it",
+  "Grow in silence",
+  "Every second counts",
 ];
 const validViews = new Set(["home", "work", "about"]);
 
 function setRandomHeroLine() {
   heroLine.textContent = heroLines[Math.floor(Math.random() * heroLines.length)];
+}
+
+function setTimezoneLabel() {
+  if (!timezoneLabel) {
+    return;
+  }
+
+  const offset = -new Date().getTimezoneOffset();
+  const sign = offset >= 0 ? "+" : "-";
+  const hours = String(Math.floor(Math.abs(offset) / 60));
+  const minutes = String(Math.abs(offset) % 60).padStart(2, "0");
+  timezoneLabel.textContent = `GMT ${sign}${hours}:${minutes}`;
 }
 
 function getViewFromLocation() {
@@ -381,5 +394,6 @@ projectCards.forEach((card) => {
 });
 
 cardField.dataset.activeCard = "work";
+setTimezoneLabel();
 setActiveView(getViewFromLocation());
 setRandomHeroLine();

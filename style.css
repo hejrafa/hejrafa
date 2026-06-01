@@ -447,9 +447,79 @@ img {
 }
 
 .project-card[data-layout="leadership"] {
-  --project-bg: #59330e;
-  --project-text: #f8e8e2;
-  --project-shadow: rgba(62, 30, 5, 0.34);
+  --project-bg: #f0b429;
+  --project-text: #080607;
+  --project-cta: #df3456;
+  --project-shadow: rgba(111, 78, 8, 0.34);
+}
+
+.project-card[data-layout="leadership"] .project-link {
+  color: var(--project-cta);
+}
+
+.leadership-notes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.leadership-note {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 176px;
+  min-width: 176px;
+  min-height: 142px;
+  padding: 20px;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 38%),
+    #df3456;
+  color: #ffffff;
+  font-family: "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700;
+  line-height: 0.9;
+  text-align: center;
+  box-shadow:
+    0 8px 0 rgba(0, 0, 0, 0.22),
+    0 22px 42px rgba(0, 0, 0, 0.34),
+    inset 0 -12px 18px rgba(8, 6, 7, 0.1);
+  transform: rotate(var(--leadership-rotate));
+  transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 160ms ease;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.leadership-note--hiring {
+  --leadership-rotate: -7deg;
+  top: clamp(28px, 4vw, 46px);
+  left: clamp(24px, 4vw, 46px);
+}
+
+.leadership-note--taste {
+  --leadership-rotate: 6deg;
+  top: clamp(54px, 6vw, 78px);
+  right: clamp(28px, 4.2vw, 52px);
+}
+
+.project-card[data-layout="leadership"]:hover .leadership-note--hiring,
+.project-card[data-layout="leadership"]:focus-visible .leadership-note--hiring,
+.project-card[data-layout="leadership"]:focus-within .leadership-note--hiring {
+  transform: translate(-5px, -6px) rotate(-8deg);
+}
+
+.project-card[data-layout="leadership"]:hover .leadership-note--taste,
+.project-card[data-layout="leadership"]:focus-visible .leadership-note--taste,
+.project-card[data-layout="leadership"]:focus-within .leadership-note--taste {
+  transform: translate(6px, -4px) rotate(7deg);
+}
+
+.project-card[data-layout="leadership"].is-flipped .leadership-note {
+  opacity: 0;
+  transform: translateY(10px) scale(0.96) rotate(var(--leadership-rotate));
 }
 
 .project-card[data-layout="system"] {
@@ -1669,6 +1739,14 @@ img {
   transform: rotate(4deg);
 }
 
+.note-card[data-card="work"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+}
+
 .note-card[data-card="notes"] {
   z-index: 2;
   opacity: 0.54;
@@ -1696,6 +1774,55 @@ img {
   color: #8b7b70;
   font-size: 13px;
   font-weight: 850;
+}
+
+.identity-name,
+.identity-role,
+.identity-belief,
+.identity-meta {
+  display: block;
+  width: min(100%, 220px);
+  color: var(--red);
+  text-align: left;
+}
+
+.identity-name {
+  margin: 0 0 8px;
+  font-family: "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 0.78;
+  transform: none;
+}
+
+.identity-role {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 0.92;
+}
+
+.identity-belief {
+  margin-top: 22px;
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 0.88;
+}
+
+.identity-belief span {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.identity-meta {
+  margin-top: 22px;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .note-card h2 {
@@ -1755,10 +1882,10 @@ img {
   z-index: 8;
   display: flex;
   align-items: center;
-  width: 260px;
-  min-height: 42px;
-  padding: 5px;
-  border-radius: 18px;
+  width: 330px;
+  min-height: 48px;
+  padding: 6px;
+  border-radius: 20px;
   background: var(--nav-frame);
   box-shadow:
     0 7px 0 rgba(16, 16, 16, 0.22),
@@ -1771,8 +1898,8 @@ img {
   z-index: 3;
   flex: 1;
   display: block;
-  padding: 9px 12px;
-  border-radius: 13px;
+  padding: 10px 16px;
+  border-radius: 15px;
   background: transparent;
   color: var(--cream);
   font-family: var(--display);
@@ -1796,11 +1923,11 @@ img {
 .dock-thumb {
   position: absolute;
   z-index: 1;
-  top: 5px;
-  left: 5px;
-  width: calc((100% - 10px) / 3);
-  height: calc(100% - 10px);
-  border-radius: 13px;
+  top: 6px;
+  left: 6px;
+  width: calc((100% - 12px) / 3);
+  height: calc(100% - 12px);
+  border-radius: 15px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82), transparent 42%),
     var(--cream);

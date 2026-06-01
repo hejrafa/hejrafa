@@ -1,70 +1,1105 @@
-
-
 <!doctype html>
-<!-- Created in Figma Sites -->
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <noscript>
-      <style>
-        #container {
-          display: none;
-        }
-      </style>
-    </noscript>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Health Notes - hejrafa</title>
+  <link rel="icon" href="/favicon.ico?v=20260526a" sizes="any">
+  <link rel="shortcut icon" href="/favicon.ico?v=20260526a">
+  <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
+  <style>
+    @font-face {
+      font-family: "Redaction";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 400;
+      src: url("https://cdn.jsdelivr.net/fontsource/fonts/redaction@latest/latin-400-normal.woff2") format("woff2");
+    }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
-    <link rel="preload" href="/_runtimes/sites-runtime.1b0e86ab45327ae8035a6935be9efba4c3d5fa3ac4a86e107a8ec048e7956035.js" as="script" crossorigin />
-    <link rel="preload" href="/_components/v2/354fb2691811665de5357824c3908150949a9f0b.js" as="script" crossorigin />
-    <link rel="preload" href="/_json/56a93e7a-33f5-4a52-b53e-05eb587a9a8a/health.json" as="fetch" />
-        <style id="reset-css"> @layer figreset,figoverridable,reset,theme,base,figutils,components,utilities;@layer figoverridable{:root{font-synthesis:none}}@layer figutils{:root{--banner-height:48px;--banner-height-v2:40px;--full-height-with-banner:calc(100dvh - var(--banner-height))}@media (max-width:600px){.banner-v2-container{left:0 !important;right:0 !important;margin:0 auto !important}}.wrapper-with-banner .min-h-screen{min-height:var(--full-height-with-banner)}.wrapper-with-banner .h-screen{height:var(--full-height-with-banner)}}@layer figreset{:root{font-family:var( --default-font-family,ui-sans-serif,system-ui,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji' )}html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;width:100%}body{margin:0;width:100%}body:has([data-page-overflowx='hidden']){overflow-x:hidden}body:has([data-page-overflowx='auto']){overflow-x:auto}}@layer figutils{#container{width:100%}}@layer figreset{*,*:before,*:after{box-sizing:border-box}a{color:inherit;text-decoration:none}button{border:none;background:none;padding:0}h1,h2,h3,h4,h5,h6,p{font-size:inherit;font-weight:inherit}blockquote,dl,dd,h1,h2,h3,h4,h5,h6,hr,figure,p,pre{margin:0}ol,ul,menu{list-style:none;margin:0;padding-inline-start:0}}@layer figutils{:is(.textContents ul,ul.textContents) > li:before{content:'\2022';margin-left:-1.5em;display:inline-block;text-align:center;width:1.5em;-webkit-background-clip:var(--list-marker-background-clip);-webkit-text-fill-color:var(--list-marker-text-fill-color);background-clip:var(--list-marker-background-clip);color:var(--list-marker-color);font-size:var(--list-marker-font-size);line-height:var(--list-marker-line-height);vertical-align:var(--list-marker-vertical-align)}:is(.textContents ol,ol.textContents) > li::marker{color:var(--list-marker-color);font-size:var(--list-marker-font-size);line-height:var(--list-marker-line-height);vertical-align:var(--list-marker-vertical-align)}:is(.textContents,.textContents *).adjustLetterSpacing:after{content:'';margin-left:calc(var(--letter-spacing) * -1)}}@layer figutils{#container .embed{border:none}}@layer figutils{#container .marquee-container{overflow-x:hidden;display:flex;flex-direction:row;position:relative;width:var(--width);transform:var(--transform);&:hover div{animation-play-state:var(--pause-on-hover)}&:active div{animation-play-state:var(--pause-on-click)}&:focus-within > *{animation-play-state:paused !important}}#container .marquee{flex:0 0 auto;min-width:var(--min-width);display:flex;flex-direction:row;align-items:center;animation:scroll var(--duration) linear var(--delay) var(--iteration-count);animation-delay:var(--delay);animation-direction:var(--direction);animation-timing-function:var(--timing-function)}#container .marquee.reduced-motion{@media (prefers-reduced-motion:reduce){animation:none}}@keyframes scroll{0%{transform:translateX(0%)}100%{transform:translateX(-100%)}}#container .marquee-initial-child-container{flex:0 0 auto;display:flex;min-width:auto;flex-direction:row;align-items:center}#container .marquee-child{transform:var(--transform)}}@layer figutils{.code-behavior-wrapper > *{width:100%;height:100%}}@layer figreset{:root{--100dvw:100vw;--100dvh:100vh}@supports (width:100dvw){:root{--100dvw:100dvw;--100dvh:100dvh}}}@layer figutils{.bypass-link{position:fixed;top:16px;left:0;right:0;display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none}.bypass-link:focus-within{opacity:1;z-index:10000}.bypass-link > a{background-color:#000;color:#fff;border:1px solid #fff;padding:12px 16px;font-size:16px;border-radius:12px;pointer-events:auto}}@layer figreset{:root{text-align:left;button{text-align:left}}}</style><style id="font-faces-5j6n1z"> @font-face{font-family:"Literata:SemiBold Italic";font-style:italic;src:url("/_user_fonts/v1/b01ddfe83ef0aeaf4be47d1b61ea24a17df81047");font-display:block}@font-face{font-family:"Literata";font-style:Regular;src:url("/_user_fonts/v1/90a9af469ec41482667bd0b7e0e85e1a859d3660");font-display:block;font-weight:400}@font-face{font-family:"Literata:Italic";font-style:italic;src:url("/_user_fonts/v1/032dea3265a6a01130397d90c8591c9fd33ee043");font-display:block}@font-face{font-family:"Literata:Bold Italic";font-style:italic;src:url("/_user_fonts/v1/dc800ab52be25d18aa7ecf6cc21ba894ca20a7a0");font-display:block}@font-face{font-family:"Literata:Black Italic";font-style:italic;src:url("/_user_fonts/v1/e9d035d119636c02d5069763116231a63e2e905a");font-display:block}@font-face{font-family:"Literata:Regular";font-style:normal;src:url("/_user_fonts/v1/90a9af469ec41482667bd0b7e0e85e1a859d3660");font-display:block}</style><style id="breakpoint-css">@media (width < 1024px){[data-breakpoint-id="node-98_4032"]{display:none !important}}@media (width >= 1024px) or (width < 700px){[data-breakpoint-id="node-98_4066"]{display:none !important}}@media (width >= 700px){[data-breakpoint-id="node-98_4100"]{display:none !important}}</style><style id="body-background-color">@media (max-width: 699px) { body:has([data-breakpoint-id="node-98_4100"]) { background-color: #fff6cf } }
-@media (max-width: 1023px), (min-width: 700px) { body:has([data-breakpoint-id="node-98_4066"]) { background-color: #fff6cf } }
-@media (min-width: 1024px) { body:has([data-breakpoint-id="node-98_4032"]) { background-color: #fff6cf } }</style><style id="ssr-css">#container .css-ll733z {position: relative;}#container .css-50jkpj {min-width: var(--content-min-width); width: 100%;}#container .css-3tcx9o {--content-min-width: 100%; --content-min-height: var(--100dvh);}#container .css-oljopy {position: relative; display: flex; flex-direction: column; align-items: center;}#container .css-dqc75a {--content-min-width: 100%; --content-min-height: var(--100dvh); align-content: stretch; overflow: clip; background-color: #fff6cf;}#container .css-j9f0op {width: 100%; height: 100%;}#container .css-8zr56v {display: block;}#container .css-5knerd {position: relative; flex-shrink: 0;}#container .css-v27th6 {width: 100%;}#container .css-1kkr58 {display: flex; flex-direction: column; align-items: center; border-radius: inherit;}#container .css-7rhb8 {display: flex; flex-direction: column; align-items: center; gap: 40px; position: relative; padding: 80px 24px 120px;}#container .css-paq0kv {align-content: stretch;}#container .css-y58kkh {max-width: 944px; width: 100%;}#container .css-f1jjdz {position: relative; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-start;}#container .css-l2q6j7 {width: 120px; height: 96px;}#container .css-wc1msa {position: relative; flex-shrink: 0; display: block;}#container .css-134pm3 {cursor: pointer;}#container .css-tzn6qh {display: block; position: absolute;}#container .css-ez8men {max-width: none; width: 100%; height: 100%;}#container .css-trglf0 {position: absolute;}#container .css-wixxpz {inset: 0;}#container .css-e2iotp {padding-bottom: 136px; padding-left: 24px; padding-right: 24px; display: flex; flex-direction: column; align-items: center; gap: 80px; position: relative;}#container .css-kv9s57 {position: relative; flex-shrink: 0; display: flex; align-items: flex-start; gap: 8px;}#container .css-z9kw5f {line-height: 0;}#container .css-gs60ek {overflow: visible;}#container .css-us4svo {position: relative; flex-shrink: 0; display: inline-grid; place-items: start;}#container .css-4cmtt6 {grid-template-columns: max-content; grid-template-rows: max-content;}#container .css-f027mj {width: 2.143px; height: 2.143px;}#container .css-h842v8 {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 4.29px;}#container .css-bademn {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 4.29px; display: block;}#container .css-bo4u3g {background-color: #000;}#container .css-h97pe6 {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 6.43px;}#container .css-6esvsr {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 6.43px; display: block;}#container .css-dtproa {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 8.57px;}#container .css-8y15o9 {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 8.57px; display: block;}#container .css-9z6u59 {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 10.71px;}#container .css-2q6adm {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 10.71px; display: block;}#container .css-pqbsbe {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 10.71px;}#container .css-c0jgq5 {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 10.71px; display: block;}#container .css-et35pi {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 8.57px;}#container .css-sfflub {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 8.57px; display: block;}#container .css-cu42x5 {grid-column: 1; grid-row: 1; position: relative; margin-left: 12.86px; margin-top: 6.43px;}#container .css-sn1efe {grid-column: 1; grid-row: 1; position: relative; margin-left: 12.86px; margin-top: 6.43px; display: block;}#container .css-ct0ge7 {grid-column: 1; grid-row: 1; position: relative; margin-left: 12.86px; margin-top: 4.29px;}#container .css-oowd4c {grid-column: 1; grid-row: 1; position: relative; margin-left: 12.86px; margin-top: 4.29px; display: block;}#container .css-crwuch {grid-column: 1; grid-row: 1; position: relative; margin-left: 12.86px; margin-top: 2.14px;}#container .css-dtvqtq {grid-column: 1; grid-row: 1; position: relative; margin-left: 12.86px; margin-top: 2.14px; display: block;}#container .css-dmp8wk {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 0px;}#container .css-362315 {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 0px; display: block;}#container .css-pdrn8h {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 0px;}#container .css-vnzc3w {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 0px; display: block;}#container .css-enky4r {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 2.14px;}#container .css-oy2g20 {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 2.14px; display: block;}#container .css-hhcuom {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 0px;}#container .css-t6xv5v {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 0px; display: block;}#container .css-5s4sy0 {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 0px;}#container .css-o0ofob {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 0px; display: block;}#container .css-h70gti {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 2.14px;}#container .css-m5e0x9 {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 2.14px; display: block;}#container .css-dqex2r {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 2.14px;}#container .css-fwguhs {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 2.14px; display: block;}#container .css-aufy1y {background-color: #f00;}#container .css-drij4h {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 4.29px;}#container .css-qrhgse {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 4.29px; display: block;}#container .css-dsm5nf {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 6.43px;}#container .css-qkgarc {grid-column: 1; grid-row: 1; position: relative; margin-left: 2.14px; margin-top: 6.43px; display: block;}#container .css-hp017a {background-color: #a50000;}#container .css-buqovx {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 6.43px;}#container .css-50lw16 {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 6.43px; display: block;}#container .css-bvuaws {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 8.57px;}#container .css-mn1149 {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 8.57px; display: block;}#container .css-eqvsqa {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 8.57px;}#container .css-l8jlr3 {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 8.57px; display: block;}#container .css-qrsamr {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 8.57px;}#container .css-nnuabk {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 8.57px; display: block;}#container .css-qqoolw {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 6.43px;}#container .css-tqumkh {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 6.43px; display: block;}#container .css-erzjon {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 6.43px;}#container .css-at0gr8 {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 6.43px; display: block;}#container .css-epsb3z {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 2.14px;}#container .css-hr6fys {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 2.14px; display: block;}#container .css-wws05s {background-color: #ff9090;}#container .css-eqvx5p {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 4.29px;}#container .css-6w5to6 {grid-column: 1; grid-row: 1; position: relative; margin-left: 10.71px; margin-top: 4.29px; display: block;}#container .css-qpl22y {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 4.29px;}#container .css-c1oc53 {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 4.29px; display: block;}#container .css-eook6h {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 4.29px;}#container .css-e31tre {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 4.29px; display: block;}#container .css-btn2cz {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 4.29px;}#container .css-cokee8 {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 4.29px; display: block;}#container .css-bsjgb9 {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 2.14px;}#container .css-njl0ou {grid-column: 1; grid-row: 1; position: relative; margin-left: 4.29px; margin-top: 2.14px; display: block;}#container .css-i9hclv {background-color: #fe9292;}#container .css-eps6pf {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 6.43px;}#container .css-3m4go0 {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 6.43px; display: block;}#container .css-qohg18 {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 2.14px;}#container .css-16npuh {grid-column: 1; grid-row: 1; position: relative; margin-left: 8.57px; margin-top: 2.14px; display: block;}#container .css-rod4kn {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 10.71px;}#container .css-uaa40k {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 10.71px; display: block;}#container .css-rpgqmd {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 12.86px;}#container .css-tvtbny {grid-column: 1; grid-row: 1; position: relative; margin-left: 6.43px; margin-top: 12.86px; display: block;}#container .css-zfhtxa {position: relative; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 24px;}#container .css-nf5ac4 {display: block; position: relative; flex-shrink: 0;}#container .css-c3x8cf {font-family: "Literata:Bold Italic",sans-serif; word-break: break-word; font-style: italic; font-size: 48px; letter-spacing: 0px; line-height: 56px;}#container .css-o4851m {color: #1b1819; -webkit-text-fill-color: #1b1819; --letter-spacing: 0px;}#container .css-9uyk0n {position: relative; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start;}#container .css-22itc5 {position: relative; flex-shrink: 0; display: flex; align-items: flex-start;}#container .css-l1mcow {display: block; position: relative; flex: 1 0 0;}#container .css-5dba7r {min-width: 1px; min-height: 1px;}#container .css-z1cs5a {font-family: "Literata:Italic",sans-serif; word-break: break-word; font-style: italic; font-size: 24px; letter-spacing: 0px; line-height: 32px;}#container .css-goy04p {width: 327px; height: 64px;}#container .css-nc07bn {width: 1635px; height: 96px;}#container .css-sesiit {width: 327px; height: 100%;}#container .css-9agccl {font-family: "Literata:Bold Italic",sans-serif; word-break: break-word; font-style: italic; font-size: 24px; letter-spacing: 0px; line-height: 32px;}#container .css-ssz2vg {color: #11b10b; -webkit-text-fill-color: #11b10b; --letter-spacing: 0px;}#container .css-huvhs4 {color: #f83439; -webkit-text-fill-color: #f83439; --letter-spacing: 0px;}#container .css-bife08 {display: flex; flex-direction: column; align-items: center; gap: 40px; position: relative; padding: 80px 40px 120px;}#container .css-2cbti9 {padding-bottom: 136px; padding-left: 40px; padding-right: 40px; display: flex; flex-direction: column; align-items: center; gap: 80px; position: relative;}#container .css-u0p2gd {height: 192px; width: 100%;}#container .css-7y6cel {position: relative; flex: 1 0 0;}#container .css-w9y3m0 {min-width: 1px; min-height: 1px; height: 100%;}#container .css-4s85sp {position: relative; flex: 1 0 0; display: flex; align-items: flex-start;}#container .css-l52jh0 {width: 620px; height: 32px;}#container .css-unjovo {width: 3100px; height: 32px;}#container .css-4ap37l {width: 620px; height: 100%;}#container .css-gp8l8h {padding-bottom: 224px; padding-left: 40px; padding-right: 40px; display: flex; flex-direction: column; align-items: center; gap: 80px; position: relative;}#container .css-4b0cup {max-width: inherit; width: 100%;}#container .css-sa1u2p {padding-left: 120px; padding-right: 120px; display: flex; align-items: flex-start; position: relative; border-radius: inherit;}#container .css-eyrb23 {width: 5.714px; height: 5.714px;}#container .css-ze5wbs {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 11.43px;}#container .css-si4c8b {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 11.43px; display: block;}#container .css-zhgloq {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 17.14px;}#container .css-6qgvav {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 17.14px; display: block;}#container .css-vlpqeg {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 22.86px;}#container .css-rqfsa3 {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 22.86px; display: block;}#container .css-qqxvbi {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 28.57px;}#container .css-attvuj {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 28.57px; display: block;}#container .css-v3udpt {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 28.57px;}#container .css-ua0e4 {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 28.57px; display: block;}#container .css-41g4gf {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 22.86px;}#container .css-bml05g {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 22.86px; display: block;}#container .css-q0xro9 {grid-column: 1; grid-row: 1; position: relative; margin-left: 34.28px; margin-top: 17.14px;}#container .css-84tg4 {grid-column: 1; grid-row: 1; position: relative; margin-left: 34.28px; margin-top: 17.14px; display: block;}#container .css-q48h17 {grid-column: 1; grid-row: 1; position: relative; margin-left: 34.28px; margin-top: 11.43px;}#container .css-z0ge32 {grid-column: 1; grid-row: 1; position: relative; margin-left: 34.28px; margin-top: 11.43px; display: block;}#container .css-s6fu3 {grid-column: 1; grid-row: 1; position: relative; margin-left: 34.28px; margin-top: 5.71px;}#container .css-l2vvia {grid-column: 1; grid-row: 1; position: relative; margin-left: 34.28px; margin-top: 5.71px; display: block;}#container .css-eg6o51 {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 0px;}#container .css-nko56w {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 0px; display: block;}#container .css-2vdvxl {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 0px;}#container .css-ccoziu {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 0px; display: block;}#container .css-9ez44z {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 5.71px;}#container .css-x9cyiu {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 5.71px; display: block;}#container .css-ufnhns {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 0px;}#container .css-ryoqj9 {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 0px; display: block;}#container .css-u4gi58 {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 0px;}#container .css-tdprjj {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 0px; display: block;}#container .css-h8nyz6 {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 5.71px;}#container .css-9u096n {grid-column: 1; grid-row: 1; position: relative; margin-left: 0px; margin-top: 5.71px; display: block;}#container .css-ez4mfh {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 5.71px;}#container .css-i2915s {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 5.71px; display: block;}#container .css-v448dj {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 11.43px;}#container .css-u4cgr8 {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 11.43px; display: block;}#container .css-v7exqh {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 17.14px;}#container .css-5o6doq {grid-column: 1; grid-row: 1; position: relative; margin-left: 5.71px; margin-top: 17.14px; display: block;}#container .css-q9cdal {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 17.14px;}#container .css-2chx3a {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 17.14px; display: block;}#container .css-qnn5yk {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 22.86px;}#container .css-oerbon {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 22.86px; display: block;}#container .css-94vohe {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 22.86px;}#container .css-1n14p1 {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 22.86px; display: block;}#container .css-v7532r {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 22.86px;}#container .css-yeb752 {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 22.86px; display: block;}#container .css-vlfvqq {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 17.14px;}#container .css-cc1sjp {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 17.14px; display: block;}#container .css-3n5bsg {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 17.14px;}#container .css-afoefx {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 17.14px; display: block;}#container .css-kg4178 {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 5.71px;}#container .css-c8shzt {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 5.71px; display: block;}#container .css-3jumfi {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 11.43px;}#container .css-oswt39 {grid-column: 1; grid-row: 1; position: relative; margin-left: 28.57px; margin-top: 11.43px; display: block;}#container .css-voql3o {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 11.43px;}#container .css-ngh1w9 {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 11.43px; display: block;}#container .css-9mh6ib {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 11.43px;}#container .css-etcxmu {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 11.43px; display: block;}#container .css-q61nxn {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 11.43px;}#container .css-xg0xco {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 11.43px; display: block;}#container .css-qlb5zl {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 5.71px;}#container .css-vpbcmc {grid-column: 1; grid-row: 1; position: relative; margin-left: 11.43px; margin-top: 5.71px; display: block;}#container .css-9j6h5d {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 17.14px;}#container .css-kf89wc {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 17.14px; display: block;}#container .css-xenyxa {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 5.71px;}#container .css-dsu3wb {grid-column: 1; grid-row: 1; position: relative; margin-left: 22.86px; margin-top: 5.71px; display: block;}#container .css-91kz4g {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 28.57px;}#container .css-xlk2u5 {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 28.57px; display: block;}#container .css-8mqlax {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 34.28px;}#container .css-3xgzdg {grid-column: 1; grid-row: 1; position: relative; margin-left: 17.14px; margin-top: 34.28px; display: block;}#container .css-jo8ywo {width: 100%; height: 100%; max-width: inherit;}#container .css-qwo48t {padding-left: 120px; padding-right: 120px; display: flex; flex-direction: column; align-items: center; gap: 24px; position: relative;}#container .css-acyp5d {font-family: "Literata:Italic",sans-serif; word-break: break-word; font-style: italic; font-size: 24px; letter-spacing: 0px; line-height: 0;}#container .css-8jchzs {display: block; margin-bottom: 0px;}#container .css-3gmely {line-height: 32px;}#container .css-a8cioh {position: relative; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 40px;}#container .css-7neklh {position: relative; flex-shrink: 0; display: flex; align-items: flex-start; gap: 24px;}#container .css-n8r97t {position: relative; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px;}#container .css-uwf2km {position: relative; flex: 1 0 0; display: block;}#container .css-fr5sqr {letter-spacing: -0.16px; line-height: 32px;}#container .css-nc3idd {font-family: "Literata:Italic",sans-serif; word-break: break-word; font-style: italic; font-size: 24px; letter-spacing: -0.24px; line-height: 32px;}#container .css-y6zpe5 {color: #1b1819; -webkit-text-fill-color: #1b1819; --letter-spacing: -0.24px;}</style><script>window.__serverRenderedCSSClassNames = {"css-ll733z":"{\"position\":\"relative\"}","css-50jkpj":"{\"minWidth\":\"var(--content-min-width)\",\"width\":\"100%\"}","css-3tcx9o":"{\"--content-min-width\":\"100%\",\"--content-min-height\":\"var(--100dvh)\"}","css-oljopy":"{\"position\":\"relative\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\"}","css-dqc75a":"{\"--content-min-width\":\"100%\",\"--content-min-height\":\"var(--100dvh)\",\"alignContent\":\"stretch\",\"overflow\":\"clip\",\"backgroundColor\":\"#fff6cf\"}","css-j9f0op":"{\"width\":\"100%\",\"height\":\"100%\"}","css-8zr56v":"{\"display\":\"block\"}","css-5knerd":"{\"position\":\"relative\",\"flexShrink\":0}","css-v27th6":"{\"width\":\"100%\"}","css-1kkr58":"{\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"borderRadius\":\"inherit\"}","css-7rhb8":"{\"paddingTop\":80,\"paddingBottom\":120,\"paddingLeft\":24,\"paddingRight\":24,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"gap\":40,\"position\":\"relative\"}","css-paq0kv":"{\"alignContent\":\"stretch\"}","css-y58kkh":"{\"maxWidth\":944,\"width\":\"100%\"}","css-f1jjdz":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"flex\",\"justifyContent\":\"center\",\"alignItems\":\"flex-start\"}","css-l2q6j7":"{\"width\":120,\"height\":96}","css-wc1msa":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"block\"}","css-134pm3":"{\"cursor\":\"pointer\"}","css-tzn6qh":"{\"display\":\"block\",\"position\":\"absolute\"}","css-ez8men":"{\"maxWidth\":\"none\",\"width\":\"100%\",\"height\":\"100%\"}","css-trglf0":"{\"position\":\"absolute\"}","css-wixxpz":"{\"top\":\"0\",\"left\":\"0\",\"right\":\"0\",\"bottom\":\"0\"}","css-e2iotp":"{\"paddingBottom\":136,\"paddingLeft\":24,\"paddingRight\":24,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"gap\":80,\"position\":\"relative\"}","css-kv9s57":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"flex\",\"alignItems\":\"flex-start\",\"gap\":8}","css-z9kw5f":"{\"lineHeight\":\"0\"}","css-gs60ek":"{\"overflow\":\"visible\"}","css-us4svo":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"inline-grid\",\"placeItems\":\"start\"}","css-4cmtt6":"{\"gridTemplateColumns\":\"max-content\",\"gridTemplateRows\":\"max-content\"}","css-f027mj":"{\"width\":2.143,\"height\":2.143}","css-h842v8":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":4.29}","css-bademn":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":4.29,\"display\":\"block\"}","css-bo4u3g":"{\"backgroundColor\":\"#000\"}","css-h97pe6":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":6.43}","css-6esvsr":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":6.43,\"display\":\"block\"}","css-dtproa":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":8.57}","css-8y15o9":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":8.57,\"display\":\"block\"}","css-9z6u59":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":10.71}","css-2q6adm":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":10.71,\"display\":\"block\"}","css-pqbsbe":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":10.71}","css-c0jgq5":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":10.71,\"display\":\"block\"}","css-et35pi":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":8.57}","css-sfflub":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":8.57,\"display\":\"block\"}","css-cu42x5":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":12.86,\"marginTop\":6.43}","css-sn1efe":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":12.86,\"marginTop\":6.43,\"display\":\"block\"}","css-ct0ge7":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":12.86,\"marginTop\":4.29}","css-oowd4c":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":12.86,\"marginTop\":4.29,\"display\":\"block\"}","css-crwuch":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":12.86,\"marginTop\":2.14}","css-dtvqtq":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":12.86,\"marginTop\":2.14,\"display\":\"block\"}","css-dmp8wk":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":0}","css-362315":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":0,\"display\":\"block\"}","css-pdrn8h":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":0}","css-vnzc3w":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":0,\"display\":\"block\"}","css-enky4r":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":2.14}","css-oy2g20":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":2.14,\"display\":\"block\"}","css-hhcuom":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":0}","css-t6xv5v":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":0,\"display\":\"block\"}","css-5s4sy0":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":0}","css-o0ofob":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":0,\"display\":\"block\"}","css-h70gti":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":2.14}","css-m5e0x9":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":2.14,\"display\":\"block\"}","css-dqex2r":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":2.14}","css-fwguhs":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":2.14,\"display\":\"block\"}","css-aufy1y":"{\"backgroundColor\":\"#f00\"}","css-drij4h":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":4.29}","css-qrhgse":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":4.29,\"display\":\"block\"}","css-dsm5nf":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":6.43}","css-qkgarc":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":2.14,\"marginTop\":6.43,\"display\":\"block\"}","css-hp017a":"{\"backgroundColor\":\"#a50000\"}","css-buqovx":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":6.43}","css-50lw16":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":6.43,\"display\":\"block\"}","css-bvuaws":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":8.57}","css-mn1149":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":8.57,\"display\":\"block\"}","css-eqvsqa":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":8.57}","css-l8jlr3":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":8.57,\"display\":\"block\"}","css-qrsamr":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":8.57}","css-nnuabk":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":8.57,\"display\":\"block\"}","css-qqoolw":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":6.43}","css-tqumkh":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":6.43,\"display\":\"block\"}","css-erzjon":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":6.43}","css-at0gr8":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":6.43,\"display\":\"block\"}","css-epsb3z":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":2.14}","css-hr6fys":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":2.14,\"display\":\"block\"}","css-wws05s":"{\"backgroundColor\":\"#ff9090\"}","css-eqvx5p":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":4.29}","css-6w5to6":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":10.71,\"marginTop\":4.29,\"display\":\"block\"}","css-qpl22y":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":4.29}","css-c1oc53":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":4.29,\"display\":\"block\"}","css-eook6h":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":4.29}","css-e31tre":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":4.29,\"display\":\"block\"}","css-btn2cz":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":4.29}","css-cokee8":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":4.29,\"display\":\"block\"}","css-bsjgb9":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":2.14}","css-njl0ou":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":4.29,\"marginTop\":2.14,\"display\":\"block\"}","css-i9hclv":"{\"backgroundColor\":\"#fe9292\"}","css-eps6pf":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":6.43}","css-3m4go0":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":6.43,\"display\":\"block\"}","css-qohg18":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":2.14}","css-16npuh":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":8.57,\"marginTop\":2.14,\"display\":\"block\"}","css-rod4kn":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":10.71}","css-uaa40k":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":10.71,\"display\":\"block\"}","css-rpgqmd":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":12.86}","css-tvtbny":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":6.43,\"marginTop\":12.86,\"display\":\"block\"}","css-zfhtxa":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"gap\":24}","css-nf5ac4":"{\"display\":\"block\",\"position\":\"relative\",\"flexShrink\":0}","css-c3x8cf":"{\"fontFamily\":\"\\\"Literata:Bold Italic\\\",sans-serif\",\"wordBreak\":\"break-word\",\"fontStyle\":\"italic\",\"fontSize\":\"48px\",\"letterSpacing\":\"0px\",\"lineHeight\":\"56px\"}","css-o4851m":"{\"color\":\"#1b1819\",\"WebkitTextFillColor\":\"#1b1819\",\"--letter-spacing\":\"0px\"}","css-9uyk0n":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"flex-start\"}","css-22itc5":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"flex\",\"alignItems\":\"flex-start\"}","css-l1mcow":"{\"display\":\"block\",\"position\":\"relative\",\"flex\":\"1 0 0\"}","css-5dba7r":"{\"minWidth\":1,\"minHeight\":1}","css-z1cs5a":"{\"fontFamily\":\"\\\"Literata:Italic\\\",sans-serif\",\"wordBreak\":\"break-word\",\"fontStyle\":\"italic\",\"fontSize\":\"24px\",\"letterSpacing\":\"0px\",\"lineHeight\":\"32px\"}","css-goy04p":"{\"width\":327,\"height\":64}","css-nc07bn":"{\"width\":1635,\"height\":96}","css-sesiit":"{\"width\":327,\"height\":\"100%\"}","css-9agccl":"{\"fontFamily\":\"\\\"Literata:Bold Italic\\\",sans-serif\",\"wordBreak\":\"break-word\",\"fontStyle\":\"italic\",\"fontSize\":\"24px\",\"letterSpacing\":\"0px\",\"lineHeight\":\"32px\"}","css-ssz2vg":"{\"color\":\"#11b10b\",\"WebkitTextFillColor\":\"#11b10b\",\"--letter-spacing\":\"0px\"}","css-huvhs4":"{\"color\":\"#f83439\",\"WebkitTextFillColor\":\"#f83439\",\"--letter-spacing\":\"0px\"}","css-bife08":"{\"paddingTop\":80,\"paddingBottom\":120,\"paddingLeft\":40,\"paddingRight\":40,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"gap\":40,\"position\":\"relative\"}","css-2cbti9":"{\"paddingBottom\":136,\"paddingLeft\":40,\"paddingRight\":40,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"gap\":80,\"position\":\"relative\"}","css-u0p2gd":"{\"height\":192,\"width\":\"100%\"}","css-7y6cel":"{\"position\":\"relative\",\"flex\":\"1 0 0\"}","css-w9y3m0":"{\"minWidth\":1,\"minHeight\":1,\"height\":\"100%\"}","css-4s85sp":"{\"position\":\"relative\",\"flex\":\"1 0 0\",\"display\":\"flex\",\"alignItems\":\"flex-start\"}","css-l52jh0":"{\"width\":620,\"height\":32}","css-unjovo":"{\"width\":3100,\"height\":32}","css-4ap37l":"{\"width\":620,\"height\":\"100%\"}","css-gp8l8h":"{\"paddingBottom\":224,\"paddingLeft\":40,\"paddingRight\":40,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"gap\":80,\"position\":\"relative\"}","css-4b0cup":"{\"maxWidth\":\"inherit\",\"width\":\"100%\"}","css-sa1u2p":"{\"paddingLeft\":120,\"paddingRight\":120,\"display\":\"flex\",\"alignItems\":\"flex-start\",\"position\":\"relative\",\"borderRadius\":\"inherit\"}","css-eyrb23":"{\"width\":5.714,\"height\":5.714}","css-ze5wbs":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":11.43}","css-si4c8b":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":11.43,\"display\":\"block\"}","css-zhgloq":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":17.14}","css-6qgvav":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":17.14,\"display\":\"block\"}","css-vlpqeg":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":22.86}","css-rqfsa3":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":22.86,\"display\":\"block\"}","css-qqxvbi":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":28.57}","css-attvuj":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":28.57,\"display\":\"block\"}","css-v3udpt":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":28.57}","css-ua0e4":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":28.57,\"display\":\"block\"}","css-41g4gf":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":22.86}","css-bml05g":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":22.86,\"display\":\"block\"}","css-q0xro9":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":34.28,\"marginTop\":17.14}","css-84tg4":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":34.28,\"marginTop\":17.14,\"display\":\"block\"}","css-q48h17":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":34.28,\"marginTop\":11.43}","css-z0ge32":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":34.28,\"marginTop\":11.43,\"display\":\"block\"}","css-s6fu3":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":34.28,\"marginTop\":5.71}","css-l2vvia":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":34.28,\"marginTop\":5.71,\"display\":\"block\"}","css-eg6o51":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":0}","css-nko56w":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":0,\"display\":\"block\"}","css-2vdvxl":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":0}","css-ccoziu":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":0,\"display\":\"block\"}","css-9ez44z":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":5.71}","css-x9cyiu":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":5.71,\"display\":\"block\"}","css-ufnhns":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":0}","css-ryoqj9":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":0,\"display\":\"block\"}","css-u4gi58":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":0}","css-tdprjj":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":0,\"display\":\"block\"}","css-h8nyz6":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":5.71}","css-9u096n":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":0,\"marginTop\":5.71,\"display\":\"block\"}","css-ez4mfh":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":5.71}","css-i2915s":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":5.71,\"display\":\"block\"}","css-v448dj":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":11.43}","css-u4cgr8":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":11.43,\"display\":\"block\"}","css-v7exqh":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":17.14}","css-5o6doq":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":5.71,\"marginTop\":17.14,\"display\":\"block\"}","css-q9cdal":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":17.14}","css-2chx3a":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":17.14,\"display\":\"block\"}","css-qnn5yk":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":22.86}","css-oerbon":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":22.86,\"display\":\"block\"}","css-94vohe":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":22.86}","css-1n14p1":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":22.86,\"display\":\"block\"}","css-v7532r":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":22.86}","css-yeb752":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":22.86,\"display\":\"block\"}","css-vlfvqq":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":17.14}","css-cc1sjp":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":17.14,\"display\":\"block\"}","css-3n5bsg":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":17.14}","css-afoefx":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":17.14,\"display\":\"block\"}","css-kg4178":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":5.71}","css-c8shzt":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":5.71,\"display\":\"block\"}","css-3jumfi":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":11.43}","css-oswt39":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":28.57,\"marginTop\":11.43,\"display\":\"block\"}","css-voql3o":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":11.43}","css-ngh1w9":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":11.43,\"display\":\"block\"}","css-9mh6ib":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":11.43}","css-etcxmu":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":11.43,\"display\":\"block\"}","css-q61nxn":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":11.43}","css-xg0xco":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":11.43,\"display\":\"block\"}","css-qlb5zl":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":5.71}","css-vpbcmc":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":11.43,\"marginTop\":5.71,\"display\":\"block\"}","css-9j6h5d":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":17.14}","css-kf89wc":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":17.14,\"display\":\"block\"}","css-xenyxa":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":5.71}","css-dsu3wb":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":22.86,\"marginTop\":5.71,\"display\":\"block\"}","css-91kz4g":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":28.57}","css-xlk2u5":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":28.57,\"display\":\"block\"}","css-8mqlax":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":34.28}","css-3xgzdg":"{\"gridColumn\":1,\"gridRow\":1,\"position\":\"relative\",\"marginLeft\":17.14,\"marginTop\":34.28,\"display\":\"block\"}","css-jo8ywo":"{\"width\":\"100%\",\"height\":\"100%\",\"maxWidth\":\"inherit\"}","css-qwo48t":"{\"paddingLeft\":120,\"paddingRight\":120,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"gap\":24,\"position\":\"relative\"}","css-acyp5d":"{\"fontFamily\":\"\\\"Literata:Italic\\\",sans-serif\",\"wordBreak\":\"break-word\",\"fontStyle\":\"italic\",\"fontSize\":\"24px\",\"letterSpacing\":\"0px\",\"lineHeight\":0}","css-8jchzs":"{\"display\":\"block\",\"marginBottom\":0}","css-3gmely":"{\"lineHeight\":\"32px\"}","css-a8cioh":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"flex-start\",\"gap\":40}","css-7neklh":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"flex\",\"alignItems\":\"flex-start\",\"gap\":24}","css-n8r97t":"{\"position\":\"relative\",\"flexShrink\":0,\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"flex-start\",\"gap\":8}","css-uwf2km":"{\"position\":\"relative\",\"flex\":\"1 0 0\",\"display\":\"block\"}","css-fr5sqr":"{\"letterSpacing\":\"-0.16px\",\"lineHeight\":\"32px\"}","css-nc3idd":"{\"fontFamily\":\"\\\"Literata:Italic\\\",sans-serif\",\"wordBreak\":\"break-word\",\"fontStyle\":\"italic\",\"fontSize\":\"24px\",\"letterSpacing\":\"-0.24px\",\"lineHeight\":\"32px\"}","css-y6zpe5":"{\"color\":\"#1b1819\",\"WebkitTextFillColor\":\"#1b1819\",\"--letter-spacing\":\"-0.24px\"}"}</script><meta id="meta-zemf26" name="description" content="for anyone who misses the time when websites were weird, honest, and built just for the joy of it. made by rafael polutta"><meta id="meta-8dg5f0" name="title" content="hejrafa"><meta id="meta-yw3oin" name="robots" content="noindex"><meta id="meta-1ab1uk" name="twitter:card" content="summary_large_image"><meta id="meta-qqzw0e" name="twitter:url" content="https://www.hejrafa.com/health"><meta id="meta-3sfaw5" name="twitter:title" content="hejrafa"><meta id="meta-xyyym3" name="twitter:description" content="for anyone who misses the time when websites were weird, honest, and built just for the joy of it. made by rafael polutta"><meta id="meta-7qdoja" property="og:title" content="hejrafa"><meta id="meta-r3pnds" property="og:description" content="for anyone who misses the time when websites were weird, honest, and built just for the joy of it. made by rafael polutta"><meta id="meta-zfz6ci" property="og:type" content="website"><meta id="meta-dkshql" property="og:url" content="https://www.hejrafa.com/health"><meta id="meta-5hjsi3" property="og:site_name" content="hejrafa"><link id="link-add7ql" rel="icon" href="/_assets/v11/6be1c4ead049148005feae6de1e4286728761a7a.png"><title id="title-tuak6h">hejrafa</title>
-    <link rel="stylesheet" href="/_components/v2/354fb2691811665de5357824c3908150949a9f0b.css">
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="905e7698-0384-44fe-bba4-7ffeb8587d44"></script>
-      <style id="local-figma-fallback">#container [style*="opacity:0"]{opacity:1!important;transform:none!important;animation:localRise .52s cubic-bezier(.22,1,.36,1) both}#container [role="link"]{cursor:pointer}.local-card-link,.local-logo-link{transition:transform .18s ease,filter .18s ease,opacity .18s ease;will-change:transform,filter}.local-card-link:hover{transform:translateY(-3px) scale(1.01)!important;filter:brightness(1.045) saturate(1.04)}.local-card-link:active{transform:translateY(-1px) scale(.995)!important;filter:brightness(.98)}.local-logo-link:hover{transform:scale(1.06)!important;filter:brightness(1.12);opacity:.92}.local-logo-link:active{transform:scale(.98)!important;opacity:.85}@keyframes localRise{from{translate:0 24px;filter:blur(2px)}to{translate:0 0;filter:none}}@media (prefers-reduced-motion:reduce){#container [style*="opacity:0"]{animation:none!important;translate:0 0!important;filter:none!important}.local-card-link,.local-logo-link{transition:none!important}}#container .local-code-value{display:block;margin:0;width:100%;height:100%;font-style:italic;letter-spacing:0;white-space:nowrap;word-break:normal}#container .local-code-amount{font-family:"Literata:Bold Italic",sans-serif;font-size:24px;line-height:32px;font-weight:700;color:#050103;-webkit-text-fill-color:#050103;text-align:right}#container .local-code-total{font-family:"Literata:Black Italic",sans-serif;font-weight:900;text-align:right}.local-code-total.local-code-lg{font-size:120px;line-height:112px}.local-code-total.local-code-md{font-size:80px;line-height:72px}.local-code-total.local-code-sm{font-size:56px;line-height:48px}</style>
-  <script defer src="/_local-interactions.js"></script>
-    </head>
-  <body>
-    
-    
-    <script data-template-id="country-code">window.__cf_country = "DE"</script>
-    <script type="module">
-      import {SitesRuntime} from '/_runtimes/sites-runtime.1b0e86ab45327ae8035a6935be9efba4c3d5fa3ac4a86e107a8ec048e7956035.js';
-      const sitesRuntime = new SitesRuntime({
-        container: document.getElementById('container'),
-        env: 'published',
-        bundleId: '56a93e7a-33f5-4a52-b53e-05eb587a9a8a',
-        
-        loadComponentsOverNetwork: true,
-        assetsVersion: 'v11',
-        fontsVersion: 'v1',
-        videosVersion: 'v1',
-        codeComponentsVersion: 'v2',
-        withBaseStyles: true,
-        reportingDomain: "https://www.figma.com",
-        bundleCreationDate: '2026-04-02 11:31:57 UTC',
-        isFigmake: false,
-        enableMetaTags: true,
+    @font-face {
+      font-family: "Redaction";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 700;
+      src: url("https://cdn.jsdelivr.net/fontsource/fonts/redaction@latest/latin-700-normal.woff2") format("woff2");
+    }
+
+    :root {
+      --paper: #f4e6d2;
+      --cream: #fff8ea;
+      --ink: #141313;
+      --muted: #665b51;
+      --red: #df3456;
+      --green: #16a05d;
+      --blue: #005478;
+      --gold: #f0b429;
+      --display: "Redaction", Georgia, serif;
+      --sans: Inter, Arial, sans-serif;
+      --mono: "IBM Plex Mono", "Courier New", monospace;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 32%),
+        linear-gradient(135deg, #f1dcc1 0%, #fbefd9 46%, #f4dfc8 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+    }
+
+    .page {
+      width: min(100%, 1180px);
+      margin: 0 auto;
+      padding: clamp(42px, 6.4vh, 84px) 18px clamp(72px, 9vw, 120px);
+    }
+
+    .top-mark {
+      position: relative;
+      z-index: 9;
+      width: min(100%, 980px);
+      display: flex;
+      justify-content: center;
+      margin-inline: auto;
+      padding-bottom: 14px;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .top-mark a {
+      display: block;
+      width: clamp(84px, 6vw, 110px);
+      color: var(--ink);
+      filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.12));
+      pointer-events: auto;
+      animation: health-enter 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      transition: transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 220ms ease;
+    }
+
+    .top-mark a:hover,
+    .top-mark a:focus-visible {
+      transform: rotate(-7deg) scale(1.08);
+      filter: drop-shadow(0 14px 0 rgba(45, 5, 4, 0.16));
+    }
+
+    .top-mark img {
+      width: 100%;
+      height: auto;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: center;
+      margin-bottom: clamp(40px, 6vw, 64px);
+      padding-top: clamp(16px, 4vh, 42px);
+      text-align: center;
+    }
+
+    h1 {
+      min-height: clamp(116px, 12vw, 160px);
+      max-width: 1120px;
+      margin: 12px 0 10px;
+      font-family: var(--display);
+      font-size: clamp(54px, 8vw, 108px);
+      font-weight: 700;
+      line-height: 0.84;
+      letter-spacing: 0;
+      text-shadow: 0 6px 0 rgba(20, 19, 19, 0.08);
+      text-wrap: balance;
+      animation: health-enter 420ms 80ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    h1 span {
+      display: block;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(14px, 2vw, 22px);
+      margin-bottom: clamp(38px, 6vw, 72px);
+    }
+
+    .summary-card,
+    .panel {
+      border-radius: 18px;
+      background: rgba(255, 253, 246, 0.9);
+      box-shadow:
+        0 8px 0 rgba(45, 5, 4, 0.1),
+        0 24px 56px rgba(45, 5, 4, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.42),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+        inset 0 -34px 60px rgba(0, 0, 0, 0.06);
+    }
+
+    .summary-card {
+      min-height: 154px;
+      padding: 22px;
+      animation: health-enter 420ms 150ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .summary-card:nth-child(2) {
+      --enter-rotate: -1deg;
+    }
+
+    .summary-card:nth-child(3) {
+      --enter-rotate: 1deg;
+    }
+
+    .summary-card:nth-child(5) {
+      --enter-rotate: 1deg;
+    }
+
+    .summary-card:nth-child(6) {
+      --enter-rotate: -1deg;
+    }
+
+    .summary-card span {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .summary-card strong {
+      display: block;
+      font-family: var(--display);
+      font-size: clamp(42px, 5vw, 64px);
+      font-weight: 700;
+      line-height: 0.86;
+    }
+
+    .summary-card em {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-family: var(--display);
+      font-size: 24px;
+      font-style: normal;
+      line-height: 1;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(22px, 3.6vw, 42px);
+      align-items: stretch;
+      margin-bottom: clamp(38px, 6vw, 72px);
+      animation: health-enter 420ms 220ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .panel {
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: baseline;
+      padding: clamp(22px, 3vw, 32px);
+      border-bottom: 1px solid rgba(20, 19, 19, 0.1);
+    }
+
+    .panel h2 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(34px, 4.2vw, 56px);
+      font-weight: 700;
+      line-height: 0.9;
+    }
+
+    .panel-header span {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .goal-panel {
+      position: relative;
+      display: flex;
+      min-height: 360px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(24px, 3vw, 34px);
+      border-radius: 18px;
+      overflow: visible;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.28), transparent 36%),
+        var(--gold);
+      color: var(--ink);
+      box-shadow:
+        0 8px 0 rgba(45, 5, 4, 0.1),
+        0 24px 56px rgba(45, 5, 4, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.42),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+        inset 0 -34px 60px rgba(0, 0, 0, 0.06);
+      transform: rotate(-1deg);
+    }
+
+    .goal-panel::after {
+      content: "10s";
+      position: absolute;
+      top: clamp(22px, 3vw, 34px);
+      right: clamp(22px, 3vw, 34px);
+      display: grid;
+      width: 92px;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--cream);
+      font-family: var(--display);
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 0.8;
+      box-shadow:
+        0 7px 0 rgba(45, 5, 4, 0.18),
+        0 20px 36px rgba(45, 5, 4, 0.22);
+      transform: rotate(8deg);
+    }
+
+    .goal-panel h2,
+    .workout-panel h2,
+    .trend-panel h2 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(38px, 5vw, 72px);
+      font-weight: 700;
+      line-height: 0.86;
+    }
+
+    .goal-panel p {
+      max-width: 640px;
+      margin: 18px 0 0;
+      font-family: var(--display);
+      font-size: clamp(22px, 2.4vw, 31px);
+      line-height: 1.05;
+    }
+
+    .goal-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 42px;
+    }
+
+    .goal-metrics div {
+      min-height: 112px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255, 253, 246, 0.72);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36);
+    }
+
+    .goal-metrics span,
+    .workout-day span,
+    .trend-card span {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .goal-metrics strong {
+      display: block;
+      font-family: var(--display);
+      font-size: clamp(30px, 3vw, 44px);
+      font-weight: 700;
+      line-height: 0.9;
+    }
+
+    .goal-track {
+      margin-top: 18px;
+    }
+
+    .goal-track > span {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: rgba(20, 19, 19, 0.72);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .goal-track em {
+      font-style: normal;
+    }
+
+    .progress {
+      height: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(20, 19, 19, 0.16);
+      box-shadow: inset 0 1px 2px rgba(20, 19, 19, 0.18);
+    }
+
+    .progress span {
+      display: block;
+      width: 4%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--red);
+    }
+
+    .milestones {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .milestones li {
+      min-height: 70px;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 253, 246, 0.54);
+      font-family: var(--display);
+      font-size: clamp(16px, 1.5vw, 20px);
+      line-height: 0.98;
+    }
+
+    .workout-panel {
+      padding: clamp(24px, 3vw, 34px);
+    }
+
+    .workout-panel header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .week-progress {
+      min-width: 134px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(20, 19, 19, 0.06);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .week-progress strong {
+      display: block;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: 44px;
+      line-height: 0.9;
+    }
+
+    .workout-panel > p {
+      max-width: 820px;
+      margin: 18px 0 28px;
+      color: var(--muted);
+      font-family: var(--display);
+      font-size: clamp(26px, 2.8vw, 38px);
+      line-height: 1.08;
+    }
+
+    .workout-days {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(14px, 2vw, 22px);
+    }
+
+    .workout-day {
+      display: flex;
+      min-height: 390px;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      padding: clamp(18px, 2.2vw, 26px);
+      border-radius: 16px;
+      background: rgba(20, 19, 19, 0.045);
+      box-shadow: inset 0 0 0 1px rgba(20, 19, 19, 0.05);
+    }
+
+    .workout-day h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(36px, 3.8vw, 56px);
+      line-height: 0.9;
+    }
+
+    .workout-day fieldset {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-family: var(--display);
+      font-size: clamp(42px, 4.2vw, 58px);
+      line-height: 0.96;
+    }
+
+    .workout-day label {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .workout-day input {
+      width: 24px;
+      min-width: 24px;
+      height: 24px;
+      margin: 0;
+      accent-color: var(--green);
+    }
+
+    .workout-day label span {
+      display: block;
+      transform: translateY(3px);
+    }
+
+    .workout-day input:checked + span {
+      opacity: 0.48;
+      text-decoration: line-through;
+    }
+
+    .trend-panel {
+      margin-bottom: clamp(38px, 6vw, 72px);
+      padding: clamp(24px, 3vw, 34px);
+      animation: health-enter 420ms 280ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .trend-panel > p {
+      max-width: 760px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-family: var(--display);
+      font-size: clamp(21px, 2.2vw, 28px);
+      line-height: 1.08;
+    }
+
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(12px, 2vw, 20px);
+      margin-top: 24px;
+    }
+
+    .trend-card {
+      min-height: 260px;
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(20, 19, 19, 0.045);
+    }
+
+    .trend-card header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+      margin-bottom: 18px;
+    }
+
+    .trend-card h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 0.88;
+    }
+
+    .trend-card time {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+
+    .data-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .data-list div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(20, 19, 19, 0.08);
+    }
+
+    .data-list dt {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .data-list dd {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(22px, 2.2vw, 31px);
+      line-height: 0.9;
+      text-align: right;
+    }
+
+    .trend-card svg {
+      width: 100%;
+      height: 64px;
+      margin-top: 16px;
+      overflow: visible;
+    }
+
+    .trend-card polyline {
+      fill: none;
+      stroke: var(--line-color);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 6;
+    }
+
+    .trend-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-family: var(--display);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .table-wrap {
+      overflow: visible;
+    }
+
+    table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      font-family: var(--display);
+    }
+
+    th,
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(20, 19, 19, 0.08);
+      text-align: left;
+      font-size: clamp(18px, 1.8vw, 23px);
+      line-height: 1.05;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .group-row th {
+      padding-top: 28px;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(23px, 2.4vw, 31px);
+      letter-spacing: 0;
+      text-transform: none;
+      background: rgba(20, 19, 19, 0.035);
+    }
+
+    .biomarker-name {
+      position: relative;
+      display: inline-flex;
+      align-items: baseline;
+      border-bottom: 2px dotted rgba(20, 19, 19, 0.32);
+      cursor: help;
+      outline: none;
+    }
+
+    .biomarker-name::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 0;
+      z-index: 20;
+      width: min(320px, 72vw);
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--ink);
+      color: var(--cream);
+      box-shadow:
+        0 8px 0 rgba(45, 5, 4, 0.16),
+        0 22px 42px rgba(45, 5, 4, 0.28);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.25;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px) scale(0.98);
+      transition: opacity 160ms ease, transform 210ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .biomarker-name::before {
+      content: "";
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 18px;
+      z-index: 21;
+      border: 8px solid transparent;
+      border-top-color: var(--ink);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 160ms ease, transform 210ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .biomarker-name:hover::after,
+    .biomarker-name:focus-visible::after,
+    .biomarker-name:hover::before,
+    .biomarker-name:focus-visible::before {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .status {
+      display: inline-flex;
+      min-width: 76px;
+      justify-content: center;
+      padding: 5px 9px 6px;
+      border-radius: 999px;
+      color: var(--cream);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .status--optimal {
+      background: var(--green);
+    }
+
+    .status--watch {
+      background: var(--red);
+    }
+
+    .range {
+      color: var(--muted);
+    }
+
+    .biomarker-section {
+      animation: health-enter 420ms 340ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .biomarker-section .panel {
+      overflow: visible;
+    }
+
+    @keyframes health-enter {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.985) rotate(var(--enter-rotate, 0deg));
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(var(--enter-rotate, 0deg));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        scroll-behavior: auto !important;
+        transition-duration: 1ms !important;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .dashboard-grid,
+      .trend-grid,
+      .workout-days,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        padding-inline: 14px;
+      }
+
+      .summary-card {
+        min-height: 132px;
+      }
+
+      .panel-header {
+        flex-direction: column;
+      }
+
+      .workout-panel header {
+        flex-direction: column;
+      }
+
+      .week-progress {
+        text-align: left;
+      }
+
+      .goal-metrics,
+      .milestones,
+      .workout-days,
+      .workout-day {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" aria-label="Private health notes">
+    <header class="top-mark">
+      <a href="/#home" aria-label="Hej Rafa home">
+        <img src="/assets/icons/hej-logo.svg" alt="">
+      </a>
+    </header>
+
+    <section class="hero">
+      <h1 data-health-title><span>Small proof</span><span>every week</span></h1>
+    </section>
+
+    <section class="summary-grid" aria-label="Health summary">
+      <article class="summary-card">
+        <span>Chronological age</span>
+        <strong>36</strong>
+        <em>Current</em>
+      </article>
+      <article class="summary-card">
+        <span>Pace of aging</span>
+        <strong>0.7</strong>
+        <em>Current marker</em>
+      </article>
+      <article class="summary-card">
+        <span>Weight</span>
+        <strong>66.6 kg</strong>
+        <em>Body composition</em>
+      </article>
+      <article class="summary-card">
+        <span>Body fat</span>
+        <strong>9%</strong>
+        <em>Measured value</em>
+      </article>
+      <article class="summary-card">
+        <span>Visceral fat</span>
+        <strong>21.7 cm²</strong>
+        <em>Area</em>
+      </article>
+      <article class="summary-card">
+        <span>Skeletal muscle mass</span>
+        <strong>34.3 kg</strong>
+        <em>Lean mass</em>
+      </article>
+    </section>
+
+    <section class="dashboard-grid" aria-label="Goal and weekly training plan">
+      <article class="goal-panel">
+        <div>
+          <h2>Freestanding handstand</h2>
+          <p>Build the strength, balance, and nerve to hold a clean handstand without the wall.</p>
+        </div>
+
+        <div>
+          <div class="goal-metrics" aria-label="Handstand goal metrics">
+            <div>
+              <span>Current best</span>
+              <strong>0s</strong>
+            </div>
+            <div>
+              <span>Target hold</span>
+              <strong>10s</strong>
+            </div>
+            <div>
+              <span>Deadline</span>
+              <strong>2026</strong>
+            </div>
+          </div>
+          <div class="goal-track" aria-label="Handstand goal progress">
+            <span><em>Progress</em><em>0 / 10s</em></span>
+            <div class="progress"><span></span></div>
+            <ol class="milestones">
+              <li>30s wall hold</li>
+              <li>45s chest-to-wall</li>
+              <li>10 clean kick-ups</li>
+              <li>3s free hold</li>
+              <li>10s free hold</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel workout-panel">
+        <header>
+          <h2>This week</h2>
+          <div class="week-progress" aria-live="polite"><strong data-week-count>0/3</strong>sessions</div>
+        </header>
+        <p>Three focused sessions for one goal: build a straight line, learn balance against the wall, then practice calm kick-ups and exits.</p>
+
+        <div class="workout-days">
+          <article class="workout-day">
+            <div>
+              <span>Session A</span>
+              <h3>Strength line</h3>
+            </div>
+            <fieldset>
+              <label><input type="checkbox" data-workout-check><span>Wrist prep, 6 min</span></label>
+              <label><input type="checkbox" data-workout-check><span>Hollow hold, 3 x 30s</span></label>
+              <label><input type="checkbox" data-workout-check><span>Pike push-ups, 3 x 8</span></label>
+              <label><input type="checkbox" data-workout-check><span>Chest-to-wall hold, 4 x 20s</span></label>
+              <label><input type="checkbox" data-workout-check><span>Shoulder taps at wall, 3 x 6</span></label>
+            </fieldset>
+          </article>
+
+          <article class="workout-day">
+            <div>
+              <span>Session B</span>
+              <h3>Wall balance</h3>
+            </div>
+            <fieldset>
+              <label><input type="checkbox" data-workout-check><span>Wrist prep, 6 min</span></label>
+              <label><input type="checkbox" data-workout-check><span>Wall weight shifts, 4 x 8</span></label>
+              <label><input type="checkbox" data-workout-check><span>Toe pulls from wall, 5 x 3</span></label>
+              <label><input type="checkbox" data-workout-check><span>One-foot wall float, 6 attempts</span></label>
+              <label><input type="checkbox" data-workout-check><span>Controlled exits, 5 each side</span></label>
+            </fieldset>
+          </article>
+
+          <article class="workout-day">
+            <div>
+              <span>Session C</span>
+              <h3>Kick-up test</h3>
+            </div>
+            <fieldset>
+              <label><input type="checkbox" data-workout-check><span>Shoulder mobility, 8 min</span></label>
+              <label><input type="checkbox" data-workout-check><span>Wall hold max test</span></label>
+              <label><input type="checkbox" data-workout-check><span>Kick-ups to soft wall touch, 10 attempts</span></label>
+              <label><input type="checkbox" data-workout-check><span>Freestanding attempts, 12 min</span></label>
+              <label><input type="checkbox" data-workout-check><span>Log best hold and one note</span></label>
+            </fieldset>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <section class="trend-panel panel" aria-label="Health and skill data cards">
+      <h2>Data cards</h2>
+      <p>The lines only matter when they sit next to the numbers. These are the places to add new check-ins over time.</p>
+      <div class="trend-grid">
+        <article class="trend-card" style="--line-color: var(--red);">
+          <header>
+            <h3>Composition</h3>
+            <time datetime="2026-06-01">01.06.26</time>
+          </header>
+          <dl class="data-list">
+            <div><dt>Weight</dt><dd>66.6 kg</dd></div>
+            <div><dt>Body fat</dt><dd>9%</dd></div>
+            <div><dt>Muscle mass</dt><dd>34.3 kg</dd></div>
+            <div><dt>Visceral fat</dt><dd>21.7 cm²</dd></div>
+          </dl>
+          <svg viewBox="0 0 220 90" aria-hidden="true">
+            <polyline points="8,62 48,58 88,60 128,50 168,46 212,38"></polyline>
+          </svg>
+          <p>Log this weekly, same scale, same time of day.</p>
+        </article>
+
+        <article class="trend-card" style="--line-color: var(--gold);">
+          <header>
+            <h3>Measurements</h3>
+            <time datetime="2026-06-01">01.06.26</time>
+          </header>
+          <dl class="data-list">
+            <div><dt>Chest</dt><dd>101 cm</dd></div>
+            <div><dt>Waist</dt><dd>88 cm</dd></div>
+            <div><dt>Hip</dt><dd>91 cm</dd></div>
+            <div><dt>Thigh</dt><dd>50.5 cm</dd></div>
+            <div><dt>Biceps</dt><dd>32.5 cm</dd></div>
+          </dl>
+          <svg viewBox="0 0 220 90" aria-hidden="true">
+            <polyline points="8,54 48,46 88,50 128,38 168,42 212,30"></polyline>
+          </svg>
+          <p>Use the same tape position each time. Boring is accurate.</p>
+        </article>
+
+        <article class="trend-card" style="--line-color: var(--blue);">
+          <header>
+            <h3>Watchlist</h3>
+            <time datetime="2025-01-07">07.01.25</time>
+          </header>
+          <dl class="data-list">
+            <div><dt>Ferritin</dt><dd>28.0</dd></div>
+            <div><dt>LDL</dt><dd>140</dd></div>
+            <div><dt>Creatinine</dt><dd>2.30</dd></div>
+          </dl>
+          <svg viewBox="0 0 220 90" aria-hidden="true">
+            <polyline points="8,36 48,42 88,34 128,50 168,44 212,54"></polyline>
+          </svg>
+          <p>Repeat with the next blood panel and compare direction.</p>
+        </article>
+
+        <article class="trend-card" style="--line-color: var(--green);">
+          <header>
+            <h3>Handstand</h3>
+            <time datetime="2026-05-31">This week</time>
+          </header>
+          <dl class="data-list">
+            <div><dt>Best hold</dt><dd>0s</dd></div>
+            <div><dt>Target</dt><dd>10s</dd></div>
+            <div><dt>Sessions</dt><dd>0 / 3</dd></div>
+          </dl>
+          <svg viewBox="0 0 220 90" aria-hidden="true">
+            <polyline points="8,76 48,72 88,64 128,52 168,36 212,18"></polyline>
+          </svg>
+          <p>Update after training: seconds, attempts, and sessions done.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="biomarker-section">
+      <article class="panel">
+        <header class="panel-header">
+          <h2>Biomarkers</h2>
+          <span>07.01.25</span>
+        </header>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Biomarker</th>
+                <th>Status</th>
+                <th>Result</th>
+                <th>Range</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="group-row"><th colspan="4">Complete blood count</th></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Oxygen transport. Low values can point to anemia or poor recovery capacity.">Hemoglobin</span></td><td><span class="status status--optimal">Optimal</span></td><td>14.5</td><td class="range">13.5-17.2</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="How much of your blood volume is red blood cells. Useful context for hydration, endurance, and anemia checks.">Hematocrit</span></td><td><span class="status status--optimal">Optimal</span></td><td>45.2</td><td class="range">39.5-50.5</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Red blood cell count. Helps explain oxygen delivery and pairs with hemoglobin and hematocrit.">RBC</span></td><td><span class="status status--optimal">Optimal</span></td><td>4.69</td><td class="range">4.30-5.75</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="White blood cells. A rough immune-system signal that can rise with infection, inflammation, or stress.">WBC</span></td><td><span class="status status--optimal">Optimal</span></td><td>4.0</td><td class="range">3.9-10.2</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Platelets. Important for clotting and a useful inflammation or recovery context marker.">PLT</span></td><td><span class="status status--optimal">Optimal</span></td><td>236</td><td class="range">150-370</td></tr>
+
+              <tr class="group-row"><th colspan="4">Comprehensive metabolic panel</th></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Kidney filtration marker, but it can read higher with more muscle, creatine, dehydration, or hard training.">Creatinine</span></td><td><span class="status status--watch">Over</span></td><td>2.30</td><td class="range">0.58-1.61</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Protein breakdown and kidney context. Often interpreted together with creatinine and hydration.">Urea</span></td><td><span class="status status--optimal">Optimal</span></td><td>6.4</td><td class="range">3.6-8.2</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Liver enzyme, also called ALT. Helpful for liver stress and sometimes hard training context.">GPT</span></td><td><span class="status status--optimal">Optimal</span></td><td>28</td><td class="range">&lt; 50</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Liver and muscle enzyme, also called AST. Can move with liver strain or muscle damage after training.">GOT</span></td><td><span class="status status--optimal">Optimal</span></td><td>27</td><td class="range">&lt; 50</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Liver and bile-duct marker, also called GGT. Often watched for alcohol, medication, or liver stress signals.">GGOT</span></td><td><span class="status status--optimal">Optimal</span></td><td>22</td><td class="range">11-59</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Pigment from red blood cell breakdown. Higher values can be harmless for some people, but worth tracking with liver context.">Bilirubin</span></td><td><span class="status status--watch">Over</span></td><td>1.25</td><td class="range">0.2-1.2</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Mineral involved in muscle contraction, nerves, sleep, and energy metabolism.">Magnesium</span></td><td><span class="status status--optimal">Optimal</span></td><td>32.3</td><td class="range">30-40</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Sodium. Key electrolyte for fluid balance, blood pressure, and nerve signals.">Natrium</span></td><td><span class="status status--optimal">Optimal</span></td><td>1559</td><td class="range">1500-1850</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Potassium. Key electrolyte for heart rhythm, muscles, nerves, and hydration balance.">Kalium</span></td><td><span class="status status--optimal">Optimal</span></td><td>1593</td><td class="range">1386-1950</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Blood sugar at the time of the test. Useful for metabolic health and energy stability.">Glucose</span></td><td><span class="status status--optimal">Optimal</span></td><td>100</td><td class="range">&lt; 100</td></tr>
+
+              <tr class="group-row"><th colspan="4">Lipid panel</th></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="LDL cholesterol. One of the main markers used to estimate long-term cardiovascular risk.">LDL</span></td><td><span class="status status--watch">Over</span></td><td>140</td><td class="range">&gt; 70</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="HDL cholesterol. Often called protective cholesterol, but the full lipid picture matters more than one number.">HDL</span></td><td><span class="status status--watch">Over</span></td><td>41</td><td class="range">&gt; 45</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Blood fats that respond strongly to food, alcohol, activity, and metabolic health.">Triglycerides</span></td><td><span class="status status--optimal">Optimal</span></td><td>91.2</td><td class="range">&lt; 150</td></tr>
+
+              <tr class="group-row"><th colspan="4">Iron & energy</th></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Stored iron. Low ferritin can affect energy, training tolerance, and recovery before anemia shows up.">Ferritin</span></td><td><span class="status status--watch">Under</span></td><td>28.0</td><td class="range">30-300</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Iron circulating in the blood right now. More volatile than ferritin, so it is best read with the full iron picture.">Serum iron</span></td><td><span class="status status--optimal">Optimal</span></td><td>&lt; 1.0 mg/l</td><td class="range">&lt; 5.0</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Vitamin D supports bones, immune function, muscles, and mood. Useful to track through seasons.">Vitamin D</span></td><td><span class="status status--optimal">Optimal</span></td><td>58</td><td class="range">30-100</td></tr>
+              <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Important for nerves, red blood cells, energy metabolism, and especially worth watching with low animal-product intake.">Vitamin B12</span></td><td><span class="status status--optimal">Optimal</span></td><td>834</td><td class="range">&gt; 358</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script>
+    const healthTitles = [
+      ["Small proof", "every week"],
+      ["Future Rafa", "says thanks"],
+      ["A little stronger", "than yesterday"],
+      ["Keep the promise", "to yourself"],
+      ["Earn the balance", "then keep it"]
+    ];
+    const title = document.querySelector("[data-health-title]");
+    const titleText = healthTitles[Math.floor(Math.random() * healthTitles.length)];
+
+    if (title && titleText) {
+      title.innerHTML = `<span>${titleText[0]}</span><span>${titleText[1]}</span>`;
+    }
+
+    const workoutChecks = [...document.querySelectorAll("[data-workout-check]")];
+    const weekCount = document.querySelector("[data-week-count]");
+    const storageKey = "hejrafa-health-workout-week";
+
+    function updateWorkoutProgress() {
+      const days = [...document.querySelectorAll(".workout-day")];
+      const completedDays = days.filter((day) => {
+        const checks = [...day.querySelectorAll("[data-workout-check]")];
+        return checks.length > 0 && checks.every((check) => check.checked);
+      }).length;
+
+      if (weekCount) {
+        weekCount.textContent = `${completedDays}/3`;
+      }
+
+      localStorage.setItem(storageKey, JSON.stringify(workoutChecks.map((check) => check.checked)));
+    }
+
+    try {
+      const savedChecks = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      workoutChecks.forEach((check, index) => {
+        check.checked = Boolean(savedChecks[index]);
+        check.addEventListener("change", updateWorkoutProgress);
       });
-    </script>
-    
-    <div id="container"><div class="css-oljopy css-50jkpj css-dqc75a" data-page-overflowx="hidden" data-breakpoint-id="node-98_4100" data-breakpoint="true" data-width="375" data-height="1015.00030517578"><header class="css-5knerd css-v27th6"><div class="css-1kkr58 css-j9f0op"><div class="css-7rhb8 css-paq0kv css-v27th6"><div class="css-y58kkh css-f1jjdz css-paq0kv"><div class="css-l2q6j7 css-wc1msa css-134pm3" tabindex="0" role="link" data-isimage="true" style="opacity:0;transform:scaleX(0.5) scaleY(0.5)"><img src="/_assets/v11/73c8270d78c5e23aa6ba0b452746dc7a0cfb0942.svg" alt="" class="css-tzn6qh css-ez8men"/></div></div></div></div></header><div class="css-5knerd css-v27th6" style="opacity:0;transform:translateY(150px)"><div class="css-1kkr58 css-j9f0op"><div class="css-e2iotp css-paq0kv css-v27th6"><div class="css-y58kkh css-f1jjdz css-paq0kv" style="opacity:0;transform:translateY(150px)"><div class="css-kv9s57 css-paq0kv"><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-f027mj css-bademn css-bo4u3g"></div><div class="css-f027mj css-6esvsr css-bo4u3g"></div><div class="css-f027mj css-8y15o9 css-bo4u3g"></div><div class="css-f027mj css-2q6adm css-bo4u3g"></div><div class="css-f027mj css-c0jgq5 css-bo4u3g"></div><div class="css-f027mj css-sfflub css-bo4u3g"></div><div class="css-f027mj css-sn1efe css-bo4u3g"></div><div class="css-f027mj css-oowd4c css-bo4u3g"></div><div class="css-f027mj css-dtvqtq css-bo4u3g"></div><div class="css-f027mj css-362315 css-bo4u3g"></div><div class="css-f027mj css-vnzc3w css-bo4u3g"></div><div class="css-f027mj css-oy2g20 css-bo4u3g"></div><div class="css-f027mj css-t6xv5v css-bo4u3g"></div><div class="css-f027mj css-o0ofob css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-fwguhs css-aufy1y"></div><div class="css-f027mj css-qrhgse css-aufy1y"></div><div class="css-f027mj css-qkgarc css-aufy1y"></div><div class="css-f027mj css-qkgarc css-hp017a"></div><div class="css-f027mj css-50lw16 css-aufy1y"></div><div class="css-f027mj css-mn1149 css-hp017a"></div><div class="css-f027mj css-l8jlr3 css-aufy1y"></div><div class="css-f027mj css-nnuabk css-aufy1y"></div><div class="css-f027mj css-tqumkh css-aufy1y"></div><div class="css-f027mj css-at0gr8 css-aufy1y"></div><div class="css-f027mj css-hr6fys css-wws05s"></div><div class="css-f027mj css-6w5to6 css-aufy1y"></div><div class="css-f027mj css-c1oc53 css-aufy1y"></div><div class="css-f027mj css-e31tre css-aufy1y"></div><div class="css-f027mj css-cokee8 css-aufy1y"></div><div class="css-f027mj css-njl0ou css-i9hclv"></div><div class="css-f027mj css-3m4go0 css-aufy1y"></div><div class="css-f027mj css-16npuh css-aufy1y"></div><div class="css-f027mj css-uaa40k css-hp017a"></div><div class="css-f027mj css-tvtbny css-bo4u3g"></div></div><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-f027mj css-bademn css-bo4u3g"></div><div class="css-f027mj css-6esvsr css-bo4u3g"></div><div class="css-f027mj css-8y15o9 css-bo4u3g"></div><div class="css-f027mj css-2q6adm css-bo4u3g"></div><div class="css-f027mj css-c0jgq5 css-bo4u3g"></div><div class="css-f027mj css-sfflub css-bo4u3g"></div><div class="css-f027mj css-sn1efe css-bo4u3g"></div><div class="css-f027mj css-oowd4c css-bo4u3g"></div><div class="css-f027mj css-dtvqtq css-bo4u3g"></div><div class="css-f027mj css-362315 css-bo4u3g"></div><div class="css-f027mj css-vnzc3w css-bo4u3g"></div><div class="css-f027mj css-oy2g20 css-bo4u3g"></div><div class="css-f027mj css-t6xv5v css-bo4u3g"></div><div class="css-f027mj css-o0ofob css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-fwguhs css-aufy1y"></div><div class="css-f027mj css-qrhgse css-aufy1y"></div><div class="css-f027mj css-qkgarc css-aufy1y"></div><div class="css-f027mj css-qkgarc css-hp017a"></div><div class="css-f027mj css-50lw16 css-aufy1y"></div><div class="css-f027mj css-mn1149 css-hp017a"></div><div class="css-f027mj css-l8jlr3 css-aufy1y"></div><div class="css-f027mj css-nnuabk css-aufy1y"></div><div class="css-f027mj css-tqumkh css-aufy1y"></div><div class="css-f027mj css-at0gr8 css-aufy1y"></div><div class="css-f027mj css-hr6fys css-wws05s"></div><div class="css-f027mj css-6w5to6 css-aufy1y"></div><div class="css-f027mj css-c1oc53 css-aufy1y"></div><div class="css-f027mj css-e31tre css-aufy1y"></div><div class="css-f027mj css-cokee8 css-aufy1y"></div><div class="css-f027mj css-njl0ou css-i9hclv"></div><div class="css-f027mj css-3m4go0 css-aufy1y"></div><div class="css-f027mj css-16npuh css-aufy1y"></div><div class="css-f027mj css-uaa40k css-hp017a"></div><div class="css-f027mj css-tvtbny css-bo4u3g"></div></div><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-f027mj css-bademn css-bo4u3g"></div><div class="css-f027mj css-6esvsr css-bo4u3g"></div><div class="css-f027mj css-8y15o9 css-bo4u3g"></div><div class="css-f027mj css-2q6adm css-bo4u3g"></div><div class="css-f027mj css-c0jgq5 css-bo4u3g"></div><div class="css-f027mj css-sfflub css-bo4u3g"></div><div class="css-f027mj css-sn1efe css-bo4u3g"></div><div class="css-f027mj css-oowd4c css-bo4u3g"></div><div class="css-f027mj css-dtvqtq css-bo4u3g"></div><div class="css-f027mj css-362315 css-bo4u3g"></div><div class="css-f027mj css-vnzc3w css-bo4u3g"></div><div class="css-f027mj css-oy2g20 css-bo4u3g"></div><div class="css-f027mj css-t6xv5v css-bo4u3g"></div><div class="css-f027mj css-o0ofob css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-fwguhs css-aufy1y"></div><div class="css-f027mj css-qrhgse css-aufy1y"></div><div class="css-f027mj css-qkgarc css-aufy1y"></div><div class="css-f027mj css-qkgarc css-hp017a"></div><div class="css-f027mj css-50lw16 css-aufy1y"></div><div class="css-f027mj css-mn1149 css-hp017a"></div><div class="css-f027mj css-l8jlr3 css-aufy1y"></div><div class="css-f027mj css-nnuabk css-aufy1y"></div><div class="css-f027mj css-tqumkh css-aufy1y"></div><div class="css-f027mj css-at0gr8 css-aufy1y"></div><div class="css-f027mj css-hr6fys css-wws05s"></div><div class="css-f027mj css-6w5to6 css-aufy1y"></div><div class="css-f027mj css-c1oc53 css-aufy1y"></div><div class="css-f027mj css-e31tre css-aufy1y"></div><div class="css-f027mj css-cokee8 css-aufy1y"></div><div class="css-f027mj css-njl0ou css-i9hclv"></div><div class="css-f027mj css-3m4go0 css-aufy1y"></div><div class="css-f027mj css-16npuh css-aufy1y"></div><div class="css-f027mj css-uaa40k css-hp017a"></div><div class="css-f027mj css-tvtbny css-bo4u3g"></div></div></div></div><div class="css-y58kkh css-zfhtxa css-paq0kv" style="opacity:0;transform:translateY(150px)"><p class="css-nf5ac4 css-v27th6 css-c3x8cf css-o4851m textContents">biomarker (07.01.25)</p><div class="css-9uyk0n css-v27th6 css-paq0kv"><div class="css-22itc5 css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">biomarker</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">status</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">result</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">range</p></div><div class="css-goy04p css-22itc5 css-paq0kv"></div><div class="css-goy04p css-22itc5 css-paq0kv"></div><div class="css-goy04p css-22itc5 css-paq0kv"></div><div class="css-nc07bn css-22itc5 css-paq0kv"><div class="css-sesiit css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-9agccl css-o4851m textContents">iron &amp; energy</p></div><div class="css-sesiit css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">serum iron</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 1.0 mg/l</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 5.0</p></div><div class="css-sesiit css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">vitamin d</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">58</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">30 – 100</p></div><div class="css-sesiit css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">vitamin b12</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">834</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&gt; 358</p></div><div class="css-sesiit css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">ferritin</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-huvhs4 textContents">under</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">28.0</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">30 – 300</p></div></div></div></div></div></div></div></div><div class="css-oljopy css-50jkpj css-dqc75a" data-page-overflowx="hidden" data-breakpoint-id="node-98_4066" data-breakpoint="true" data-width="700" data-height="927.000305175781"><header class="css-5knerd css-v27th6"><div class="css-1kkr58 css-j9f0op"><div class="css-bife08 css-paq0kv css-v27th6"><div class="css-y58kkh css-f1jjdz css-paq0kv"><div class="css-l2q6j7 css-wc1msa css-134pm3" tabindex="0" role="link" data-isimage="true" style="opacity:0;transform:scaleX(0.5) scaleY(0.5)"><img src="/_assets/v11/704d6641b2f45040e72b2ed9391a4969527fa5b7.svg" alt="" class="css-tzn6qh css-ez8men"/></div></div></div></div></header><div class="css-5knerd css-v27th6" style="opacity:0;transform:translateY(150px)"><div class="css-1kkr58 css-j9f0op"><div class="css-2cbti9 css-paq0kv css-v27th6"><div class="css-y58kkh css-f1jjdz css-paq0kv" style="opacity:0;transform:translateY(150px)"><div class="css-kv9s57 css-paq0kv"><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-f027mj css-bademn css-bo4u3g"></div><div class="css-f027mj css-6esvsr css-bo4u3g"></div><div class="css-f027mj css-8y15o9 css-bo4u3g"></div><div class="css-f027mj css-2q6adm css-bo4u3g"></div><div class="css-f027mj css-c0jgq5 css-bo4u3g"></div><div class="css-f027mj css-sfflub css-bo4u3g"></div><div class="css-f027mj css-sn1efe css-bo4u3g"></div><div class="css-f027mj css-oowd4c css-bo4u3g"></div><div class="css-f027mj css-dtvqtq css-bo4u3g"></div><div class="css-f027mj css-362315 css-bo4u3g"></div><div class="css-f027mj css-vnzc3w css-bo4u3g"></div><div class="css-f027mj css-oy2g20 css-bo4u3g"></div><div class="css-f027mj css-t6xv5v css-bo4u3g"></div><div class="css-f027mj css-o0ofob css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-fwguhs css-aufy1y"></div><div class="css-f027mj css-qrhgse css-aufy1y"></div><div class="css-f027mj css-qkgarc css-aufy1y"></div><div class="css-f027mj css-qkgarc css-hp017a"></div><div class="css-f027mj css-50lw16 css-aufy1y"></div><div class="css-f027mj css-mn1149 css-hp017a"></div><div class="css-f027mj css-l8jlr3 css-aufy1y"></div><div class="css-f027mj css-nnuabk css-aufy1y"></div><div class="css-f027mj css-tqumkh css-aufy1y"></div><div class="css-f027mj css-at0gr8 css-aufy1y"></div><div class="css-f027mj css-hr6fys css-wws05s"></div><div class="css-f027mj css-6w5to6 css-aufy1y"></div><div class="css-f027mj css-c1oc53 css-aufy1y"></div><div class="css-f027mj css-e31tre css-aufy1y"></div><div class="css-f027mj css-cokee8 css-aufy1y"></div><div class="css-f027mj css-njl0ou css-i9hclv"></div><div class="css-f027mj css-3m4go0 css-aufy1y"></div><div class="css-f027mj css-16npuh css-aufy1y"></div><div class="css-f027mj css-uaa40k css-hp017a"></div><div class="css-f027mj css-tvtbny css-bo4u3g"></div></div><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-f027mj css-bademn css-bo4u3g"></div><div class="css-f027mj css-6esvsr css-bo4u3g"></div><div class="css-f027mj css-8y15o9 css-bo4u3g"></div><div class="css-f027mj css-2q6adm css-bo4u3g"></div><div class="css-f027mj css-c0jgq5 css-bo4u3g"></div><div class="css-f027mj css-sfflub css-bo4u3g"></div><div class="css-f027mj css-sn1efe css-bo4u3g"></div><div class="css-f027mj css-oowd4c css-bo4u3g"></div><div class="css-f027mj css-dtvqtq css-bo4u3g"></div><div class="css-f027mj css-362315 css-bo4u3g"></div><div class="css-f027mj css-vnzc3w css-bo4u3g"></div><div class="css-f027mj css-oy2g20 css-bo4u3g"></div><div class="css-f027mj css-t6xv5v css-bo4u3g"></div><div class="css-f027mj css-o0ofob css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-fwguhs css-aufy1y"></div><div class="css-f027mj css-qrhgse css-aufy1y"></div><div class="css-f027mj css-qkgarc css-aufy1y"></div><div class="css-f027mj css-qkgarc css-hp017a"></div><div class="css-f027mj css-50lw16 css-aufy1y"></div><div class="css-f027mj css-mn1149 css-hp017a"></div><div class="css-f027mj css-l8jlr3 css-aufy1y"></div><div class="css-f027mj css-nnuabk css-aufy1y"></div><div class="css-f027mj css-tqumkh css-aufy1y"></div><div class="css-f027mj css-at0gr8 css-aufy1y"></div><div class="css-f027mj css-hr6fys css-wws05s"></div><div class="css-f027mj css-6w5to6 css-aufy1y"></div><div class="css-f027mj css-c1oc53 css-aufy1y"></div><div class="css-f027mj css-e31tre css-aufy1y"></div><div class="css-f027mj css-cokee8 css-aufy1y"></div><div class="css-f027mj css-njl0ou css-i9hclv"></div><div class="css-f027mj css-3m4go0 css-aufy1y"></div><div class="css-f027mj css-16npuh css-aufy1y"></div><div class="css-f027mj css-uaa40k css-hp017a"></div><div class="css-f027mj css-tvtbny css-bo4u3g"></div></div><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-f027mj css-bademn css-bo4u3g"></div><div class="css-f027mj css-6esvsr css-bo4u3g"></div><div class="css-f027mj css-8y15o9 css-bo4u3g"></div><div class="css-f027mj css-2q6adm css-bo4u3g"></div><div class="css-f027mj css-c0jgq5 css-bo4u3g"></div><div class="css-f027mj css-sfflub css-bo4u3g"></div><div class="css-f027mj css-sn1efe css-bo4u3g"></div><div class="css-f027mj css-oowd4c css-bo4u3g"></div><div class="css-f027mj css-dtvqtq css-bo4u3g"></div><div class="css-f027mj css-362315 css-bo4u3g"></div><div class="css-f027mj css-vnzc3w css-bo4u3g"></div><div class="css-f027mj css-oy2g20 css-bo4u3g"></div><div class="css-f027mj css-t6xv5v css-bo4u3g"></div><div class="css-f027mj css-o0ofob css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-m5e0x9 css-bo4u3g"></div><div class="css-f027mj css-fwguhs css-aufy1y"></div><div class="css-f027mj css-qrhgse css-aufy1y"></div><div class="css-f027mj css-qkgarc css-aufy1y"></div><div class="css-f027mj css-qkgarc css-hp017a"></div><div class="css-f027mj css-50lw16 css-aufy1y"></div><div class="css-f027mj css-mn1149 css-hp017a"></div><div class="css-f027mj css-l8jlr3 css-aufy1y"></div><div class="css-f027mj css-nnuabk css-aufy1y"></div><div class="css-f027mj css-tqumkh css-aufy1y"></div><div class="css-f027mj css-at0gr8 css-aufy1y"></div><div class="css-f027mj css-hr6fys css-wws05s"></div><div class="css-f027mj css-6w5to6 css-aufy1y"></div><div class="css-f027mj css-c1oc53 css-aufy1y"></div><div class="css-f027mj css-e31tre css-aufy1y"></div><div class="css-f027mj css-cokee8 css-aufy1y"></div><div class="css-f027mj css-njl0ou css-i9hclv"></div><div class="css-f027mj css-3m4go0 css-aufy1y"></div><div class="css-f027mj css-16npuh css-aufy1y"></div><div class="css-f027mj css-uaa40k css-hp017a"></div><div class="css-f027mj css-tvtbny css-bo4u3g"></div></div></div></div><div class="css-y58kkh css-zfhtxa css-paq0kv" style="opacity:0;transform:translateY(150px)"><p class="css-nf5ac4 css-v27th6 css-c3x8cf css-o4851m textContents">biomarker (07.01.25)</p><div class="css-9uyk0n css-v27th6 css-paq0kv"><div class="css-22itc5 css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">biomarker</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">status</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">result</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">range</p></div><div class="css-u0p2gd css-22itc5 css-paq0kv"><div class="css-4s85sp css-w9y3m0 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">wbc</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">4.0</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">3.9 – 10.2</p></div><div class="css-4s85sp css-w9y3m0 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">plt</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">236</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">150 – 370</p></div><div class="css-4s85sp css-w9y3m0 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">rbc</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">4.69</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">4.30 – 5.75</p></div><div class="css-4s85sp css-w9y3m0 css-paq0kv"><p class="css-l1mcow css-5dba7r css-9agccl css-o4851m textContents">complete blood count</p></div><div class="css-4s85sp css-w9y3m0 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">hemoglobin</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">14.5</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">13.5 – 17.2</p></div><div class="css-4s85sp css-w9y3m0 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">hematocrit</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">45.2</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">39.5 – 50.5</p></div></div><div class="css-l52jh0 css-22itc5 css-paq0kv"></div><div class="css-l52jh0 css-22itc5 css-paq0kv"></div><div class="css-unjovo css-22itc5 css-paq0kv"><div class="css-4ap37l css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-9agccl css-o4851m textContents">iron &amp; energy</p></div><div class="css-4ap37l css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">serum iron</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 1.0 mg/l</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 5.0</p></div><div class="css-4ap37l css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">vitamin d</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">58</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">30 – 100</p></div><div class="css-4ap37l css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">vitamin b12</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">834</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&gt; 358</p></div><div class="css-4ap37l css-22itc5 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">ferritin</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-huvhs4 textContents">under</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">28.0</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">30 – 300</p></div></div></div></div></div></div></div></div><div class="css-oljopy css-50jkpj css-dqc75a" data-page-overflowx="hidden" data-breakpoint-id="node-98_4032" data-breakpoint="true" data-width="1024" data-height="2271.99853515625"><header class="css-5knerd css-v27th6"><div class="css-1kkr58 css-j9f0op"><div class="css-bife08 css-paq0kv css-v27th6"><div class="css-y58kkh css-f1jjdz css-paq0kv"><div class="css-l2q6j7 css-wc1msa css-134pm3" tabindex="0" role="link" data-isimage="true" style="opacity:0;transform:scaleX(0.5) scaleY(0.5)"><img src="/_assets/v11/2af1fcb4339bc13ccad85564ec01ddf85aa2bf77.svg" alt="" class="css-tzn6qh css-ez8men"/></div></div></div></div></header><div class="css-5knerd css-v27th6" style="opacity:0;transform:translateY(150px)"><div class="css-1kkr58 css-j9f0op"><div class="css-gp8l8h css-paq0kv css-v27th6"><div class="css-y58kkh css-5knerd" style="opacity:0;transform:translateY(150px)"><div class="css-4b0cup css-sa1u2p css-paq0kv"><div class="css-kv9s57 css-paq0kv"><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-eyrb23 css-si4c8b css-bo4u3g"></div><div class="css-eyrb23 css-6qgvav css-bo4u3g"></div><div class="css-eyrb23 css-rqfsa3 css-bo4u3g"></div><div class="css-eyrb23 css-attvuj css-bo4u3g"></div><div class="css-eyrb23 css-ua0e4 css-bo4u3g"></div><div class="css-eyrb23 css-bml05g css-bo4u3g"></div><div class="css-eyrb23 css-84tg4 css-bo4u3g"></div><div class="css-eyrb23 css-z0ge32 css-bo4u3g"></div><div class="css-eyrb23 css-l2vvia css-bo4u3g"></div><div class="css-eyrb23 css-nko56w css-bo4u3g"></div><div class="css-eyrb23 css-ccoziu css-bo4u3g"></div><div class="css-eyrb23 css-x9cyiu css-bo4u3g"></div><div class="css-eyrb23 css-ryoqj9 css-bo4u3g"></div><div class="css-eyrb23 css-tdprjj css-bo4u3g"></div><div class="css-eyrb23 css-9u096n css-bo4u3g"></div><div class="css-eyrb23 css-9u096n css-bo4u3g"></div><div class="css-eyrb23 css-i2915s css-aufy1y"></div><div class="css-eyrb23 css-u4cgr8 css-aufy1y"></div><div class="css-eyrb23 css-5o6doq css-aufy1y"></div><div class="css-eyrb23 css-5o6doq css-hp017a"></div><div class="css-eyrb23 css-2chx3a css-aufy1y"></div><div class="css-eyrb23 css-oerbon css-hp017a"></div><div class="css-eyrb23 css-1n14p1 css-aufy1y"></div><div class="css-eyrb23 css-yeb752 css-aufy1y"></div><div class="css-eyrb23 css-cc1sjp css-aufy1y"></div><div class="css-eyrb23 css-afoefx css-aufy1y"></div><div class="css-eyrb23 css-c8shzt css-wws05s"></div><div class="css-eyrb23 css-oswt39 css-aufy1y"></div><div class="css-eyrb23 css-ngh1w9 css-aufy1y"></div><div class="css-eyrb23 css-etcxmu css-aufy1y"></div><div class="css-eyrb23 css-xg0xco css-aufy1y"></div><div class="css-eyrb23 css-vpbcmc css-i9hclv"></div><div class="css-eyrb23 css-kf89wc css-aufy1y"></div><div class="css-eyrb23 css-dsu3wb css-aufy1y"></div><div class="css-eyrb23 css-xlk2u5 css-hp017a"></div><div class="css-eyrb23 css-3xgzdg css-bo4u3g"></div></div><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-eyrb23 css-si4c8b css-bo4u3g"></div><div class="css-eyrb23 css-6qgvav css-bo4u3g"></div><div class="css-eyrb23 css-rqfsa3 css-bo4u3g"></div><div class="css-eyrb23 css-attvuj css-bo4u3g"></div><div class="css-eyrb23 css-ua0e4 css-bo4u3g"></div><div class="css-eyrb23 css-bml05g css-bo4u3g"></div><div class="css-eyrb23 css-84tg4 css-bo4u3g"></div><div class="css-eyrb23 css-z0ge32 css-bo4u3g"></div><div class="css-eyrb23 css-l2vvia css-bo4u3g"></div><div class="css-eyrb23 css-nko56w css-bo4u3g"></div><div class="css-eyrb23 css-ccoziu css-bo4u3g"></div><div class="css-eyrb23 css-x9cyiu css-bo4u3g"></div><div class="css-eyrb23 css-ryoqj9 css-bo4u3g"></div><div class="css-eyrb23 css-tdprjj css-bo4u3g"></div><div class="css-eyrb23 css-9u096n css-bo4u3g"></div><div class="css-eyrb23 css-9u096n css-bo4u3g"></div><div class="css-eyrb23 css-i2915s css-aufy1y"></div><div class="css-eyrb23 css-u4cgr8 css-aufy1y"></div><div class="css-eyrb23 css-5o6doq css-aufy1y"></div><div class="css-eyrb23 css-5o6doq css-hp017a"></div><div class="css-eyrb23 css-2chx3a css-aufy1y"></div><div class="css-eyrb23 css-oerbon css-hp017a"></div><div class="css-eyrb23 css-1n14p1 css-aufy1y"></div><div class="css-eyrb23 css-yeb752 css-aufy1y"></div><div class="css-eyrb23 css-cc1sjp css-aufy1y"></div><div class="css-eyrb23 css-afoefx css-aufy1y"></div><div class="css-eyrb23 css-c8shzt css-wws05s"></div><div class="css-eyrb23 css-oswt39 css-aufy1y"></div><div class="css-eyrb23 css-ngh1w9 css-aufy1y"></div><div class="css-eyrb23 css-etcxmu css-aufy1y"></div><div class="css-eyrb23 css-xg0xco css-aufy1y"></div><div class="css-eyrb23 css-vpbcmc css-i9hclv"></div><div class="css-eyrb23 css-kf89wc css-aufy1y"></div><div class="css-eyrb23 css-dsu3wb css-aufy1y"></div><div class="css-eyrb23 css-xlk2u5 css-hp017a"></div><div class="css-eyrb23 css-3xgzdg css-bo4u3g"></div></div><div class="css-us4svo css-z9kw5f css-4cmtt6" style="opacity:1;transform:none"><div class="css-eyrb23 css-si4c8b css-bo4u3g"></div><div class="css-eyrb23 css-6qgvav css-bo4u3g"></div><div class="css-eyrb23 css-rqfsa3 css-bo4u3g"></div><div class="css-eyrb23 css-attvuj css-bo4u3g"></div><div class="css-eyrb23 css-ua0e4 css-bo4u3g"></div><div class="css-eyrb23 css-bml05g css-bo4u3g"></div><div class="css-eyrb23 css-84tg4 css-bo4u3g"></div><div class="css-eyrb23 css-z0ge32 css-bo4u3g"></div><div class="css-eyrb23 css-l2vvia css-bo4u3g"></div><div class="css-eyrb23 css-nko56w css-bo4u3g"></div><div class="css-eyrb23 css-ccoziu css-bo4u3g"></div><div class="css-eyrb23 css-x9cyiu css-bo4u3g"></div><div class="css-eyrb23 css-ryoqj9 css-bo4u3g"></div><div class="css-eyrb23 css-tdprjj css-bo4u3g"></div><div class="css-eyrb23 css-9u096n css-bo4u3g"></div><div class="css-eyrb23 css-9u096n css-bo4u3g"></div><div class="css-eyrb23 css-i2915s css-aufy1y"></div><div class="css-eyrb23 css-u4cgr8 css-aufy1y"></div><div class="css-eyrb23 css-5o6doq css-aufy1y"></div><div class="css-eyrb23 css-5o6doq css-hp017a"></div><div class="css-eyrb23 css-2chx3a css-aufy1y"></div><div class="css-eyrb23 css-oerbon css-hp017a"></div><div class="css-eyrb23 css-1n14p1 css-aufy1y"></div><div class="css-eyrb23 css-yeb752 css-aufy1y"></div><div class="css-eyrb23 css-cc1sjp css-aufy1y"></div><div class="css-eyrb23 css-afoefx css-aufy1y"></div><div class="css-eyrb23 css-c8shzt css-wws05s"></div><div class="css-eyrb23 css-oswt39 css-aufy1y"></div><div class="css-eyrb23 css-ngh1w9 css-aufy1y"></div><div class="css-eyrb23 css-etcxmu css-aufy1y"></div><div class="css-eyrb23 css-xg0xco css-aufy1y"></div><div class="css-eyrb23 css-vpbcmc css-i9hclv"></div><div class="css-eyrb23 css-kf89wc css-aufy1y"></div><div class="css-eyrb23 css-dsu3wb css-aufy1y"></div><div class="css-eyrb23 css-xlk2u5 css-hp017a"></div><div class="css-eyrb23 css-3xgzdg css-bo4u3g"></div></div></div></div></div><div class="css-y58kkh css-5knerd" style="opacity:0;transform:translateY(150px)"><div class="css-1kkr58 css-jo8ywo"><div class="css-4b0cup css-qwo48t css-paq0kv"><p class="css-nf5ac4 css-v27th6 css-c3x8cf css-o4851m textContents">basics</p><div class="textContents css-wc1msa css-v27th6 css-acyp5d css-o4851m"><p class="css-8jchzs css-3gmely">chronological age: 35</p><p class="css-8jchzs css-3gmely">pace of aging: 0.7</p><p class="css-8jchzs css-3gmely">weight: 66 kg</p><p class="css-8jchzs css-3gmely">body fat: 6.2%</p><p class="css-8jchzs css-3gmely">body water: 45.6 l</p><p class="css-8zr56v css-3gmely">skeletal muscle mass: 35.3 kg</p></div></div></div></div><div class="css-y58kkh css-5knerd" style="opacity:0;transform:translateY(150px)"><div class="css-1kkr58 css-jo8ywo"><div class="css-4b0cup css-qwo48t css-paq0kv"><p class="css-nf5ac4 css-v27th6 css-c3x8cf css-o4851m textContents">biomarker (07.01.25)</p><div class="css-a8cioh css-v27th6 css-paq0kv"><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">biomarker</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">status</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">result</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">range</p></div><div class="css-n8r97t css-v27th6 css-paq0kv"><div class="css-22itc5 css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-9agccl css-o4851m textContents">complete blood count</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">hemoglobin</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">14.5</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">13.5 – 17.2</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">hematocrit</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">45.2</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">39.5 – 50.5</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">rbc</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">4.69</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">4.30 – 5.75</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">wbc</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">4.0</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">3.9 – 10.2</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">plt</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">236</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">150 – 370</p></div></div><div class="css-n8r97t css-v27th6 css-paq0kv"><div class="css-22itc5 css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-9agccl css-o4851m textContents">comprehensive metabolic panel</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">creatinine</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-huvhs4 textContents">over</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">2.30</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">0.58 – 1.61</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">urea</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">6.4</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">3.6 – 8.2</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">gpt</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">28</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 50</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">got</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">27</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 50</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">ggot</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">22</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">11 – 59</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">bilirubin</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-huvhs4 textContents">over</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">1.25</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">0.2 – 1.2</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">magnesium</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">32.3</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">30 – 40</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">natrium</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">1559</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">1500 – 1850</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">kalium</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">1593</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">1386 – 1950</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">glucose</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">100</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 100</p></div></div><div class="css-n8r97t css-v27th6 css-paq0kv"><div class="css-22itc5 css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-9agccl css-o4851m textContents">lipid panel</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">ldl</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-huvhs4 textContents">over</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">140</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&gt; 70</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">hdl</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-huvhs4 textContents">over</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">41</p><p class="css-uwf2km css-5dba7r css-acyp5d css-o4851m textContents"><span class="css-fr5sqr">&gt;</span><span class="css-3gmely"> 45</span></p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">triglycerides</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">91.2</p><p class="css-l1mcow css-5dba7r css-nc3idd css-y6zpe5 textContents">&lt; 150</p></div></div><div class="css-n8r97t css-v27th6 css-paq0kv"><div class="css-22itc5 css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-9agccl css-o4851m textContents">iron &amp; energy</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">ferritin</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-huvhs4 textContents">under</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">28.0</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">30 – 300</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">serum iron</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 1.0 mg/l</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&lt; 5.0</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">vitamin d</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">58</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">30 – 100</p></div><div class="css-7neklh css-v27th6 css-paq0kv"><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">vitamin b12</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-ssz2vg textContents">optimal</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">834</p><p class="css-l1mcow css-5dba7r css-z1cs5a css-o4851m textContents">&gt; 358</p></div></div></div></div></div></div></div></div></div></div></div>
-    
-
-     <noscript data-nosnippet>
-      <main style="height: 100vh; width: 100vw; background-color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-        <h1 style="font-size: 24px; padding: 8px; color: black">
-        This site requires JavaScript
-        </h1>
-        <p style="font-size: 16px; padding: 8px; color: #00000080">To view this website, enable JavaScript in your browser settings and reload the page.</p>
-        <form style="margin-top: 12px;" action="">
-          <button type="submit" style="font-size: 14px; color: black; border: 1px solid #0000001a; border-radius: 5px; width: 256px; height: 32px;">
-          Reload page
-          </button>
-        </form>
-      </main>
-    </noscript>
-  </body>
+      updateWorkoutProgress();
+    } catch {
+      workoutChecks.forEach((check) => check.addEventListener("change", updateWorkoutProgress));
+    }
+  </script>
+</body>
 </html>
