@@ -24,13 +24,6 @@ Standalone pages still available:
 - `/cv/`
 - `/inventory/`
 
-Hidden / personal pages:
-
-- `/health/`
-- `/expenses/`
-- `/expenses-yearly/`
-- `/debt/`
-
 System:
 
 - `/404.html`
