@@ -14,8 +14,24 @@
   src: url("https://cdn.jsdelivr.net/fontsource/fonts/redaction@latest/latin-700-normal.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "Reenie Beanie";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/reeniebeanie/v22/z7NSdR76eDkaJKZJFkkjuvWxbP0.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Yuji Boku";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/yujiboku/v8/P5sAzZybeNzXsA9xj1FkjQ.ttf") format("truetype");
+}
+
 :root {
-  --paper: #f4e6d2;
+  --paper: #fff6cf;
   --paper-hot: #fff1b8;
   --ink: #141313;
   --muted: #5f564b;
@@ -24,6 +40,8 @@
   --cream: #fff8ea;
   --card: rgba(255, 253, 246, 0.88);
   --display: "Redaction", Georgia, serif;
+  --hand: "Reenie Beanie", "Bradley Hand", "Comic Sans MS", cursive;
+  --japanese-hand: "Yuji Boku", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --sans: Inter, Arial, sans-serif;
   --mono: "IBM Plex Mono", "Courier New", monospace;
   color: var(--ink);
@@ -73,7 +91,7 @@ img {
   padding: clamp(42px, 6.4vh, 84px) 18px 30px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 34%),
-    linear-gradient(135deg, #f1dcc1 0%, #fbefd9 46%, #f4dfc8 100%);
+    var(--paper);
 }
 
 .start::before {
@@ -93,15 +111,34 @@ img {
   display: block;
   width: clamp(84px, 6vw, 110px);
   color: var(--ink);
+  cursor: pointer;
   filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.12));
   pointer-events: auto;
-  transition: transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 220ms ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform, filter;
+  transition:
+    transform 190ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 190ms ease;
+}
+
+.top-mark img {
+  width: 100%;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .top-mark a:hover,
 .top-mark a:focus-visible {
-  transform: rotate(-7deg) scale(1.08);
-  filter: drop-shadow(0 14px 0 rgba(45, 5, 4, 0.16));
+  transform: translateY(-4px) rotate(-7deg) scale(1.1);
+  filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.16));
+}
+
+.top-mark a:active {
+  transform: translateY(-1px) rotate(-4deg) scale(1.04);
+  filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.13));
 }
 
 .view-stage {
@@ -134,6 +171,14 @@ img {
   transform: translateY(var(--scroll-bounce)) scale(1);
 }
 
+.view-panel.is-leaving {
+  overflow: visible;
+  visibility: visible;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(calc(-24px + var(--scroll-bounce))) scale(0.992);
+}
+
 .hero {
   position: relative;
   width: 100%;
@@ -149,9 +194,360 @@ img {
   position: absolute;
 }
 
+.home-curiosities {
+  --curiosity-scale: 1.34;
+  position: absolute;
+  inset: -42px -110px -24px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.curiosity-egg {
+  --egg-width: 84px;
+  --egg-rotate: 0deg;
+  --egg-hover-rotate: var(--egg-rotate);
+  position: absolute;
+  z-index: var(--egg-z, 1);
+  display: block;
+  width: calc(var(--egg-width) * var(--curiosity-scale));
+  border-radius: var(--egg-radius, 12px);
+  box-shadow:
+    0 7px 0 rgba(45, 5, 4, 0.13),
+    0 18px 34px rgba(45, 5, 4, 0.19);
+  pointer-events: auto;
+  transform: rotate(var(--egg-rotate));
+  transition:
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 190ms ease,
+    opacity 160ms ease;
+}
+
+.curiosity-egg img {
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.curiosity-egg--youtube-1 img,
+.curiosity-egg--youtube-2 img,
+.curiosity-egg--youtube-3 img,
+.curiosity-egg--youtube-4 img,
+.curiosity-egg--mentor-1 img,
+.curiosity-egg--mentor-2 img,
+.curiosity-egg--mentor-3 img,
+.curiosity-egg--mentor-4 img {
+  aspect-ratio: 1 / 1;
+  height: calc(var(--egg-width) * var(--curiosity-scale));
+}
+
+.curiosity-egg::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  z-index: 4;
+  width: max-content;
+  max-width: 178px;
+  padding: 7px 10px 8px;
+  border-radius: 10px;
+  background: var(--nav-frame);
+  color: var(--cream);
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.05;
+  white-space: normal;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  box-shadow:
+    0 5px 0 rgba(16, 16, 16, 0.18),
+    0 14px 24px rgba(20, 19, 19, 0.14);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 7px) rotate(1deg);
+  transition: opacity 150ms ease, transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.curiosity-egg:hover,
+.curiosity-egg:focus-visible {
+  z-index: 7;
+  box-shadow:
+    0 10px 0 rgba(45, 5, 4, 0.14),
+    0 26px 46px rgba(45, 5, 4, 0.24);
+  transform: translateY(-10px) rotate(var(--egg-hover-rotate)) scale(1.12);
+}
+
+.curiosity-egg:hover::after,
+.curiosity-egg:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(-1deg);
+}
+
+.curiosity-egg[data-tooltip="Once Upon a Time in Hollywood"]::after,
+.curiosity-egg[data-tooltip="Zen and the Art of Motorcycle Maintenance"]::after,
+.curiosity-egg[data-tooltip="I Who Have Never Known Men"]::after,
+.curiosity-egg[data-tooltip="The Incredible True Story"]::after,
+.curiosity-egg[data-tooltip="Conan O'Brien Needs a Friend"]::after,
+.curiosity-egg[data-tooltip="Tobias van Schneider"]::after,
+.curiosity-egg[data-tooltip="Sebastiaan de With"]::after {
+  width: 178px;
+}
+
+.curiosity-egg--movie-1 {
+  --egg-width: 88px;
+  --egg-rotate: -9deg;
+  --egg-hover-rotate: -6deg;
+  left: -70px;
+  top: 132px;
+}
+
+.curiosity-egg--movie-2 {
+  --egg-width: 82px;
+  --egg-rotate: 7deg;
+  --egg-hover-rotate: 4deg;
+  left: -2px;
+  top: 178px;
+}
+
+.curiosity-egg--movie-3 {
+  --egg-width: 80px;
+  --egg-rotate: -3deg;
+  --egg-hover-rotate: -1deg;
+  left: -62px;
+  top: 386px;
+}
+
+.curiosity-egg--movie-4 {
+  --egg-width: 84px;
+  --egg-rotate: 9deg;
+  --egg-hover-rotate: 6deg;
+  right: -88px;
+  top: 116px;
+}
+
+.curiosity-egg--show-1 {
+  --egg-width: 80px;
+  --egg-rotate: -6deg;
+  --egg-hover-rotate: -3deg;
+  right: -12px;
+  top: 220px;
+}
+
+.curiosity-egg--show-2 {
+  --egg-width: 82px;
+  --egg-rotate: 5deg;
+  --egg-hover-rotate: 2deg;
+  right: -92px;
+  top: 382px;
+}
+
+.curiosity-egg--show-3 {
+  --egg-width: 76px;
+  --egg-rotate: -4deg;
+  --egg-hover-rotate: -2deg;
+  left: 34px;
+  top: 306px;
+}
+
+.curiosity-egg--show-4 {
+  --egg-width: 78px;
+  --egg-rotate: 8deg;
+  --egg-hover-rotate: 5deg;
+  right: 38px;
+  top: 468px;
+}
+
+.curiosity-egg--book-1 {
+  --egg-width: 80px;
+  --egg-rotate: 6deg;
+  --egg-hover-rotate: 3deg;
+  left: -92px;
+  bottom: 42px;
+}
+
+.curiosity-egg--book-2 {
+  --egg-width: 78px;
+  --egg-rotate: -8deg;
+  --egg-hover-rotate: -5deg;
+  left: 2px;
+  bottom: -24px;
+}
+
+.curiosity-egg--book-3 {
+  --egg-width: 76px;
+  --egg-rotate: 5deg;
+  --egg-hover-rotate: 2deg;
+  right: 6px;
+  bottom: 6px;
+}
+
+.curiosity-egg--book-4 {
+  --egg-width: 82px;
+  --egg-rotate: -6deg;
+  --egg-hover-rotate: -3deg;
+  right: -96px;
+  bottom: 68px;
+}
+
+.curiosity-egg--album-1,
+.curiosity-egg--album-2,
+.curiosity-egg--album-3,
+.curiosity-egg--album-4,
+.curiosity-egg--podcast-1,
+.curiosity-egg--podcast-2,
+.curiosity-egg--podcast-3,
+.curiosity-egg--podcast-4 {
+  --egg-radius: 14px;
+  aspect-ratio: 1 / 1;
+  height: calc(var(--egg-width) * var(--curiosity-scale));
+}
+
+.curiosity-egg--youtube-1,
+.curiosity-egg--youtube-2,
+.curiosity-egg--youtube-3,
+.curiosity-egg--youtube-4,
+.curiosity-egg--mentor-1,
+.curiosity-egg--mentor-2,
+.curiosity-egg--mentor-3,
+.curiosity-egg--mentor-4 {
+  --egg-radius: 50%;
+  aspect-ratio: 1 / 1;
+  height: calc(var(--egg-width) * var(--curiosity-scale));
+}
+
+.curiosity-egg--album-1 {
+  --egg-width: 78px;
+  --egg-rotate: -8deg;
+  --egg-hover-rotate: -5deg;
+  left: 36px;
+  top: -28px;
+}
+
+.curiosity-egg--album-2 {
+  --egg-width: 74px;
+  --egg-rotate: 7deg;
+  --egg-hover-rotate: 4deg;
+  right: 52px;
+  top: -24px;
+}
+
+.curiosity-egg--album-3 {
+  --egg-width: 76px;
+  --egg-rotate: -4deg;
+  --egg-hover-rotate: -1deg;
+  left: 132px;
+  bottom: 26px;
+}
+
+.curiosity-egg--album-4 {
+  --egg-width: 78px;
+  --egg-rotate: 5deg;
+  --egg-hover-rotate: 2deg;
+  right: 78px;
+  bottom: 48px;
+}
+
+.curiosity-egg--podcast-1 {
+  --egg-width: 74px;
+  --egg-rotate: 8deg;
+  --egg-hover-rotate: 5deg;
+  left: -62px;
+  top: -8px;
+}
+
+.curiosity-egg--podcast-2 {
+  --egg-width: 76px;
+  --egg-rotate: -6deg;
+  --egg-hover-rotate: -3deg;
+  right: -62px;
+  top: -12px;
+}
+
+.curiosity-egg--podcast-3 {
+  --egg-width: 72px;
+  --egg-rotate: 6deg;
+  --egg-hover-rotate: 3deg;
+  left: 56px;
+  bottom: 166px;
+}
+
+.curiosity-egg--podcast-4 {
+  --egg-width: 72px;
+  --egg-rotate: -5deg;
+  --egg-hover-rotate: -2deg;
+  right: 56px;
+  bottom: 166px;
+}
+
+.curiosity-egg--youtube-1 {
+  --egg-width: 74px;
+  --egg-rotate: -6deg;
+  --egg-hover-rotate: -3deg;
+  left: 214px;
+  top: -10px;
+}
+
+.curiosity-egg--youtube-2 {
+  --egg-width: 76px;
+  --egg-rotate: 5deg;
+  --egg-hover-rotate: 2deg;
+  right: 214px;
+  top: -12px;
+}
+
+.curiosity-egg--youtube-3 {
+  --egg-width: 72px;
+  --egg-rotate: 7deg;
+  --egg-hover-rotate: 4deg;
+  left: 214px;
+  bottom: -40px;
+}
+
+.curiosity-egg--youtube-4 {
+  --egg-width: 74px;
+  --egg-rotate: -5deg;
+  --egg-hover-rotate: -2deg;
+  right: 104px;
+  bottom: -40px;
+}
+
+.curiosity-egg--mentor-1 {
+  --egg-width: 72px;
+  --egg-rotate: 6deg;
+  --egg-hover-rotate: 3deg;
+  left: -58px;
+  top: 596px;
+}
+
+.curiosity-egg--mentor-2 {
+  --egg-width: 72px;
+  --egg-rotate: -7deg;
+  --egg-hover-rotate: -4deg;
+  right: -62px;
+  top: 592px;
+}
+
+.curiosity-egg--mentor-3 {
+  --egg-width: 70px;
+  --egg-rotate: 4deg;
+  --egg-hover-rotate: 1deg;
+  left: 106px;
+  top: 504px;
+}
+
+.curiosity-egg--mentor-4 {
+  --egg-width: 70px;
+  --egg-rotate: -6deg;
+  --egg-hover-rotate: -3deg;
+  right: 104px;
+  top: 504px;
+}
+
 :is(.hero h1, .work-story-hero h1, .simple-page h1, .about-story-hero h1) {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   min-height: clamp(116px, 12vw, 160px);
   max-width: 920px;
   margin: 12px 0 10px;
@@ -211,6 +607,7 @@ img {
   margin-bottom: clamp(40px, 6vw, 64px);
 }
 
+.hero h1 span,
 .work-story-hero h1 span {
   display: block;
 }
@@ -478,9 +875,9 @@ img {
     linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 38%),
     #df3456;
   color: #ffffff;
-  font-family: "Bradley Hand", "Comic Sans MS", cursive;
+  font-family: var(--hand);
   font-size: clamp(28px, 3.2vw, 42px);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 0.9;
   text-align: center;
   box-shadow:
@@ -544,18 +941,18 @@ img {
 }
 
 .project-card[data-layout="system"] .project-face {
-  transition: opacity 120ms ease;
+  transition: box-shadow 210ms ease, opacity 120ms ease;
 }
 
 .project-card[data-layout="system"]:hover .project-face,
 .project-card[data-layout="system"]:focus-visible .project-face,
 .project-card[data-layout="system"]:focus-within .project-face {
   box-shadow:
-    0 8px 0 rgba(45, 5, 4, 0.1),
-    0 24px 56px var(--project-shadow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.36),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
-    inset 0 -34px 60px rgba(0, 0, 0, 0.12);
+    0 12px 0 rgba(45, 5, 4, 0.12),
+    0 32px 72px var(--project-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    inset 0 -34px 60px rgba(0, 0, 0, 0.14);
 }
 
 .project-card[data-layout="system"] .project-face::before {
@@ -944,6 +1341,55 @@ img {
   pointer-events: none;
 }
 
+.project-card--empty {
+  --empty-slot-ink: rgba(20, 19, 19, 0.28);
+  cursor: default;
+}
+
+.project-card--empty:hover,
+.project-card--empty:focus-visible,
+.project-card--empty:focus-within {
+  transform: rotate(var(--card-tilt, 0deg));
+}
+
+.project-card--empty::after {
+  display: none;
+}
+
+.project-empty-slot {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  place-items: center;
+  border: 3px dotted var(--empty-slot-ink);
+  border-radius: inherit;
+  color: var(--empty-slot-ink);
+  background: rgba(20, 19, 19, 0.025);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+  transform: rotate(1deg);
+}
+
+.project-card--empty:hover .project-empty-slot,
+.project-card--empty:focus-visible .project-empty-slot,
+.project-card--empty:focus-within .project-empty-slot {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+}
+
+.project-empty-slot h2 {
+  max-width: 240px;
+  margin: 0;
+  color: inherit;
+  font-family: var(--display);
+  font-size: clamp(36px, 4.4vw, 54px);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: 0;
+  text-align: center;
+  text-wrap: balance;
+}
+
 .project-face h2 {
   max-width: min(100%, 330px);
   margin: 0;
@@ -965,6 +1411,7 @@ img {
   align-items: flex-start;
   color: var(--project-text);
   font-family: var(--display);
+  text-align: left;
 }
 
 .project-summary {
@@ -974,7 +1421,7 @@ img {
 }
 
 .project-back-copy {
-  justify-content: space-between;
+  justify-content: flex-start;
   min-height: 100%;
 }
 
@@ -1007,7 +1454,7 @@ img {
 }
 
 .project-back-copy p + p {
-  margin-top: 24px;
+  margin-top: 0.55em;
 }
 
 .project-link {
@@ -1015,7 +1462,7 @@ img {
   width: fit-content;
   align-items: center;
   gap: 8px;
-  margin-top: 28px;
+  margin-top: auto;
   text-decoration: none;
   transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1056,6 +1503,7 @@ img {
   overflow: visible;
   padding: 0;
   text-align: left;
+  transition: box-shadow 210ms ease, opacity 120ms ease;
 }
 
 .project-card[data-layout="daumenkino"] .project-face--front {
@@ -1113,6 +1561,17 @@ img {
     inset 0 1px 0 rgba(255, 255, 255, 0.32),
     inset 0 0 0 1px rgba(255, 255, 255, 0.18),
     inset 0 -34px 60px rgba(80, 20, 10, 0.1);
+}
+
+.project-card[data-layout="daumenkino"]:hover .project-face,
+.project-card[data-layout="daumenkino"]:focus-visible .project-face,
+.project-card[data-layout="daumenkino"]:focus-within .project-face {
+  box-shadow:
+    0 12px 0 rgba(75, 7, 24, 0.18),
+    0 32px 72px rgba(75, 7, 24, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    inset 0 -34px 60px rgba(80, 20, 10, 0.12);
 }
 
 .episode-covers {
@@ -1211,14 +1670,15 @@ img {
 .project-info span {
   color: #50140a;
   font-family: var(--display);
-  font-size: clamp(21px, 2.25vw, 27px);
-  font-weight: 700;
-  line-height: 1.08;
+  font-size: clamp(20px, 2vw, 25px);
+  font-weight: 400;
+  line-height: 1.1;
 }
 
 .project-info h2 {
   max-width: min(100%, 330px);
   margin-top: 12px;
+  margin-bottom: 20px;
   color: #50140a;
   font-size: clamp(36px, 4.4vw, 54px);
   line-height: 0.88;
@@ -1226,15 +1686,16 @@ img {
 
 .project-info p {
   max-width: 330px;
-  margin: 20px 0 0;
+  margin: 0;
   color: #50140a;
   font-family: var(--display);
-  font-size: clamp(21px, 2.25vw, 27px);
-  font-weight: 700;
-  line-height: 1.08;
+  font-size: clamp(20px, 2vw, 25px);
+  font-weight: 400;
+  line-height: 1.1;
 }
 
 .project-info--back {
+  justify-content: flex-start;
   min-height: 100%;
   padding-top: clamp(34px, 4.2vw, 52px);
   background: transparent;
@@ -1245,11 +1706,12 @@ img {
   margin: 0;
   color: #50140a;
   font-size: clamp(20px, 2vw, 25px);
+  font-weight: 400;
   line-height: 1.12;
 }
 
 .project-info--back p + p {
-  margin-top: 24px;
+  margin-top: 0.55em;
 }
 
 .inline-project-link {
@@ -1274,7 +1736,7 @@ img {
   color: #2f0d62;
   font-family: var(--display);
   font-size: clamp(20px, 2vw, 25px);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
   transition: color 180ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1315,6 +1777,24 @@ img {
 .project-card[data-layout="daumenkino"] .project-info--back .project-cta:hover .cta-arrow,
 .project-card[data-layout="daumenkino"] .project-info--back .project-cta:focus-visible .cta-arrow {
   transform: translate(4px, -0.03em);
+}
+
+.project-card .project-face h2 {
+  font-weight: 700;
+}
+
+.project-card .project-summary > span,
+.project-card .project-summary > p,
+.project-card .project-back-copy p,
+.project-card .project-link,
+.project-card .project-link-label,
+.project-card .project-info > span,
+.project-card .project-info > p,
+.project-card .project-info--back p,
+.project-card .project-info--back .project-cta,
+.project-card .project-info--back .cta-label,
+.project-card .inline-project-link {
+  font-weight: 400;
 }
 
 .about-page {
@@ -1376,8 +1856,8 @@ img {
 .about-polaroid figcaption,
 .about-wide-image figcaption {
   color: var(--ink);
-  font-family: "Bradley Hand", "Comic Sans MS", cursive;
-  font-weight: 700;
+  font-family: var(--hand);
+  font-weight: 400;
   line-height: 1;
   text-align: center;
 }
@@ -1540,9 +2020,9 @@ img {
   margin: 20px 0 0;
   padding-left: 26px;
   color: #2d2824;
-  font-family: "Bradley Hand", "Comic Sans MS", cursive;
+  font-family: var(--hand);
   font-size: clamp(19px, 2.4vw, 26px);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.22;
 }
 
@@ -1552,6 +2032,7 @@ img {
 
 .card-field {
   position: relative;
+  z-index: 4;
   width: min(100%, 520px);
   height: clamp(320px, 37vh, 410px);
   margin-top: clamp(38px, 7vh, 86px);
@@ -1714,9 +2195,9 @@ img {
   bottom: 10px;
   display: block;
   color: var(--ink);
-  font-family: "Bradley Hand", "Comic Sans MS", cursive;
+  font-family: var(--hand);
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
   text-align: center;
   transform: rotate(-2deg);
@@ -1724,6 +2205,7 @@ img {
 
 .note-card {
   --hover-rotate: 2deg;
+  --home-card-title-size: clamp(34px, 3.4vw, 40px);
   right: 20px;
   top: 0;
   z-index: 5;
@@ -1736,7 +2218,12 @@ img {
     linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 38%),
     var(--card);
   background-size: 18px 18px, 18px 18px, auto, auto;
+  cursor: pointer;
   transform: rotate(4deg);
+}
+
+.note-card :where(h2, p, span, strong) {
+  cursor: pointer;
 }
 
 .note-card[data-card="work"] {
@@ -1788,9 +2275,9 @@ img {
 
 .identity-name {
   margin: 0 0 8px;
-  font-family: "Bradley Hand", "Comic Sans MS", cursive;
+  font-family: var(--hand);
   font-size: 56px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 0.78;
   transform: none;
 }
@@ -1803,17 +2290,33 @@ img {
 }
 
 .identity-belief {
-  margin-top: 22px;
-  font-family: var(--display);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 0.88;
+  margin-top: 0;
+  font-family: var(--hand);
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.08;
 }
 
 .identity-belief span {
   display: block;
   width: 100%;
   text-align: left;
+}
+
+.identity-belief .identity-pronunciation {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.identity-belief .identity-japanese {
+  font-family: var(--japanese-hand);
+  font-size: var(--home-card-title-size);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.identity-belief .identity-text-start {
+  margin-top: 16px;
 }
 
 .identity-meta {
@@ -1823,6 +2326,73 @@ img {
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
+}
+
+.note-card .designer-title,
+.note-card .designer-copy,
+.note-card .designer-email {
+  display: block;
+  width: min(100%, 248px);
+  color: var(--red);
+  text-align: left;
+}
+
+.note-card .designer-title {
+  margin: 0;
+  font-family: var(--hand);
+  font-size: clamp(29px, 3.1vw, 36px);
+  font-weight: 400;
+  line-height: 0.96;
+}
+
+.note-card .designer-copy {
+  margin: 24px 0 0;
+  font-family: var(--hand);
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.02;
+}
+
+.note-card .designer-email {
+  display: inline-flex;
+  margin-top: 26px;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  font-family: var(--hand);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.designer-email-label {
+  text-decoration: underline;
+  text-decoration-color: #ffd600;
+  text-decoration-thickness: 0.16em;
+  text-underline-offset: 0.14em;
+}
+
+.designer-email-arrow {
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.7em;
+  font-weight: 900;
+  line-height: 0;
+  text-decoration: none;
+  transform: translateY(-0.02em);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.designer-email:hover,
+.designer-email:focus-visible {
+  transform: translateY(-2px);
+}
+
+.designer-email:hover .designer-email-arrow,
+.designer-email:focus-visible .designer-email-arrow {
+  transform: translate(4px, -0.02em);
 }
 
 .note-card h2 {
@@ -1844,27 +2414,43 @@ img {
 
 .note-card[data-card="notes"] h2,
 .note-card[data-card="notes"] .recipe-copy {
-  font-family: "Bradley Hand", "Comic Sans MS", cursive;
-  font-weight: 700;
+  font-family: var(--hand);
+  font-weight: 400;
 }
 
 .note-card[data-card="notes"] h2 {
-  font-size: clamp(34px, 4vw, 48px);
-  line-height: 0.95;
+  font-size: var(--home-card-title-size);
+  line-height: 0.98;
   transform: rotate(-1deg);
 }
 
+.note-card[data-card="notes"] h2 span {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.52em;
+  line-height: 1;
+}
+
 .note-card[data-card="notes"] .recipe-copy {
-  margin: 22px 0 0;
+  margin: 18px 0 0;
   padding-left: 24px;
-  font-size: 18px;
-  line-height: 1.28;
+  font-size: 20px;
+  line-height: 1.12;
   color: #2d2824;
   transform: rotate(-0.5deg);
 }
 
 .note-card[data-card="notes"] .recipe-copy li {
   padding-left: 2px;
+}
+
+.note-card[data-card="notes"] .recipe-copy li:has(strong) {
+  margin-top: 8px;
+  list-style: none;
+}
+
+.note-card[data-card="notes"] .recipe-copy li:first-child {
+  margin-top: 0;
 }
 
 .note-card small {
@@ -1995,6 +2581,24 @@ img {
     transform: scale(0.74);
     transform-origin: top center;
   }
+
+  .home-curiosities {
+    transform: scale(0.82);
+    transform-origin: center top;
+  }
+
+  .curiosity-egg--book-1,
+  .curiosity-egg--book-2,
+  .curiosity-egg--book-3,
+  .curiosity-egg--book-4,
+  .curiosity-egg--podcast-3,
+  .curiosity-egg--podcast-4,
+  .curiosity-egg--youtube-3,
+  .curiosity-egg--youtube-4,
+  .curiosity-egg--mentor-3,
+  .curiosity-egg--mentor-4 {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -2036,5 +2640,98 @@ img {
   .polaroid-card {
     left: 0;
     width: 148px;
+  }
+
+  .home-curiosities {
+    inset: -18px -44px -20px;
+  }
+
+  .curiosity-egg {
+    --egg-width: 58px;
+    opacity: 0.78;
+  }
+
+  .curiosity-egg:hover,
+  .curiosity-egg:focus-visible {
+    opacity: 1;
+  }
+
+  .curiosity-egg--movie-2,
+  .curiosity-egg--movie-3,
+  .curiosity-egg--show-3,
+  .curiosity-egg--show-4,
+  .curiosity-egg--book-2,
+  .curiosity-egg--book-3,
+  .curiosity-egg--album-3,
+  .curiosity-egg--album-4,
+  .curiosity-egg--podcast-3,
+  .curiosity-egg--podcast-4,
+  .curiosity-egg--youtube-2,
+  .curiosity-egg--youtube-3,
+  .curiosity-egg--youtube-4,
+  .curiosity-egg--mentor-2,
+  .curiosity-egg--mentor-3,
+  .curiosity-egg--mentor-4 {
+    display: none;
+  }
+
+  .curiosity-egg--movie-1 {
+    left: -42px;
+    top: 140px;
+  }
+
+  .curiosity-egg--movie-4 {
+    right: -40px;
+    top: 148px;
+  }
+
+  .curiosity-egg--show-1 {
+    right: -8px;
+    top: 286px;
+  }
+
+  .curiosity-egg--show-2 {
+    right: -42px;
+    top: 420px;
+  }
+
+  .curiosity-egg--book-1 {
+    left: -42px;
+    bottom: 76px;
+  }
+
+  .curiosity-egg--book-4 {
+    right: -42px;
+    bottom: 72px;
+  }
+
+  .curiosity-egg--album-1 {
+    left: 22px;
+    top: -4px;
+  }
+
+  .curiosity-egg--album-2 {
+    right: 22px;
+    top: -2px;
+  }
+
+  .curiosity-egg--podcast-1 {
+    left: -42px;
+    top: 8px;
+  }
+
+  .curiosity-egg--podcast-2 {
+    right: -42px;
+    top: 8px;
+  }
+
+  .curiosity-egg--youtube-1 {
+    left: 18px;
+    bottom: 152px;
+  }
+
+  .curiosity-egg--mentor-1 {
+    right: 18px;
+    bottom: 148px;
   }
 }

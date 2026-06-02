@@ -8,28 +8,33 @@ const viewPanels = document.querySelectorAll("[data-page]");
 const stackCards = document.querySelectorAll(".card-field [data-card]");
 const draggableCards = document.querySelectorAll("[data-draggable-card]");
 const projectCards = document.querySelectorAll(".project-card");
+const viewTransitionDuration = 460;
 let scrollBounceFrame = null;
 let scrollBounce = 0;
 let touchStartY = null;
 
 const heroLines = [
-  "Touch grass",
-  "Move first thing",
-  "One thing at a time",
-  "Cooking can be meditation",
-  "Read every day",
-  "Hold your own happiness",
-  "Be thankful",
-  "Respect everyone",
-  "Wasted time can count",
-  "Just go for it",
-  "Grow in silence",
-  "Every second counts",
+  ["Touch", "grass"],
+  ["Move", "first thing"],
+  ["One thing", "at a time"],
+  ["Cooking can be", "meditation"],
+  ["Read", "every day"],
+  ["Hold your own", "happiness"],
+  ["Be", "thankful"],
+  ["Respect", "everyone"],
+  ["Wasted time", "can count"],
+  ["Just go", "for it"],
+  ["Grow", "in silence"],
+  ["Every second", "counts"],
 ];
 const validViews = new Set(["home", "work", "about"]);
 
 function setRandomHeroLine() {
-  heroLine.textContent = heroLines[Math.floor(Math.random() * heroLines.length)];
+  const [firstLine, secondLine] = heroLines[Math.floor(Math.random() * heroLines.length)];
+  heroLine.replaceChildren(
+    Object.assign(document.createElement("span"), { textContent: firstLine }),
+    Object.assign(document.createElement("span"), { textContent: secondLine }),
+  );
 }
 
 function setTimezoneLabel() {
@@ -59,8 +64,10 @@ function updateRoute(view) {
   }
 }
 
-function setActiveView(view, { updateUrl = false } = {}) {
+function setActiveView(view, { animate = true, updateUrl = false } = {}) {
   const nextView = validViews.has(view) ? view : "home";
+  const previousPanel = getActivePanel();
+  const shouldAnimateLeaving = animate && previousPanel && previousPanel.dataset.page !== nextView;
 
   if (updateUrl) {
     updateRoute(nextView);
@@ -84,8 +91,23 @@ function setActiveView(view, { updateUrl = false } = {}) {
 
   viewPanels.forEach((panel) => {
     const isSelected = panel.dataset.page === nextView;
+    const isLeaving = shouldAnimateLeaving && panel === previousPanel;
+
+    if (panel.leaveTimer) {
+      clearTimeout(panel.leaveTimer);
+      panel.leaveTimer = null;
+    }
+
+    panel.classList.toggle("is-leaving", isLeaving);
     panel.classList.toggle("is-active", isSelected);
     panel.setAttribute("aria-hidden", String(!isSelected));
+
+    if (isLeaving) {
+      panel.leaveTimer = setTimeout(() => {
+        panel.classList.remove("is-leaving");
+        panel.leaveTimer = null;
+      }, viewTransitionDuration);
+    }
   });
 }
 
@@ -197,7 +219,7 @@ start.addEventListener("touchcancel", () => {
 });
 
 stackCards.forEach((card) => {
-  card.addEventListener("click", (event) => {
+  function toggleStackCard(event) {
     if (card.dataset.card === "photo") {
       return;
     }
@@ -210,6 +232,22 @@ stackCards.forEach((card) => {
 
     event.preventDefault();
     cardField.dataset.activeCard = card.dataset.card;
+  }
+
+  card.addEventListener("click", (event) => {
+    if (event.target.closest("a")) {
+      return;
+    }
+
+    toggleStackCard(event);
+  });
+
+  card.addEventListener("keydown", (event) => {
+    if (!["Enter", " "].includes(event.key) || event.target.closest("a")) {
+      return;
+    }
+
+    toggleStackCard(event);
   });
 });
 
@@ -351,6 +389,10 @@ draggableCards.forEach((card) => {
 });
 
 projectCards.forEach((card) => {
+  if (card.classList.contains("project-card--empty")) {
+    return;
+  }
+
   card.setAttribute("role", "button");
   card.setAttribute("aria-pressed", "false");
 
@@ -395,5 +437,5 @@ projectCards.forEach((card) => {
 
 cardField.dataset.activeCard = "work";
 setTimezoneLabel();
-setActiveView(getViewFromLocation());
+setActiveView(getViewFromLocation(), { animate: false });
 setRandomHeroLine();
