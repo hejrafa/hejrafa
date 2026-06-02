@@ -27,7 +27,8 @@ const heroLines = [
   ["Grow", "in silence"],
   ["Every second", "counts"],
 ];
-const validViews = new Set(["home", "work", "about"]);
+const legacyViewAliases = new Map([["work", "projects"]]);
+const validViews = new Set(["home", "projects", "about"]);
 
 function setRandomHeroLine() {
   const [firstLine, secondLine] = heroLines[Math.floor(Math.random() * heroLines.length)];
@@ -51,8 +52,15 @@ function setTimezoneLabel() {
 
 function getViewFromLocation() {
   const hashView = window.location.hash.replace("#", "");
+  const view = legacyViewAliases.get(hashView) ?? hashView;
 
-  return validViews.has(hashView) ? hashView : "home";
+  if (hashView !== view && validViews.has(view)) {
+    const url = new URL(window.location.href);
+    url.hash = view;
+    window.history.replaceState({ view }, "", url);
+  }
+
+  return validViews.has(view) ? view : "home";
 }
 
 function updateRoute(view) {
@@ -65,7 +73,8 @@ function updateRoute(view) {
 }
 
 function setActiveView(view, { animate = true, updateUrl = false } = {}) {
-  const nextView = validViews.has(view) ? view : "home";
+  const normalizedView = legacyViewAliases.get(view) ?? view;
+  const nextView = validViews.has(normalizedView) ? normalizedView : "home";
   const previousPanel = getActivePanel();
   const shouldAnimateLeaving = animate && previousPanel && previousPanel.dataset.page !== nextView;
 

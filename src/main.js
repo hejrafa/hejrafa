@@ -1,7 +1,6 @@
 const publicRoutes = [
   ["/curiosities/", "curiosities"],
   ["/inventory/", "inventory"],
-  ["/about/", "about"],
   ["/cv/", "cv"]
 ];
 
@@ -13,7 +12,6 @@ const pages = {
   "/": homePage,
   "/curiosities/": curiositiesPage,
   "/inventory/": inventoryPage,
-  "/about/": aboutPage,
   "/cv/": cvPage,
   "/expenses/": expensesPage,
   "/debt/": debtPage,
@@ -79,26 +77,6 @@ function inventoryPage() {
   return {
     title: "inventory",
     html: `<article class="page"><h1>inventory</h1><table><tbody>${items.map(([type, name, price]) => `<tr><td>${type}</td><td>${name}</td><td>${price}</td></tr>`).join("")}</tbody></table></article>`
-  };
-}
-
-function aboutPage() {
-  return {
-    title: "about",
-    html: `
-      <article class="page text">
-        <h1>capturing what I can't see</h1>
-        <p>my name is rafael polutta, and my goal is to tell stories that inspire. this is why.</p>
-        <p>I never thought much about it, but living with no mental images (aphantasia) makes the past feel unimportant. I don't dwell on what was. details fade quickly, and all that's left are broad strokes: growing up in a small village, helping my parents renovate the house, school days, bike rides through the forest. moving to the city, studying art direction and design simply because I was always in front of a computer. mesmerised by moving graphics in video games and the internet.</p>
-        <p>learning the rules in order to break them. finding a calling in user experiences and interfaces - without realising it, telling stories through buttons and typefaces.</p>
-        <img src="/assets/images/switzerland.jpg" alt="Rafa somewhere in Switzerland">
-        <p>the act of creating is what drives me. I don't idle well. having nothing to do might sound wonderful, but without a project I grow restless.</p>
-        <blockquote>everything around you that you call life was made up by people who were no smarter than you.</blockquote>
-        <img src="/assets/images/portrait.jpg" alt="Rafa posing">
-        <h2>things I believe</h2>
-        <ol>${["touch grass.", "move your body first thing in the morning.", "do one thing at a time.", "let cleaning and cooking become meditation.", "read something every day.", "don't ever put your happiness in someone else's hands.", "your normal day is someone's dream - be thankful.", "treat everyone with respect.", "time you enjoy wasting isn't wasted.", "just go for it.", "be private. vibe alone. grow in silence.", "every second counts."].map((item) => `<li>${item}</li>`).join("")}</ol>
-      </article>
-    `
   };
 }
 

@@ -582,16 +582,16 @@ img {
   padding: clamp(16px, 4vh, 42px) 0 118px;
 }
 
-.start[data-view="work"] {
+.start[data-view="projects"] {
   overflow-y: auto;
 }
 
-.start[data-view="work"] .view-stage {
+.start[data-view="projects"] .view-stage {
   flex: none;
   min-height: auto;
 }
 
-.start[data-view="work"] .work-page.is-active {
+.start[data-view="projects"] .work-page.is-active {
   position: relative;
 }
 
