@@ -9,8 +9,8 @@
   <link rel="shortcut icon" href="/favicon.ico?v=20260526a">
   <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
-  <link rel="stylesheet" href="/style.css?v=20260602-projects-nav">
-  <script src="/script.js?v=20260602-projects-nav" defer></script>
+  <link rel="stylesheet" href="/style.css?v=20260603-emoji-border-6">
+  <script src="/script.js?v=20260603-emoji-border-6" defer></script>
 </head>
 <body>
   <main class="start" data-view="home" aria-label="Hej Rafa home">
@@ -238,6 +238,14 @@
             </article>
 
             <article class="project-card" data-layout="system" tabindex="0">
+              <div class="syntax-outside" aria-label="Draggable design system examples">
+                <div class="syntax-outside-item syntax-outside-item--empty" data-draggable-card data-tooltip="Drag me out">
+                  <img src="/assets/images/syntax_empty_state.png" alt="" draggable="false">
+                </div>
+                <div class="syntax-outside-item syntax-outside-item--form" data-draggable-card data-tooltip="Drag me out">
+                  <img src="/assets/images/syntax_form_preset.png" alt="" draggable="false">
+                </div>
+              </div>
               <div class="project-card-inner">
                 <div class="project-face project-face--front">
                   <span class="syntax-logo" aria-hidden="true"></span>
@@ -260,15 +268,6 @@
                 </div>
               </div>
             </article>
-
-            <div class="syntax-outside" aria-label="Draggable design system examples">
-              <div class="syntax-outside-item syntax-outside-item--empty" data-draggable-card data-tooltip="Drag me out">
-                <img src="/assets/images/syntax_empty_state.png" alt="" draggable="false">
-              </div>
-              <div class="syntax-outside-item syntax-outside-item--form" data-draggable-card data-tooltip="Drag me out">
-                <img src="/assets/images/syntax_form_preset.png" alt="" draggable="false">
-              </div>
-            </div>
 
             <article class="project-card" data-layout="merge" tabindex="0">
               <div class="project-card-inner">
@@ -315,23 +314,29 @@
       <section class="view-panel about-page" data-page="about" aria-label="About Rafa" aria-hidden="true">
         <article class="about-story">
           <header class="about-story-hero">
-            <figure class="about-polaroid about-polaroid--hero" data-draggable-card data-tooltip="Drag me around">
-              <img src="/_assets/v11/35d77dbc12496bff6c119e019b2dc034ba12fe94.png" alt="Rafa naturally going through his note">
-              <figcaption>going through notes</figcaption>
-            </figure>
+            <div class="about-hero-photo-wrap">
+              <a class="about-sticker about-sticker--camera about-sticker--hero-camera" href="https://frauraenger.de/" target="_blank" rel="noreferrer" data-tooltip="Photo by Ann-Sophie" aria-label="Photo by Ann-Sophie">📷</a>
+              <figure class="about-polaroid about-polaroid--hero" data-draggable-card data-tooltip="Drag me around">
+                <img src="/_assets/v11/35d77dbc12496bff6c119e019b2dc034ba12fe94.png" alt="Rafa naturally going through his note">
+                <figcaption>going through notes</figcaption>
+              </figure>
+            </div>
             <h1>Capturing what I can’t see</h1>
           </header>
 
           <div class="about-text about-text--lead">
             <p>My name is Rafael Polutta. I design digital products, tell stories, and care deeply about making things feel clear, useful, and human.</p>
             <p>I think it started with pixels. Before I knew what product design was, I spent hours in Photoshop drawing tiny light effects for websites. Pixel by pixel. I learned HTML and CSS too, but always found myself spending more time on how things felt: the spacing, the color, the rhythm, even how clean the code looked.</p>
-            <p>At some point it became obvious that this was not just a hobby. I wanted to do this for a living, so I studied art direction and design. Over time, I found my way into interfaces: buttons, layouts, systems, type, motion, hierarchy. The quiet details that help people understand where they are and what they can do next.</p>
+            <p>At some point it became obvious that this was not just a hobby. I wanted to do this for a living, so I studied art direction and design. Over time, I found my way into interfaces: buttons, layouts, systems, type, motion, hierarchy. <strong>The quiet details that help people understand where they are and what they can do next.</strong></p>
           </div>
 
-          <figure class="about-wide-image" data-draggable-card data-tooltip="Drag me around">
-            <img src="/_assets/v11/385d6613243a7ae9ee0016d5724b42a981b83a69.png" alt="Rafa somewhere in Switzerland">
-            <figcaption>(me somewhere in Switzerland)</figcaption>
-          </figure>
+          <div class="about-wide-wrap">
+            <a class="about-sticker about-sticker--motorcycle" href="https://youtu.be/4r64mE6JMLE?si=plxt7cPdfc9EMAWP" target="_blank" rel="noreferrer" data-tooltip="Watch the Switzerland video" aria-label="Watch the Switzerland video">🏍️</a>
+            <figure class="about-wide-image" data-draggable-card data-tooltip="Drag me around">
+              <img src="/_assets/v11/385d6613243a7ae9ee0016d5724b42a981b83a69.png" alt="Rafa somewhere in Switzerland">
+              <figcaption>(me somewhere in Switzerland)</figcaption>
+            </figure>
+          </div>
 
           <div class="about-text">
             <p>I live with no mental images (<a href="https://aphantasia.com/what-is-aphantasia/" target="_blank" rel="noreferrer">aphantasia</a>), which means memories don’t come back to me as scenes. They return as moods, fragments, and broad strokes. Maybe that is why I still love wireframes, notebooks, sketches, photos, video, and physical objects. They give shape to things that would otherwise fade.</p>
@@ -345,16 +350,18 @@
           </blockquote>
 
           <div class="about-media-row">
-            <figure class="about-polaroid about-polaroid--tall" data-draggable-card data-tooltip="Drag me around">
-              <img src="/_assets/v11/b63f35a64f38fc1787e66d531ac091dd6263c810.png" alt="Rafa totally not posing">
-              <figcaption>totally not posing</figcaption>
-            </figure>
+            <div class="about-tall-wrap">
+              <a class="about-sticker about-sticker--camera about-sticker--tall-camera" href="https://frauraenger.de/" target="_blank" rel="noreferrer" data-tooltip="Photo by Ann-Sophie" aria-label="Photo by Ann-Sophie">📷</a>
+              <figure class="about-polaroid about-polaroid--tall" data-draggable-card data-tooltip="Drag me around">
+                <img src="/_assets/v11/b63f35a64f38fc1787e66d531ac091dd6263c810.png" alt="Rafa totally not posing">
+                <figcaption>totally not posing</figcaption>
+              </figure>
+            </div>
 
             <div class="about-text">
-              <p>The longer I work in design, the more I care about the ethics of it. Good design should make things clearer, not hide the truth. It should help people make better decisions, not trap them in loops. I don’t believe in dark patterns, fake urgency, or products that confuse people on purpose.</p>
+              <p>The longer I work in design, the more I care about the ethics of it. <strong>Good design should make things clearer, not hide the truth.</strong> It should help people make better decisions, not trap them in loops. I don’t believe in dark patterns, fake urgency, or products that confuse people on purpose.</p>
               <p>I like being close to the product. Close to the people building it. Close to the messy decisions that turn an idea into something real. I love focused teams that want to achieve something together. I have less love for meetings that exist only because the calendar had space.</p>
-              <p>What drives me is creating. I don’t idle well. Without a project, I get restless. Design, photography, video, writing, side projects — they all come from the same place: trying to understand something by making it visible.</p>
-              <p>I want to keep building products that are useful, mindful, and made with taste. Products that respect people. Products that feel considered. Products that do their job without shouting for attention.</p>
+              <p>I want to keep building products that are useful, mindful, and made with taste. Design, photography, video, writing, side projects — they all come from the same place: trying to understand something by making it visible.</p>
             </div>
           </div>
 

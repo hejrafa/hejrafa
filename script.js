@@ -8,6 +8,7 @@ const viewPanels = document.querySelectorAll("[data-page]");
 const stackCards = document.querySelectorAll(".card-field [data-card]");
 const draggableCards = document.querySelectorAll("[data-draggable-card]");
 const projectCards = document.querySelectorAll(".project-card");
+const aboutStickerLinks = document.querySelectorAll(".about-sticker");
 const viewTransitionDuration = 460;
 let scrollBounceFrame = null;
 let scrollBounce = 0;
@@ -394,6 +395,14 @@ draggableCards.forEach((card) => {
     if (didDrag) {
       event.preventDefault();
     }
+  });
+});
+
+aboutStickerLinks.forEach((link) => {
+  ["pointerdown", "pointerup", "mousedown", "mouseup", "touchstart", "touchend", "click"].forEach((eventName) => {
+    link.addEventListener(eventName, (event) => {
+      event.stopPropagation();
+    }, { capture: true });
   });
 });
 

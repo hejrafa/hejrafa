@@ -84,7 +84,8 @@ img {
 .start {
   position: relative;
   height: 100svh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -96,6 +97,21 @@ img {
 
 .start::before {
   content: none;
+}
+
+.start[data-view="home"] {
+  overflow-y: auto;
+}
+
+.start[data-view="home"] .view-stage {
+  flex: none;
+  min-height: auto;
+}
+
+.start[data-view="home"] .hero.is-active {
+  position: relative;
+  min-height: max(820px, calc(100svh - 160px));
+  padding-bottom: 140px;
 }
 
 .top-mark {
@@ -316,7 +332,7 @@ img {
   --egg-rotate: -3deg;
   --egg-hover-rotate: -1deg;
   left: -62px;
-  top: 386px;
+  top: 452px;
 }
 
 .curiosity-egg--movie-4 {
@@ -340,7 +356,7 @@ img {
   --egg-rotate: 5deg;
   --egg-hover-rotate: 2deg;
   right: -92px;
-  top: 382px;
+  top: 452px;
 }
 
 .curiosity-egg--show-3 {
@@ -356,7 +372,7 @@ img {
   --egg-rotate: 8deg;
   --egg-hover-rotate: 5deg;
   right: 38px;
-  top: 468px;
+  top: 548px;
 }
 
 .curiosity-egg--book-1 {
@@ -364,23 +380,23 @@ img {
   --egg-rotate: 6deg;
   --egg-hover-rotate: 3deg;
   left: -92px;
-  bottom: 42px;
+  bottom: 38px;
 }
 
 .curiosity-egg--book-2 {
   --egg-width: 78px;
   --egg-rotate: -8deg;
   --egg-hover-rotate: -5deg;
-  left: 2px;
-  bottom: -24px;
+  left: -12px;
+  bottom: 24px;
 }
 
 .curiosity-egg--book-3 {
   --egg-width: 76px;
   --egg-rotate: 5deg;
   --egg-hover-rotate: 2deg;
-  right: 6px;
-  bottom: 6px;
+  right: -8px;
+  bottom: 38px;
 }
 
 .curiosity-egg--book-4 {
@@ -388,7 +404,7 @@ img {
   --egg-rotate: -6deg;
   --egg-hover-rotate: -3deg;
   right: -96px;
-  bottom: 68px;
+  bottom: 52px;
 }
 
 .curiosity-egg--album-1,
@@ -437,16 +453,16 @@ img {
   --egg-width: 76px;
   --egg-rotate: -4deg;
   --egg-hover-rotate: -1deg;
-  left: 132px;
-  bottom: 26px;
+  left: 154px;
+  bottom: 74px;
 }
 
 .curiosity-egg--album-4 {
   --egg-width: 78px;
   --egg-rotate: 5deg;
   --egg-hover-rotate: 2deg;
-  right: 78px;
-  bottom: 48px;
+  right: 118px;
+  bottom: 88px;
 }
 
 .curiosity-egg--podcast-1 {
@@ -470,15 +486,16 @@ img {
   --egg-rotate: 6deg;
   --egg-hover-rotate: 3deg;
   left: 56px;
-  bottom: 166px;
+  bottom: 104px;
 }
 
 .curiosity-egg--podcast-4 {
   --egg-width: 72px;
   --egg-rotate: -5deg;
   --egg-hover-rotate: -2deg;
-  right: 56px;
-  bottom: 166px;
+  right: 38px;
+  top: 660px;
+  bottom: auto;
 }
 
 .curiosity-egg--youtube-1 {
@@ -501,16 +518,17 @@ img {
   --egg-width: 72px;
   --egg-rotate: 7deg;
   --egg-hover-rotate: 4deg;
-  left: 214px;
-  bottom: -40px;
+  left: 244px;
+  bottom: 40px;
 }
 
 .curiosity-egg--youtube-4 {
   --egg-width: 74px;
   --egg-rotate: -5deg;
   --egg-hover-rotate: -2deg;
-  right: 104px;
-  bottom: -40px;
+  right: 132px;
+  top: 632px;
+  bottom: auto;
 }
 
 .curiosity-egg--mentor-1 {
@@ -518,7 +536,8 @@ img {
   --egg-rotate: 6deg;
   --egg-hover-rotate: 3deg;
   left: -58px;
-  top: 596px;
+  top: auto;
+  bottom: 260px;
 }
 
 .curiosity-egg--mentor-2 {
@@ -526,7 +545,8 @@ img {
   --egg-rotate: -7deg;
   --egg-hover-rotate: -4deg;
   right: -62px;
-  top: 592px;
+  top: auto;
+  bottom: 258px;
 }
 
 .curiosity-egg--mentor-3 {
@@ -534,7 +554,8 @@ img {
   --egg-rotate: 4deg;
   --egg-hover-rotate: 1deg;
   left: 106px;
-  top: 504px;
+  top: auto;
+  bottom: 184px;
 }
 
 .curiosity-egg--mentor-4 {
@@ -542,7 +563,8 @@ img {
   --egg-rotate: -6deg;
   --egg-hover-rotate: -3deg;
   right: 104px;
-  top: 504px;
+  top: auto;
+  bottom: 182px;
 }
 
 :is(.hero h1, .work-story-hero h1, .simple-page h1, .about-story-hero h1) {
@@ -923,10 +945,11 @@ img {
   --project-bg: #03eab3;
   --project-text: #0c4a3b;
   --project-shadow: rgba(12, 74, 59, 0.26);
-  z-index: 4;
+  z-index: 3;
 }
 
 .project-card[data-layout="system"] .project-card-inner {
+  position: relative;
   z-index: 2;
 }
 
@@ -970,11 +993,8 @@ img {
 
 .syntax-outside {
   position: absolute;
-  top: calc((clamp(460px, 48vw, 540px) + clamp(18px, 2.4vw, 28px)) * 2 + 46px);
-  right: 0;
+  inset: 0;
   z-index: 1;
-  width: calc((100% - clamp(18px, 2.4vw, 28px)) / 2);
-  height: min(38vw, 410px);
   pointer-events: none;
 }
 
@@ -1041,26 +1061,26 @@ img {
 }
 
 .syntax-outside-item--empty {
-  top: 0;
-  right: -74px;
-  width: min(56%, 236px);
+  top: 7%;
+  right: -16%;
+  width: clamp(150px, 54%, 236px);
   transform: translate(var(--drag-x), var(--drag-y)) rotate(7deg);
 }
 
 .syntax-outside-item--form {
-  top: 45%;
-  right: -84px;
-  width: min(56%, 236px);
+  top: 46%;
+  right: -18%;
+  width: clamp(150px, 54%, 236px);
   transform: translate(var(--drag-x), var(--drag-y)) rotate(-5deg);
 }
 
 .syntax-logo {
   position: absolute;
-  top: clamp(60px, 7vw, 88px);
+  top: clamp(58px, 16%, 88px);
   left: 50%;
   z-index: 3;
   display: block;
-  width: min(48%, 220px);
+  width: clamp(150px, 48%, 220px);
   aspect-ratio: 399 / 112;
   background: #0c4a3b;
   mask: url("/assets/images/syntax.svg") center / contain no-repeat;
@@ -1099,18 +1119,18 @@ img {
 }
 
 .syntax-component--select {
-  top: -13%;
+  top: -12%;
   left: 7%;
   z-index: 1;
-  width: min(56%, 236px);
+  width: clamp(154px, 54%, 236px);
   transform: rotate(-8deg);
 }
 
 .syntax-component--radio {
-  top: -7%;
+  top: -6%;
   right: 7%;
   z-index: 2;
-  width: min(56%, 236px);
+  width: clamp(154px, 54%, 236px);
   transform: rotate(7deg);
 }
 
@@ -1835,6 +1855,15 @@ img {
   margin: 12px 0 10px;
 }
 
+.about-hero-photo-wrap {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  width: clamp(180px, 20vw, 270px);
+  transform: translateX(calc(-50% + 12px)) translateY(66px);
+}
+
 .about-polaroid {
   position: relative;
   z-index: 1;
@@ -1848,6 +1877,8 @@ img {
 }
 
 .about-polaroid img {
+  position: relative;
+  z-index: 2;
   width: 100%;
   border-radius: 7px;
   object-fit: cover;
@@ -1864,6 +1895,7 @@ img {
 
 .about-polaroid figcaption {
   position: absolute;
+  z-index: 3;
   left: 12px;
   right: 12px;
   bottom: 14px;
@@ -1874,9 +1906,9 @@ img {
 .about-polaroid--hero {
   --drag-x: 0px;
   --drag-y: 0px;
-  position: absolute;
-  width: clamp(180px, 20vw, 270px);
-  transform: translate(var(--drag-x), var(--drag-y)) rotate(5deg) translate(12px, 66px);
+  z-index: 2;
+  width: 100%;
+  transform: translate(var(--drag-x), var(--drag-y)) rotate(5deg);
   opacity: 0.92;
   cursor: grab;
   touch-action: none;
@@ -1920,11 +1952,19 @@ img {
   text-underline-offset: 0.12em;
 }
 
+.about-wide-wrap {
+  --wide-image-height: clamp(260px, 46vw, 520px);
+  position: relative;
+  z-index: 1;
+  margin: clamp(58px, 10vh, 104px) 0;
+}
+
 .about-wide-image {
   --drag-x: 0px;
   --drag-y: 0px;
+  z-index: 2;
   position: relative;
-  margin: clamp(58px, 10vh, 104px) 0;
+  margin: 0;
   transform: translate(var(--drag-x), var(--drag-y));
   cursor: grab;
   touch-action: none;
@@ -1932,8 +1972,10 @@ img {
 }
 
 .about-wide-image img {
+  position: relative;
+  z-index: 2;
   width: 100%;
-  height: clamp(260px, 46vw, 520px);
+  height: var(--wide-image-height);
   border: 12px solid #fffdf6;
   border-radius: 10px;
   object-fit: cover;
@@ -1941,8 +1983,103 @@ img {
 }
 
 .about-wide-image figcaption {
+  position: relative;
+  z-index: 3;
   margin-top: 14px;
-  font-size: 18px;
+  font-size: 24px;
+}
+
+.about-sticker {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  width: auto;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: clamp(54px, 6vw, 78px);
+  line-height: 1;
+  text-decoration: none;
+  text-shadow:
+    0 -6px 0 #fffdf6,
+    6px 0 0 #fffdf6,
+    0 6px 0 #fffdf6,
+    -6px 0 0 #fffdf6,
+    4.5px 4.5px 0 #fffdf6,
+    -4.5px 4.5px 0 #fffdf6,
+    4.5px -4.5px 0 #fffdf6,
+    -4.5px -4.5px 0 #fffdf6,
+    0 -3px 0 #fffdf6,
+    3px 0 0 #fffdf6,
+    0 3px 0 #fffdf6,
+    -3px 0 0 #fffdf6;
+  cursor: pointer;
+  transform: translate(-50%, -50%) rotate(var(--sticker-rotate, -8deg));
+  transition:
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.about-sticker::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  z-index: 8;
+  width: max-content;
+  max-width: 180px;
+  padding: 7px 10px 8px;
+  border-radius: 10px;
+  background: var(--nav-frame);
+  color: var(--cream);
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.05;
+  white-space: normal;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: none;
+  box-shadow:
+    0 5px 0 rgba(16, 16, 16, 0.18),
+    0 14px 24px rgba(20, 19, 19, 0.14);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 7px) rotate(1deg);
+  transition: opacity 150ms ease, transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.about-sticker:hover,
+.about-sticker:focus-visible {
+  z-index: 8;
+  transform: translate(-50%, calc(-50% - 7px)) rotate(var(--sticker-hover-rotate, -4deg)) scale(1.08);
+}
+
+.about-sticker:hover::after,
+.about-sticker:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(-1deg);
+}
+
+.about-sticker--hero-camera {
+  --sticker-rotate: 9deg;
+  --sticker-hover-rotate: 5deg;
+  left: 50%;
+  top: 50%;
+}
+
+.about-sticker--motorcycle {
+  --sticker-rotate: -7deg;
+  --sticker-hover-rotate: -3deg;
+  left: 50%;
+  top: calc(var(--wide-image-height) / 2);
+  font-size: clamp(64px, 7vw, 92px);
+}
+
+.about-sticker--tall-camera {
+  --sticker-rotate: -10deg;
+  --sticker-hover-rotate: -5deg;
+  left: 50%;
+  top: 50%;
 }
 
 .about-quote {
@@ -1978,10 +2115,17 @@ img {
   padding-bottom: 56px;
 }
 
+.about-tall-wrap {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 340px);
+}
+
 .about-polaroid--tall {
   --drag-x: 0px;
   --drag-y: 0px;
-  width: min(100%, 340px);
+  z-index: 2;
+  width: 100%;
   transform: translate(var(--drag-x), var(--drag-y)) rotate(-4deg);
   cursor: grab;
   touch-action: none;
@@ -2543,11 +2687,98 @@ img {
 
   .project-grid {
     grid-template-columns: 1fr;
+    justify-items: center;
   }
 
   .project-card {
     grid-column: 1 / -1;
+    width: min(100%, 370px);
     min-height: 470px;
+  }
+
+  .wow-icons {
+    top: 42px;
+    width: 84%;
+  }
+
+  .wow-icon {
+    width: clamp(112px, 34vw, 132px);
+  }
+
+  .hejhub-bento {
+    top: 42px;
+    width: min(82%, 300px);
+  }
+
+  .youtube-thumb {
+    top: 52px;
+    width: min(84%, 312px);
+  }
+
+  .project-cover {
+    top: -22px;
+    left: -20px;
+    width: min(52%, 190px);
+  }
+
+  .episode-cover--156 {
+    --cover-width: 34%;
+    --cover-max: 126px;
+    top: 18px;
+    left: 26%;
+  }
+
+  .episode-cover--96 {
+    --cover-width: 33%;
+    --cover-max: 122px;
+    top: 36px;
+    left: 40%;
+  }
+
+  .episode-cover--171 {
+    --cover-width: 32%;
+    --cover-max: 118px;
+    top: 54px;
+    left: 54%;
+  }
+
+  .episode-cover--148 {
+    --cover-width: 31%;
+    --cover-max: 114px;
+    top: 72px;
+    left: 68%;
+  }
+
+  .syntax-outside-item--empty {
+    top: 5%;
+    right: -14%;
+    width: clamp(144px, 46vw, 214px);
+  }
+
+  .syntax-outside-item--form {
+    top: 42%;
+    right: -16%;
+    width: clamp(144px, 46vw, 214px);
+  }
+
+  .syntax-component--select,
+  .syntax-component--radio {
+    width: min(54%, 200px);
+  }
+
+  .syntax-logo {
+    top: 82px;
+    width: min(58%, 200px);
+  }
+
+  .syntax-component--select {
+    top: -6%;
+    left: 5%;
+  }
+
+  .syntax-component--radio {
+    top: -2%;
+    right: 5%;
   }
 
   .project-card::after {
@@ -2612,7 +2843,8 @@ img {
 
   .hero {
     padding-top: clamp(44px, 8vh, 72px);
-    min-height: calc(100svh - 88px);
+    min-height: max(620px, calc(100svh - 88px));
+    padding-bottom: 132px;
   }
 
   .card-field {
@@ -2639,15 +2871,23 @@ img {
 
   .polaroid-card {
     left: 0;
-    width: 148px;
+    bottom: 8px;
+    transform: translate(var(--drag-x), var(--drag-y)) rotate(-5deg);
+  }
+
+  .polaroid-handle {
+    left: 0;
+    bottom: 8px;
+    transform: translate(var(--drag-x), var(--drag-y)) rotate(-5deg);
   }
 
   .home-curiosities {
-    inset: -18px -44px -20px;
+    --curiosity-scale: 0.92;
+    inset: -18px -34px -34px;
   }
 
   .curiosity-egg {
-    --egg-width: 58px;
+    --egg-width: 56px;
     opacity: 0.78;
   }
 
@@ -2656,82 +2896,182 @@ img {
     opacity: 1;
   }
 
-  .curiosity-egg--movie-2,
-  .curiosity-egg--movie-3,
-  .curiosity-egg--show-3,
-  .curiosity-egg--show-4,
-  .curiosity-egg--book-2,
-  .curiosity-egg--book-3,
-  .curiosity-egg--album-3,
-  .curiosity-egg--album-4,
-  .curiosity-egg--podcast-3,
-  .curiosity-egg--podcast-4,
-  .curiosity-egg--youtube-2,
-  .curiosity-egg--youtube-3,
-  .curiosity-egg--youtube-4,
-  .curiosity-egg--mentor-2,
-  .curiosity-egg--mentor-3,
-  .curiosity-egg--mentor-4 {
-    display: none;
+  .curiosity-egg--movie-1 {
+    left: -30px;
+    top: 118px;
   }
 
-  .curiosity-egg--movie-1 {
-    left: -42px;
-    top: 140px;
+  .curiosity-egg--movie-2 {
+    left: 24px;
+    top: 188px;
+  }
+
+  .curiosity-egg--movie-3 {
+    left: -36px;
+    top: 392px;
   }
 
   .curiosity-egg--movie-4 {
-    right: -40px;
-    top: 148px;
+    right: -32px;
+    top: 128px;
   }
 
   .curiosity-egg--show-1 {
-    right: -8px;
-    top: 286px;
+    right: 4px;
+    top: 256px;
   }
 
   .curiosity-egg--show-2 {
-    right: -42px;
-    top: 420px;
+    right: -34px;
+    top: 382px;
+  }
+
+  .curiosity-egg--show-3 {
+    left: 4px;
+    top: 286px;
+  }
+
+  .curiosity-egg--show-4 {
+    right: 22px;
+    top: 508px;
   }
 
   .curiosity-egg--book-1 {
-    left: -42px;
-    bottom: 76px;
+    left: -34px;
+    bottom: 92px;
+  }
+
+  .curiosity-egg--book-2 {
+    left: 18px;
+    bottom: 22px;
+  }
+
+  .curiosity-egg--book-3 {
+    right: 14px;
+    bottom: 24px;
   }
 
   .curiosity-egg--book-4 {
-    right: -42px;
-    bottom: 72px;
+    right: -34px;
+    bottom: 100px;
   }
 
   .curiosity-egg--album-1 {
-    left: 22px;
-    top: -4px;
+    left: 12px;
+    top: -8px;
   }
 
   .curiosity-egg--album-2 {
-    right: 22px;
-    top: -2px;
+    right: 12px;
+    top: -8px;
+  }
+
+  .curiosity-egg--album-3 {
+    left: 86px;
+    bottom: 58px;
+  }
+
+  .curiosity-egg--album-4 {
+    right: 84px;
+    bottom: 70px;
   }
 
   .curiosity-egg--podcast-1 {
-    left: -42px;
-    top: 8px;
+    left: -30px;
+    top: 22px;
   }
 
   .curiosity-egg--podcast-2 {
-    right: -42px;
-    top: 8px;
+    right: -30px;
+    top: 22px;
+  }
+
+  .curiosity-egg--podcast-3 {
+    left: -22px;
+    top: 512px;
+  }
+
+  .curiosity-egg--podcast-4 {
+    right: -22px;
+    top: 606px;
+    bottom: auto;
   }
 
   .curiosity-egg--youtube-1 {
-    left: 18px;
-    bottom: 152px;
+    left: -18px;
+    bottom: 186px;
+  }
+
+  .curiosity-egg--youtube-2 {
+    right: -18px;
+    bottom: 192px;
+  }
+
+  .curiosity-egg--youtube-3 {
+    left: 54px;
+    bottom: -8px;
+  }
+
+  .curiosity-egg--youtube-4 {
+    right: 44px;
+    top: 632px;
+    bottom: auto;
   }
 
   .curiosity-egg--mentor-1 {
-    right: 18px;
-    bottom: 148px;
+    left: -24px;
+    top: 642px;
+    bottom: auto;
+  }
+
+  .curiosity-egg--mentor-2 {
+    right: -24px;
+    top: 638px;
+    bottom: auto;
+  }
+
+  .curiosity-egg--mentor-3 {
+    left: 82px;
+    top: 574px;
+    bottom: auto;
+  }
+
+  .curiosity-egg--mentor-4 {
+    right: 78px;
+    top: 566px;
+    bottom: auto;
+  }
+
+  .about-media-row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: center;
+    margin: clamp(52px, 9vh, 78px) auto;
+    padding-bottom: 32px;
+  }
+
+  .about-tall-wrap {
+    justify-self: center;
+    width: min(78%, 300px);
+  }
+
+  .about-sticker {
+    font-size: 56px;
+  }
+
+  .about-sticker--hero-camera {
+    left: 50%;
+    top: 50%;
+  }
+
+  .about-sticker--motorcycle {
+    left: 50%;
+    top: calc(var(--wide-image-height) / 2);
+    font-size: 64px;
+  }
+
+  .about-sticker--tall-camera {
+    left: 50%;
+    top: 50%;
   }
 }
