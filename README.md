@@ -1,51 +1,9 @@
 # hejrafa
 
-Personal website and portfolio for Rafael Polutta.
+This is my ever-evolving personal website.
 
-The public homepage is a static single-page experience with three hash-routed sections:
+It is part portfolio, part notebook, part tiny internet home. I use it to show the work I care about, collect the things that shape my taste, and keep a corner of the web that feels handmade instead of optimized to death.
 
-- `/#home`
-- `/#projects`
-- `/#about`
+The point is not to make a perfect portfolio and freeze it. The point is to keep changing it as I change: projects, thoughts, odd details, small experiments, and whatever else feels honest at the time.
 
-The old `/#work` hash is kept as a compatibility alias and redirects to `/#projects`.
-
-## Pages
-
-The main experience lives in the root files:
-
-- `index.html`
-- `style.css`
-- `script.js`
-
-Standalone pages still available:
-
-- `/curiosities/`
-- `/cv/`
-- `/inventory/`
-
-System:
-
-- `/404.html`
-
-## Run Locally
-
-```bash
-python3 -m http.server 4173
-```
-
-Then open:
-
-```text
-http://localhost:4173/
-```
-
-## Deployment
-
-The site is plain static HTML/CSS/JS and deploys through GitHub Pages from `main` at the repository root.
-
-Custom domain:
-
-```text
-hejrafa.com
-```
+Made by Rafa in Hamburg.

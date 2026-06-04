@@ -1,0 +1,112 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--finance-paper);
+  color: var(--finance-ink);
+  font-family: var(--finance-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 34%),
+    var(--finance-paper);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+}
+
+.finance-document {
+  width: min(100%, 1180px);
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: clamp(42px, 6.4vh, 84px) 18px clamp(82px, 10vw, 132px);
+}
+
+.finance-top-mark {
+  position: relative;
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  margin-bottom: clamp(36px, 7vw, 86px);
+  pointer-events: none;
+}
+
+.finance-top-mark a {
+  display: block;
+  width: clamp(84px, 6vw, 110px);
+  cursor: pointer;
+  filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.12));
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  animation: finance-page-enter 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transition:
+    filter 190ms ease,
+    transform 190ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.finance-top-mark a:hover,
+.finance-top-mark a:focus-visible {
+  transform: translateY(-4px) rotate(-7deg) scale(1.1);
+  filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.16));
+}
+
+.finance-top-mark img {
+  width: 100%;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.finance-hero {
+  animation: finance-page-enter 420ms 70ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes finance-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .finance-document {
+    padding-top: 58px;
+    padding-inline: 14px;
+  }
+
+  .finance-top-mark {
+    margin-bottom: 42px;
+  }
+}

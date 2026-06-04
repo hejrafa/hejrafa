@@ -1,12 +1,171 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0; url=/" />
-    <title>hejrafa</title>
-  </head>
-  <body>
-    <a href="/">Return home</a>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Error 404 | hejrafa</title>
+  <link rel="icon" href="/favicon.ico?v=20260526a" sizes="any">
+  <link rel="shortcut icon" href="/favicon.ico?v=20260526a">
+  <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
+  <style>
+    @font-face {
+      font-family: "Redaction 10";
+      font-style: normal;
+      font-display: swap;
+      font-weight: 700;
+      src: url("https://cdn.jsdelivr.net/fontsource/fonts/redaction-10@latest/latin-700-normal.woff2") format("woff2");
+    }
+
+    :root {
+      --paper: #fff6cf;
+      --ink: #141313;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    img {
+      display: block;
+    }
+
+    .not-found {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(42px, 6.4vh, 84px) 18px 30px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 34%),
+        var(--paper);
+    }
+
+    .top-mark {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 980px);
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .top-mark a {
+      display: block;
+      width: clamp(84px, 6vw, 110px);
+      color: var(--ink);
+      cursor: pointer;
+      filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.12));
+      pointer-events: auto;
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-tap-highlight-color: transparent;
+      will-change: transform, filter;
+      transition:
+        transform 190ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 190ms ease;
+    }
+
+    .top-mark img {
+      width: 100%;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .top-mark a:hover,
+    .top-mark a:focus-visible {
+      transform: translateY(-4px) rotate(-7deg) scale(1.1);
+      filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.16));
+    }
+
+    .top-mark a:active {
+      transform: translateY(-1px) rotate(-4deg) scale(1.04);
+      filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.13));
+    }
+
+    .error-stage {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 120px 18px 80px;
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Redaction 10", Georgia, serif;
+      font-size: clamp(72px, 13vw, 190px);
+      font-weight: 700;
+      line-height: 0.86;
+      letter-spacing: 0;
+      text-align: center;
+      text-shadow: 0 10px 0 rgba(20, 19, 19, 0.08);
+      animation: error-rise 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes error-rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-height: 760px) and (min-width: 761px) {
+      .not-found {
+        padding-top: 28px;
+      }
+
+      .top-mark a {
+        width: 76px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-mark a {
+        width: 84px;
+      }
+
+      h1 {
+        font-size: clamp(64px, 21vw, 112px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="not-found">
+    <header class="top-mark">
+      <a href="/#home" aria-label="Hej Rafa home">
+        <img src="/assets/icons/hej-logo.svg" alt="">
+      </a>
+    </header>
+
+    <section class="error-stage" aria-label="Page not found">
+      <h1>Error 404</h1>
+    </section>
+  </main>
+</body>
 </html>
