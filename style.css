@@ -2867,6 +2867,50 @@ img {
 
   .note-card {
     right: 0;
+    --home-card-title-size: 31px;
+  }
+
+  .leadership-note {
+    font-size: 30px;
+  }
+
+  .polaroid-card span,
+  .about-polaroid figcaption,
+  .about-wide-image figcaption {
+    font-size: 21px;
+  }
+
+  .identity-name {
+    font-size: 48px;
+  }
+
+  .identity-belief {
+    font-size: 23px;
+    line-height: 1.05;
+  }
+
+  .note-card .designer-title {
+    font-size: 30px;
+    line-height: 0.98;
+  }
+
+  .note-card .designer-copy {
+    font-size: 23px;
+    line-height: 1.04;
+  }
+
+  .note-card .designer-email {
+    font-size: 21px;
+  }
+
+  .note-card[data-card="notes"] .recipe-copy {
+    font-size: 19px;
+    line-height: 1.1;
+  }
+
+  .about-note ol {
+    font-size: 21px;
+    line-height: 1.16;
   }
 
   .polaroid-card {
