@@ -4,18 +4,9 @@ const dockItems = document.querySelectorAll("[data-yellow-nav]");
 const panels = document.querySelectorAll("[data-yellow-page]");
 const passwordInput = document.querySelector("[data-yellow-password]");
 const gateForm = document.querySelector("[data-yellow-gate]");
-const healthTitle = document.querySelector("[data-health-title]");
 const viewTransitionDuration = 460;
 const validViews = new Set(["health", "finance", "finance-yearly", "finance-debt"]);
 const unlockStorageKey = "hejrafa-yellow-unlocked";
-
-const healthTitles = [
-  ["Small proof", "every week"],
-  ["Future Rafa", "says thanks"],
-  ["A little stronger", "than yesterday"],
-  ["Keep the promise", "to yourself"],
-  ["Earn the balance", "then keep it"],
-];
 
 function getViewFromLocation() {
   const hashView = window.location.hash.replace("#", "");
@@ -80,18 +71,6 @@ function setActiveView(view, { animate = true, updateUrl = false } = {}) {
       }, viewTransitionDuration);
     }
   });
-}
-
-function setRandomHealthTitle() {
-  if (!healthTitle) {
-    return;
-  }
-
-  const [firstLine, secondLine] = healthTitles[Math.floor(Math.random() * healthTitles.length)];
-  healthTitle.replaceChildren(
-    Object.assign(document.createElement("span"), { textContent: firstLine }),
-    Object.assign(document.createElement("span"), { textContent: secondLine }),
-  );
 }
 
 function isUnlocked() {
@@ -285,44 +264,6 @@ function setupFinanceTotals() {
   }));
 }
 
-function setupWorkoutProgress() {
-  const workoutChecks = [...document.querySelectorAll("[data-workout-check]")];
-  const weekCount = document.querySelector("[data-week-count]");
-  const storageKey = "hejrafa-health-workout-week";
-
-  function updateWorkoutProgress() {
-    const days = [...document.querySelectorAll(".workout-day")];
-    const completedDays = days.filter((day) => {
-      const checks = [...day.querySelectorAll("[data-workout-check]")];
-      return checks.length > 0 && checks.every((check) => check.checked);
-    }).length;
-
-    if (weekCount) {
-      weekCount.textContent = `${completedDays}/3`;
-    }
-
-    try {
-      localStorage.setItem(storageKey, JSON.stringify(workoutChecks.map((check) => check.checked)));
-    } catch {
-      // Progress is still useful during the session when localStorage is unavailable.
-    }
-  }
-
-  try {
-    const savedChecks = JSON.parse(localStorage.getItem(storageKey) || "[]");
-    workoutChecks.forEach((check, index) => {
-      check.checked = Boolean(savedChecks[index]);
-      check.addEventListener("change", updateWorkoutProgress);
-    });
-  } catch {
-    workoutChecks.forEach((check) => check.addEventListener("change", updateWorkoutProgress));
-  }
-
-  updateWorkoutProgress();
-}
-
-setRandomHealthTitle();
 setupNavigation();
 setupFinanceTotals();
-setupWorkoutProgress();
 setupGate();

@@ -227,17 +227,67 @@ body.is-unlocked .yellow-app {
   display: block;
 }
 
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 2vw, 22px);
-  margin-bottom: clamp(38px, 6vw, 72px);
+.health-page {
+  padding-top: 0;
 }
 
-.summary-card,
-.panel,
-.goal-panel {
+.health-headline {
+  display: grid;
+  justify-items: center;
+  margin-bottom: clamp(28px, 5vw, 48px);
+  padding-top: clamp(16px, 4vh, 42px);
+  text-align: center;
+  animation: yellow-enter 420ms 80ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.health-headline h1 {
+  min-height: clamp(116px, 12vw, 160px);
+  max-width: 1120px;
+  margin: 12px 0 clamp(40px, 6vw, 64px);
+  font-family: var(--display);
+  font-size: clamp(54px, 8vw, 108px);
+  font-weight: 700;
+  line-height: 0.84;
+  letter-spacing: 0;
+  text-shadow: 0 6px 0 rgba(20, 19, 19, 0.08);
+  text-wrap: balance;
+}
+
+.health-headline h1 span {
+  display: block;
+}
+
+.health-headline p {
+  max-width: 700px;
+  margin: 0 auto;
+  color: rgba(20, 19, 19, 0.7);
+  font-family: var(--display);
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1.12;
+}
+
+.section-label,
+.biomarker-summary span {
+  display: block;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.section-label {
+  margin-bottom: 10px;
+}
+
+.biomarker-section {
+  animation: yellow-enter 420ms 180ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.biomarker-sheet {
+  overflow: visible;
   border-radius: 18px;
+  background: rgba(255, 253, 246, 0.9);
   box-shadow:
     0 8px 0 rgba(45, 5, 4, 0.1),
     0 24px 56px rgba(45, 5, 4, 0.14),
@@ -246,81 +296,7 @@ body.is-unlocked .yellow-app {
     inset 0 -34px 60px rgba(0, 0, 0, 0.06);
 }
 
-.summary-card,
-.panel {
-  background: rgba(255, 253, 246, 0.9);
-}
-
-.summary-card {
-  min-height: 154px;
-  padding: 22px;
-  animation: yellow-enter 420ms 150ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-.summary-card:nth-child(2) {
-  --enter-rotate: -1deg;
-}
-
-.summary-card:nth-child(3) {
-  --enter-rotate: 1deg;
-}
-
-.summary-card:nth-child(5) {
-  --enter-rotate: 1deg;
-}
-
-.summary-card:nth-child(6) {
-  --enter-rotate: -1deg;
-}
-
-.summary-card span,
-.goal-metrics span,
-.workout-day > div > span,
-.trend-card span {
-  display: block;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.summary-card span {
-  margin-bottom: 18px;
-}
-
-.summary-card strong {
-  display: block;
-  font-family: var(--display);
-  font-size: clamp(42px, 5vw, 64px);
-  font-weight: 700;
-  line-height: 0.86;
-}
-
-.summary-card em {
-  display: block;
-  margin-top: 10px;
-  color: var(--muted);
-  font-family: var(--display);
-  font-size: 24px;
-  font-style: normal;
-  line-height: 1;
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(22px, 3.6vw, 42px);
-  align-items: stretch;
-  margin-bottom: clamp(38px, 6vw, 72px);
-  animation: yellow-enter 420ms 220ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-.panel {
-  overflow: hidden;
-}
-
-.panel-header {
+.sheet-header {
   display: flex;
   justify-content: space-between;
   gap: 18px;
@@ -329,7 +305,7 @@ body.is-unlocked .yellow-app {
   border-bottom: 1px solid rgba(20, 19, 19, 0.1);
 }
 
-.panel h2 {
+.sheet-header h2 {
   margin: 0;
   font-family: var(--display);
   font-size: clamp(34px, 4.2vw, 56px);
@@ -337,7 +313,7 @@ body.is-unlocked .yellow-app {
   line-height: 0.9;
 }
 
-.panel-header span {
+.sheet-header > span {
   color: var(--muted);
   font-family: var(--mono);
   font-size: 12px;
@@ -346,352 +322,28 @@ body.is-unlocked .yellow-app {
   text-transform: uppercase;
 }
 
-.goal-panel {
-  position: relative;
-  display: flex;
-  min-height: 360px;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(24px, 3vw, 34px);
-  overflow: visible;
-  background:
-    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.28), transparent 36%),
-    var(--gold);
-  color: var(--ink);
-  transform: rotate(-1deg);
-}
-
-.goal-panel::after {
-  content: "10s";
-  position: absolute;
-  top: clamp(22px, 3vw, 34px);
-  right: clamp(22px, 3vw, 34px);
+.biomarker-summary {
   display: grid;
-  width: 92px;
-  aspect-ratio: 1;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--red);
-  color: var(--cream);
-  font-family: var(--display);
-  font-size: 42px;
-  font-weight: 700;
-  line-height: 0.8;
-  box-shadow:
-    0 7px 0 rgba(45, 5, 4, 0.18),
-    0 20px 36px rgba(45, 5, 4, 0.22);
-  transform: rotate(8deg);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid rgba(20, 19, 19, 0.1);
 }
 
-.goal-panel h2,
-.workout-panel h2,
-.trend-panel h2 {
-  margin: 0;
+.biomarker-summary div {
+  min-height: 108px;
+  padding: 18px clamp(18px, 2.4vw, 26px);
+}
+
+.biomarker-summary div + div {
+  border-left: 1px solid rgba(20, 19, 19, 0.1);
+}
+
+.biomarker-summary strong {
+  display: block;
+  margin-top: 14px;
   font-family: var(--display);
-  font-size: clamp(38px, 5vw, 72px);
+  font-size: clamp(30px, 3.4vw, 46px);
   font-weight: 700;
   line-height: 0.86;
-}
-
-.goal-panel p {
-  max-width: 640px;
-  margin: 18px 0 0;
-  font-family: var(--display);
-  font-size: clamp(22px, 2.4vw, 31px);
-  line-height: 1.05;
-}
-
-.goal-metrics {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 42px;
-}
-
-.goal-metrics div {
-  min-height: 112px;
-  padding: 14px;
-  border-radius: 12px;
-  background: rgba(255, 253, 246, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36);
-}
-
-.goal-metrics span,
-.workout-day > div > span,
-.trend-card span {
-  margin-bottom: 10px;
-}
-
-.goal-metrics strong {
-  display: block;
-  font-family: var(--display);
-  font-size: clamp(30px, 3vw, 44px);
-  font-weight: 700;
-  line-height: 0.9;
-}
-
-.goal-track {
-  margin-top: 18px;
-}
-
-.goal-track > span {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  color: rgba(20, 19, 19, 0.72);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.goal-track em {
-  font-style: normal;
-}
-
-.progress {
-  height: 14px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(20, 19, 19, 0.16);
-  box-shadow: inset 0 1px 2px rgba(20, 19, 19, 0.18);
-}
-
-.progress span {
-  display: block;
-  width: 4%;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--red);
-}
-
-.milestones {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-  margin: 14px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.milestones li {
-  min-height: 70px;
-  padding: 10px;
-  border-radius: 10px;
-  background: rgba(255, 253, 246, 0.54);
-  font-family: var(--display);
-  font-size: clamp(16px, 1.5vw, 20px);
-  line-height: 0.98;
-}
-
-.workout-panel {
-  padding: clamp(24px, 3vw, 34px);
-}
-
-.workout-panel header {
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  align-items: flex-start;
-}
-
-.week-progress {
-  min-width: 134px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: rgba(20, 19, 19, 0.06);
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 1.2;
-  text-align: right;
-  text-transform: uppercase;
-}
-
-.week-progress strong {
-  display: block;
-  color: var(--ink);
-  font-family: var(--display);
-  font-size: 44px;
-  line-height: 0.9;
-}
-
-.workout-panel > p {
-  max-width: 820px;
-  margin: 18px 0 28px;
-  color: var(--muted);
-  font-family: var(--display);
-  font-size: clamp(26px, 2.8vw, 38px);
-  line-height: 1.08;
-}
-
-.workout-days {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 2vw, 22px);
-}
-
-.workout-day {
-  display: flex;
-  min-height: 390px;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 24px;
-  padding: clamp(18px, 2.2vw, 26px);
-  border-radius: 16px;
-  background: rgba(20, 19, 19, 0.045);
-  box-shadow: inset 0 0 0 1px rgba(20, 19, 19, 0.05);
-}
-
-.workout-day h3 {
-  margin: 0;
-  font-family: var(--display);
-  font-size: clamp(36px, 3.8vw, 56px);
-  line-height: 0.9;
-}
-
-.workout-day fieldset {
-  display: grid;
-  gap: 14px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-family: var(--display);
-  font-size: clamp(31px, 3vw, 42px);
-  line-height: 0.96;
-}
-
-.workout-day label {
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-  cursor: pointer;
-}
-
-.workout-day input {
-  width: 24px;
-  min-width: 24px;
-  height: 24px;
-  margin: 0;
-  accent-color: var(--green);
-}
-
-.workout-day label span {
-  display: block;
-  transform: translateY(3px);
-}
-
-.workout-day input:checked + span {
-  opacity: 0.48;
-  text-decoration: line-through;
-}
-
-.trend-panel {
-  margin-bottom: clamp(38px, 6vw, 72px);
-  padding: clamp(24px, 3vw, 34px);
-  animation: yellow-enter 420ms 280ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-.trend-panel > p {
-  max-width: 760px;
-  margin: 12px 0 0;
-  color: var(--muted);
-  font-family: var(--display);
-  font-size: clamp(21px, 2.2vw, 28px);
-  line-height: 1.08;
-}
-
-.trend-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 20px);
-  margin-top: 24px;
-}
-
-.trend-card {
-  min-height: 260px;
-  padding: 18px;
-  border-radius: 14px;
-  background: rgba(20, 19, 19, 0.045);
-}
-
-.trend-card header {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: baseline;
-  margin-bottom: 18px;
-}
-
-.trend-card h3 {
-  margin: 0;
-  font-family: var(--display);
-  font-size: clamp(28px, 3vw, 42px);
-  line-height: 0.88;
-}
-
-.trend-card time {
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  white-space: nowrap;
-  text-transform: uppercase;
-}
-
-.data-list {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-}
-
-.data-list div {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(20, 19, 19, 0.08);
-}
-
-.data-list dt {
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.data-list dd {
-  margin: 0;
-  font-family: var(--display);
-  font-size: clamp(22px, 2.2vw, 31px);
-  line-height: 0.9;
-  text-align: right;
-}
-
-.trend-card svg {
-  width: 100%;
-  height: 64px;
-  margin-top: 16px;
-  overflow: visible;
-}
-
-.trend-card polyline {
-  fill: none;
-  stroke: var(--line-color);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 6;
-}
-
-.trend-card p {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-family: var(--display);
-  font-size: 20px;
-  line-height: 1;
 }
 
 .table-wrap {
@@ -732,14 +384,6 @@ th {
   letter-spacing: 0;
   text-transform: none;
   background: rgba(20, 19, 19, 0.035);
-}
-
-.biomarker-section {
-  animation: yellow-enter 420ms 340ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-.biomarker-section .panel {
-  overflow: visible;
 }
 
 .biomarker-name {
@@ -1028,15 +672,6 @@ body.is-unlocked .yellow-gate {
 }
 
 @media (max-width: 860px) {
-  .trend-grid,
-  .workout-days {
-    grid-template-columns: 1fr;
-  }
-
-  .summary-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .table-wrap {
     overflow-x: auto;
   }
@@ -1053,34 +688,17 @@ body.is-unlocked .yellow-gate {
     font-size: clamp(52px, 13vw, 84px);
   }
 
-  .summary-grid,
-  .goal-metrics,
-  .milestones {
-    grid-template-columns: 1fr;
-  }
-
-  .goal-panel {
-    transform: rotate(0deg);
-  }
-
-  .goal-panel::after {
-    top: 18px;
-    right: 18px;
-    width: 72px;
-    font-size: 34px;
-  }
-
-  .goal-panel h2 {
-    padding-right: 72px;
-  }
-
-  .workout-panel header,
-  .panel-header {
+  .sheet-header {
     flex-direction: column;
   }
 
-  .week-progress {
-    text-align: left;
+  .biomarker-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .biomarker-summary div + div {
+    border-top: 1px solid rgba(20, 19, 19, 0.1);
+    border-left: 0;
   }
 
   .yellow-dock {

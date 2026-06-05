@@ -10,8 +10,8 @@
   <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
   <link rel="stylesheet" href="/yellow/finance.css?v=20260604-finance-cleanup">
-  <link rel="stylesheet" href="/yellow/yellow.css?v=20260604-yellow">
-  <script src="/yellow/yellow.js?v=20260604-finance-totals" defer=""></script>
+  <link rel="stylesheet" href="/yellow/yellow.css?v=20260605-health-minimal">
+  <script src="/yellow/yellow.js?v=20260605-health-minimal" defer=""></script>
 </head>
 <body class="is-locked" data-view="health">
   <div class="yellow-app" aria-live="polite">
@@ -23,212 +23,26 @@
       </header>
 
       <div class="yellow-stage">
-        <section class="yellow-panel health-page is-active" data-yellow-page="health" aria-label="Health dashboard" aria-hidden="false">
-          <header class="yellow-hero">
-            <h1 data-health-title=""><span>Keep the promise</span><span>to yourself</span></h1>
+        <section class="yellow-panel health-page is-active" data-yellow-page="health" aria-label="Health" aria-hidden="false">
+          <header class="health-headline" aria-label="Health overview">
+            <h1><span>Health.</span> <span>Just the signal.</span></h1>
+            <p>Bloodwork that makes the next move obvious.</p>
           </header>
 
-          <section class="summary-grid" aria-label="Health summary">
-            <article class="summary-card">
-              <span>Chronological age</span>
-              <strong>36</strong>
-              <em>Current</em>
-            </article>
-            <article class="summary-card">
-              <span>Pace of aging</span>
-              <strong>0.7</strong>
-              <em>Current marker</em>
-            </article>
-            <article class="summary-card">
-              <span>Weight</span>
-              <strong>66.6 kg</strong>
-              <em>Body composition</em>
-            </article>
-            <article class="summary-card">
-              <span>Body fat</span>
-              <strong>9%</strong>
-              <em>Measured value</em>
-            </article>
-            <article class="summary-card">
-              <span>Visceral fat</span>
-              <strong>21.7 cm²</strong>
-              <em>Area</em>
-            </article>
-            <article class="summary-card">
-              <span>Skeletal muscle mass</span>
-              <strong>34.3 kg</strong>
-              <em>Lean mass</em>
-            </article>
-          </section>
-
-          <section class="dashboard-grid" aria-label="Goal and weekly training plan">
-            <article class="goal-panel">
-              <div>
-                <h2>Freestanding handstand</h2>
-                <p>Build the strength, balance, and nerve to hold a clean handstand without the wall.</p>
-              </div>
-
-              <div>
-                <div class="goal-metrics" aria-label="Handstand goal metrics">
-                  <div>
-                    <span>Current best</span>
-                    <strong>0s</strong>
-                  </div>
-                  <div>
-                    <span>Target hold</span>
-                    <strong>10s</strong>
-                  </div>
-                  <div>
-                    <span>Deadline</span>
-                    <strong>2026</strong>
-                  </div>
-                </div>
-                <div class="goal-track" aria-label="Handstand goal progress">
-                  <span><em>Progress</em><em>0 / 10s</em></span>
-                  <div class="progress"><span></span></div>
-                  <ol class="milestones">
-                    <li>30s wall hold</li>
-                    <li>45s chest-to-wall</li>
-                    <li>10 clean kick-ups</li>
-                    <li>3s free hold</li>
-                    <li>10s free hold</li>
-                  </ol>
-                </div>
-              </div>
-            </article>
-
-            <article class="panel workout-panel">
-              <header>
-                <h2>This week</h2>
-                <div class="week-progress" aria-live="polite"><strong data-week-count="">0/3</strong>sessions</div>
-              </header>
-              <p>Three focused sessions for one goal: build a straight line, learn balance against the wall, then practice calm kick-ups and exits.</p>
-
-              <div class="workout-days">
-                <article class="workout-day">
-                  <div>
-                    <span>Session A</span>
-                    <h3>Strength line</h3>
-                  </div>
-                  <fieldset>
-                    <label><input type="checkbox" data-workout-check=""><span>Wrist prep, 6 min</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Hollow hold, 3 x 30s</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Pike push-ups, 3 x 8</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Chest-to-wall hold, 4 x 20s</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Shoulder taps at wall, 3 x 6</span></label>
-                  </fieldset>
-                </article>
-
-                <article class="workout-day">
-                  <div>
-                    <span>Session B</span>
-                    <h3>Wall balance</h3>
-                  </div>
-                  <fieldset>
-                    <label><input type="checkbox" data-workout-check=""><span>Wrist prep, 6 min</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Wall weight shifts, 4 x 8</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Toe pulls from wall, 5 x 3</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>One-foot wall float, 6 attempts</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Controlled exits, 5 each side</span></label>
-                  </fieldset>
-                </article>
-
-                <article class="workout-day">
-                  <div>
-                    <span>Session C</span>
-                    <h3>Kick-up test</h3>
-                  </div>
-                  <fieldset>
-                    <label><input type="checkbox" data-workout-check=""><span>Shoulder mobility, 8 min</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Wall hold max test</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Kick-ups to soft wall touch, 10 attempts</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Freestanding attempts, 12 min</span></label>
-                    <label><input type="checkbox" data-workout-check=""><span>Log best hold and one note</span></label>
-                  </fieldset>
-                </article>
-              </div>
-            </article>
-          </section>
-
-          <section class="trend-panel panel" aria-label="Health and skill data cards">
-            <h2>Data cards</h2>
-            <p>The lines only matter when they sit next to the numbers. These are the places to add new check-ins over time.</p>
-            <div class="trend-grid">
-              <article class="trend-card" style="--line-color: var(--red);">
-                <header>
-                  <h3>Composition</h3>
-                  <time datetime="2026-06-01">01.06.26</time>
-                </header>
-                <dl class="data-list">
-                  <div><dt>Weight</dt><dd>66.6 kg</dd></div>
-                  <div><dt>Body fat</dt><dd>9%</dd></div>
-                  <div><dt>Muscle mass</dt><dd>34.3 kg</dd></div>
-                  <div><dt>Visceral fat</dt><dd>21.7 cm²</dd></div>
-                </dl>
-                <svg viewBox="0 0 220 90" aria-hidden="true">
-                  <polyline points="8,62 48,58 88,60 128,50 168,46 212,38"></polyline>
-                </svg>
-                <p>Log this weekly, same scale, same time of day.</p>
-              </article>
-
-              <article class="trend-card" style="--line-color: var(--gold);">
-                <header>
-                  <h3>Measurements</h3>
-                  <time datetime="2026-06-01">01.06.26</time>
-                </header>
-                <dl class="data-list">
-                  <div><dt>Chest</dt><dd>101 cm</dd></div>
-                  <div><dt>Waist</dt><dd>88 cm</dd></div>
-                  <div><dt>Hip</dt><dd>91 cm</dd></div>
-                  <div><dt>Thigh</dt><dd>50.5 cm</dd></div>
-                  <div><dt>Biceps</dt><dd>32.5 cm</dd></div>
-                </dl>
-                <svg viewBox="0 0 220 90" aria-hidden="true">
-                  <polyline points="8,54 48,46 88,50 128,38 168,42 212,30"></polyline>
-                </svg>
-                <p>Use the same tape position each time. Boring is accurate.</p>
-              </article>
-
-              <article class="trend-card" style="--line-color: var(--blue);">
-                <header>
-                  <h3>Watchlist</h3>
-                  <time datetime="2025-01-07">07.01.25</time>
-                </header>
-                <dl class="data-list">
-                  <div><dt>Ferritin</dt><dd>28.0</dd></div>
-                  <div><dt>LDL</dt><dd>140</dd></div>
-                  <div><dt>Creatinine</dt><dd>2.30</dd></div>
-                </dl>
-                <svg viewBox="0 0 220 90" aria-hidden="true">
-                  <polyline points="8,36 48,42 88,34 128,50 168,44 212,54"></polyline>
-                </svg>
-                <p>Repeat with the next blood panel and compare direction.</p>
-              </article>
-
-              <article class="trend-card" style="--line-color: var(--green);">
-                <header>
-                  <h3>Handstand</h3>
-                  <time datetime="2026-05-31">This week</time>
-                </header>
-                <dl class="data-list">
-                  <div><dt>Best hold</dt><dd>0s</dd></div>
-                  <div><dt>Target</dt><dd>10s</dd></div>
-                  <div><dt>Sessions</dt><dd>0 / 3</dd></div>
-                </dl>
-                <svg viewBox="0 0 220 90" aria-hidden="true">
-                  <polyline points="8,76 48,72 88,64 128,52 168,36 212,18"></polyline>
-                </svg>
-                <p>Update after training: seconds, attempts, and sessions done.</p>
-              </article>
-            </div>
-          </section>
-
           <section class="biomarker-section">
-            <article class="panel">
-              <header class="panel-header">
-                <h2>Biomarkers</h2>
+            <article class="biomarker-sheet">
+              <header class="sheet-header">
+                <div>
+                  <span class="section-label">Blood panel</span>
+                  <h2>Biomarkers</h2>
+                </div>
                 <span>07.01.25</span>
               </header>
+              <div class="biomarker-summary" aria-label="Biomarker summary">
+                <div><span>Optimal</span><strong>17</strong></div>
+                <div><span>Watch</span><strong>5</strong></div>
+                <div><span>Priority</span><strong>Ferritin</strong></div>
+              </div>
               <div class="table-wrap">
                 <table>
                   <thead>
@@ -261,7 +75,7 @@
 
                     <tr class="group-row"><th colspan="4">Lipid panel</th></tr>
                     <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="LDL cholesterol. One of the main markers used to estimate long-term cardiovascular risk.">LDL</span></td><td><span class="status status--watch">Over</span></td><td>140</td><td class="range">&gt; 70</td></tr>
-                    <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="HDL cholesterol. Often called protective cholesterol, but the full lipid picture matters more than one number.">HDL</span></td><td><span class="status status--watch">Over</span></td><td>41</td><td class="range">&gt; 45</td></tr>
+                    <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="HDL cholesterol. Often called protective cholesterol, but the full lipid picture matters more than one number.">HDL</span></td><td><span class="status status--watch">Under</span></td><td>41</td><td class="range">&gt; 45</td></tr>
                     <tr><td><span class="biomarker-name" tabindex="0" data-tooltip="Blood fats that respond strongly to food, alcohol, activity, and metabolic health.">Triglycerides</span></td><td><span class="status status--optimal">Optimal</span></td><td>91.2</td><td class="range">&lt; 150</td></tr>
 
                     <tr class="group-row"><th colspan="4">Iron &amp; energy</th></tr>
