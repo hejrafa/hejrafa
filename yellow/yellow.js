@@ -6,16 +6,77 @@ const passwordInput = document.querySelector("[data-yellow-password]");
 const gateForm = document.querySelector("[data-yellow-gate]");
 const viewTransitionDuration = 460;
 const validViews = new Set(["health", "finance", "finance-yearly", "finance-debt"]);
+const routePaths = new Map([
+  ["/yellow", "health"],
+  ["/yellow/index.html", "health"],
+  ["/yellow/health", "health"],
+  ["/yellow/health/index.html", "health"],
+  ["/yellow/finance", "finance"],
+  ["/yellow/finance/index.html", "finance"],
+  ["/yellow/finance-yearly", "finance-yearly"],
+  ["/yellow/finance-yearly/index.html", "finance-yearly"],
+  ["/yellow/finance-debt", "finance-debt"],
+  ["/yellow/finance-debt/index.html", "finance-debt"],
+]);
 const unlockStorageKey = "hejrafa-yellow-unlocked";
 
+function normalizePathname(pathname) {
+  if (pathname !== "/" && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
+  }
+
+  return pathname;
+}
+
+function getPathForView(view) {
+  if (view === "health") {
+    return "/yellow/health/";
+  }
+
+  return `/yellow/${view}/`;
+}
+
+function getRoutedViewFromUrl(url) {
+  const hashView = url.hash.replace("#", "");
+
+  if (validViews.has(hashView)) {
+    return hashView;
+  }
+
+  return routePaths.get(normalizePathname(url.pathname)) ?? null;
+}
+
+function getViewFromUrl(url) {
+  return getRoutedViewFromUrl(url) ?? "health";
+}
+
+function replaceRoute(view) {
+  const url = new URL(window.location.href);
+  url.pathname = getPathForView(view);
+  url.hash = "";
+  url.search = "";
+
+  window.history.replaceState({ view }, "", url);
+}
+
 function getViewFromLocation() {
-  const hashView = window.location.hash.replace("#", "");
-  return validViews.has(hashView) ? hashView : "health";
+  const url = new URL(window.location.href);
+  const view = getViewFromUrl(url);
+  const hashView = url.hash.replace("#", "");
+  const normalizedPath = normalizePathname(url.pathname);
+
+  if ((validViews.has(hashView) && hashView) || routePaths.get(normalizedPath) !== view) {
+    replaceRoute(view);
+  }
+
+  return view;
 }
 
 function updateRoute(view) {
   const url = new URL(window.location.href);
-  url.hash = view;
+  url.pathname = getPathForView(view);
+  url.hash = "";
+  url.search = "";
 
   if (url.href !== window.location.href) {
     window.history.pushState({ view }, "", url);
@@ -159,6 +220,42 @@ function setupNavigation() {
 
       setActiveView(item.dataset.yellowNav, { updateUrl: true });
     });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const link = event.target.closest("a[href]");
+
+    if (!link || link.target || link.hasAttribute("download")) {
+      return;
+    }
+
+    const url = new URL(link.href, window.location.href);
+
+    if (url.origin !== window.location.origin) {
+      return;
+    }
+
+    const view = getRoutedViewFromUrl(url);
+
+    if (!view || body.classList.contains("is-locked")) {
+      return;
+    }
+
+    event.preventDefault();
+    setActiveView(view, { updateUrl: true });
+  });
+
+  window.addEventListener("popstate", () => {
+    if (body.classList.contains("is-locked")) {
+      setActiveView("health", { animate: false });
+      return;
+    }
+
+    setActiveView(getViewFromLocation());
   });
 
   window.addEventListener("hashchange", () => {

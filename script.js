@@ -30,6 +30,37 @@ const heroLines = [
 ];
 const legacyViewAliases = new Map([["work", "projects"]]);
 const validViews = new Set(["home", "projects", "about"]);
+const routePaths = new Map([
+  ["/", "home"],
+  ["/index.html", "home"],
+  ["/projects", "projects"],
+  ["/projects/index.html", "projects"],
+  ["/about", "about"],
+  ["/about/index.html", "about"],
+]);
+const routeMeta = new Map([
+  ["home", {
+    title: "Rafael Polutta - Product Designer in Hamburg | hejrafa",
+    metaTitle: "Rafael Polutta - Product Designer in Hamburg",
+    description: "Portfolio of Rafael Polutta, a Hamburg-based product designer with 11 years of experience designing useful, mindful products, design systems, and mobile apps.",
+    socialDescription: "Product designer with 11 years of experience across design systems, mobile apps, useful products, and mindful side projects.",
+    canonical: "https://hejrafa.com/",
+  }],
+  ["projects", {
+    title: "Projects - Rafael Polutta | Product Designer",
+    metaTitle: "Projects - Rafael Polutta",
+    description: "Selected product design, design system, mobility, side project, video, and podcast work by Rafael Polutta.",
+    socialDescription: "Selected product design, design system, mobility, side project, video, and podcast work by Rafael Polutta.",
+    canonical: "https://hejrafa.com/projects/",
+  }],
+  ["about", {
+    title: "About Rafael Polutta | Product Designer in Hamburg",
+    metaTitle: "About Rafael Polutta",
+    description: "About Rafael Polutta, a Hamburg-based product designer focused on clear, useful, ethical, and human digital products.",
+    socialDescription: "About Rafael Polutta, a Hamburg-based product designer focused on clear, useful, ethical, and human digital products.",
+    canonical: "https://hejrafa.com/about/",
+  }],
+]);
 
 function setRandomHeroLine() {
   const [firstLine, secondLine] = heroLines[Math.floor(Math.random() * heroLines.length)];
@@ -51,26 +82,95 @@ function setTimezoneLabel() {
   timezoneLabel.textContent = `GMT ${sign}${hours}:${minutes}`;
 }
 
-function getViewFromLocation() {
-  const hashView = window.location.hash.replace("#", "");
-  const view = legacyViewAliases.get(hashView) ?? hashView;
-
-  if (hashView !== view && validViews.has(view)) {
-    const url = new URL(window.location.href);
-    url.hash = view;
-    window.history.replaceState({ view }, "", url);
+function normalizePathname(pathname) {
+  if (pathname !== "/" && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
   }
 
-  return validViews.has(view) ? view : "home";
+  return pathname;
+}
+
+function getPathForView(view) {
+  if (view === "home") {
+    return "/";
+  }
+
+  return `/${view}/`;
+}
+
+function getRoutedViewFromUrl(url) {
+  const hashView = url.hash.replace("#", "");
+  const hashAlias = legacyViewAliases.get(hashView) ?? hashView;
+
+  if (validViews.has(hashAlias)) {
+    return hashAlias;
+  }
+
+  return routePaths.get(normalizePathname(url.pathname)) ?? null;
+}
+
+function getViewFromUrl(url) {
+  return getRoutedViewFromUrl(url) ?? "home";
+}
+
+function replaceRoute(view) {
+  const url = new URL(window.location.href);
+  url.pathname = getPathForView(view);
+  url.hash = "";
+  url.search = "";
+
+  window.history.replaceState({ view }, "", url);
+}
+
+function getViewFromLocation() {
+  const url = new URL(window.location.href);
+  const view = getViewFromUrl(url);
+  const hashView = url.hash.replace("#", "");
+  const hashAlias = legacyViewAliases.get(hashView) ?? hashView;
+  const normalizedPath = normalizePathname(url.pathname);
+
+  if ((validViews.has(hashAlias) && hashView) || routePaths.get(normalizedPath) !== view) {
+    replaceRoute(view);
+  }
+
+  return view;
 }
 
 function updateRoute(view) {
   const url = new URL(window.location.href);
-  url.hash = view === "home" ? "home" : view;
+  url.pathname = getPathForView(view);
+  url.hash = "";
+  url.search = "";
 
   if (url.href !== window.location.href) {
     window.history.pushState({ view }, "", url);
   }
+}
+
+function updateMetaContent(selector, value) {
+  const element = document.querySelector(selector);
+
+  if (element) {
+    element.setAttribute("content", value);
+  }
+}
+
+function setRouteMetadata(view) {
+  const meta = routeMeta.get(view) ?? routeMeta.get("home");
+  const canonical = document.querySelector('link[rel="canonical"]');
+
+  document.title = meta.title;
+
+  if (canonical) {
+    canonical.href = meta.canonical;
+  }
+
+  updateMetaContent('meta[name="description"]', meta.description);
+  updateMetaContent('meta[property="og:title"]', meta.metaTitle);
+  updateMetaContent('meta[property="og:description"]', meta.socialDescription);
+  updateMetaContent('meta[property="og:url"]', meta.canonical);
+  updateMetaContent('meta[name="twitter:title"]', meta.metaTitle);
+  updateMetaContent('meta[name="twitter:description"]', meta.socialDescription);
 }
 
 function setActiveView(view, { animate = true, updateUrl = false } = {}) {
@@ -83,6 +183,7 @@ function setActiveView(view, { animate = true, updateUrl = false } = {}) {
     updateRoute(nextView);
   }
 
+  setRouteMetadata(nextView);
   setScrollBounce(0);
   start.dataset.view = nextView;
   dock.dataset.selected = nextView;
@@ -190,8 +291,36 @@ function nudgeScrollBounce(delta) {
 dockItems.forEach((item) => {
   item.addEventListener("click", (event) => {
     event.preventDefault();
+    event.stopPropagation();
     setActiveView(item.dataset.navLink, { updateUrl: true });
   });
+});
+
+document.addEventListener("click", (event) => {
+  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    return;
+  }
+
+  const link = event.target.closest("a[href]");
+
+  if (!link || link.target || link.hasAttribute("download")) {
+    return;
+  }
+
+  const url = new URL(link.href, window.location.href);
+
+  if (url.origin !== window.location.origin) {
+    return;
+  }
+
+  const view = getRoutedViewFromUrl(url);
+
+  if (!view) {
+    return;
+  }
+
+  event.preventDefault();
+  setActiveView(view, { updateUrl: true });
 });
 
 window.addEventListener("popstate", () => {

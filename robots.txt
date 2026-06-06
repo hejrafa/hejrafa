@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /yellow/
 Allow: /
 
 Sitemap: https://hejrafa.com/sitemap.xml
