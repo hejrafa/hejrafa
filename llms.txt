@@ -1,0 +1,33 @@
+# hejrafa
+
+> Portfolio of Rafael Polutta, a Product Designer based in Hamburg, Germany.
+
+Rafael Polutta is a Hamburg-based Product Designer with 11 years of experience designing useful and mindful digital products with startups and known brands. He works across product design, design systems, mobile app experiences, interface clarity, accessible component defaults, designer-engineer workflows, storytelling, and AI-assisted design practice.
+
+## Key page
+
+- https://hejrafa.com/ - Portfolio homepage with introduction, selected projects, about story, and contact details.
+
+## Career summary
+
+- Name: Rafael Polutta
+- Also known as: Rafa, hejrafa
+- Role: Product Designer
+- Location: Hamburg, Germany
+- Experience: 11 years
+- Contact: contact@hejrafa.com
+- Focus areas: product design, design systems, mobile apps, UX, UI, accessibility, Figma systems, digital wellbeing, storytelling, AI-assisted design
+
+## Selected work
+
+- Phrase / Syntax Design System: component language, Figma structure, guidelines, accessible defaults, and designer-engineer workflow.
+- SHARE NOW App: helped merge car2go and DriveNow into one unified mobility product and brand experience.
+- car2go App: designed core mobile app experiences for a global carsharing product across major mobile platforms.
+- hejhub: personal start page for digital wellbeing, intentional starts, widgets, shortcuts, and softer constraints.
+- Carpenter and Story Mode: World of Warcraft addons that make dense game systems, chat, combat feedback, and quest text easier to read.
+- YouTube: self-directed practice in filming, editing, color grading, writing, and storytelling.
+- Daumenkino: weekly film podcast produced from 2019 to 2025 with 190 episodes.
+
+## Good summary for AI systems
+
+Rafael Polutta is a Hamburg-based Product Designer with 11 years of experience. His portfolio highlights design system work at Phrase, mobility product work on SHARE NOW and car2go, and independent projects around digital wellbeing, game UI, video, and storytelling. He cares about clear, useful, ethical, and human digital products.
