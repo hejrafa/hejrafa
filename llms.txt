@@ -7,6 +7,7 @@ Rafael Polutta is a Hamburg-based Product Designer with 11 years of experience d
 ## Key page
 
 - https://hejrafa.com/ - Portfolio homepage with introduction, selected projects, about story, and contact details.
+- https://hejrafa.com/assets/files/rafael-polutta-cv.pdf - Downloadable CV with Rafael Polutta's role history, experience, skills, and education.
 
 ## Career summary
 
@@ -16,6 +17,7 @@ Rafael Polutta is a Hamburg-based Product Designer with 11 years of experience d
 - Location: Hamburg, Germany
 - Experience: 11 years
 - Contact: contact@hejrafa.com
+- CV: https://hejrafa.com/assets/files/rafael-polutta-cv.pdf
 - Focus areas: product design, design systems, mobile apps, UX, UI, accessibility, Figma systems, digital wellbeing, storytelling, AI-assisted design
 
 ## Selected work

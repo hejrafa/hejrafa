@@ -2509,6 +2509,21 @@ img {
   line-height: 1.02;
 }
 
+.designer-cv-link {
+  display: inline-block;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: #ffd600;
+  text-decoration-thickness: 0.16em;
+  text-underline-offset: 0.14em;
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.designer-cv-link:hover,
+.designer-cv-link:focus-visible {
+  transform: translateY(-2px);
+}
+
 .note-card .designer-email {
   display: inline-flex;
   margin-top: 26px;
