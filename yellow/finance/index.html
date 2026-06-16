@@ -9,9 +9,9 @@
   <link rel="shortcut icon" href="/favicon.ico?v=20260526a">
   <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
-  <link rel="stylesheet" href="/yellow/finance.css?v=20260604-finance-cleanup">
-  <link rel="stylesheet" href="/yellow/yellow.css?v=20260605-health-minimal">
-  <script src="/yellow/yellow.js?v=20260606-path-routes-3" defer=""></script>
+  <link rel="stylesheet" href="/yellow/finance.css?v=20260616-letter-mobile-actions-gap">
+  <link rel="stylesheet" href="/yellow/yellow.css?v=20260616-letter-mobile-actions-gap">
+  <script src="/yellow/yellow.js?v=20260616-letter-mobile-actions-gap" defer=""></script>
 </head>
 <body class="is-locked" data-view="health">
   <div class="yellow-app" aria-live="polite">
@@ -769,6 +769,39 @@
             </section>
           </section>
         </section>
+
+        <section class="yellow-panel letter-page" data-yellow-page="letter" aria-label="Letter" aria-hidden="true">
+          <section class="letter-workspace" aria-label="Editable letter">
+            <div class="letter-actions" aria-label="Letter actions">
+              <button class="letter-action" type="button" data-letter-action="print">Print</button>
+              <button class="letter-action" type="button" data-letter-action="download">Download</button>
+            </div>
+
+            <article class="letter-sheet" data-letter-sheet="" aria-label="A4 letter">
+              <h1 class="letter-headline letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="headline" aria-label="Letter headline">Roads? Where we're going,
+we don't need roads.</h1>
+
+              <div class="letter-body">
+                <p class="letter-greeting letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="greeting" aria-label="Letter greeting">Dear future favorite person,</p>
+
+                <p class="letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="paragraph-1" aria-label="Letter paragraph 1">I hope this letter finds you well, hydrated, and only mildly surrounded by tabs you swear you still need. I am writing to share a thought, make a request, or simply put something important on a page before my brain turns it into seventeen separate notes.</p>
+
+                <p class="letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="paragraph-2" aria-label="Letter paragraph 2">The short version is this: there is an idea here, and it deserves a little room to breathe. The slightly longer version has nuance, context, and at least one sentence that makes me sound more organized than I felt while writing it.</p>
+
+                <p class="letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="paragraph-3" aria-label="Letter paragraph 3">I care about clarity, good timing, and the rare miracle of everyone knowing what happens next. If this page can help move things from vague cloud shape to actual next step, then frankly, it has already earned its keep.</p>
+
+                <p class="letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="portfolio" aria-label="Optional detail line">Optional useful detail goes here: a link, a date, a number, or the tiny but crucial thing nobody should miss.</p>
+
+                <p class="letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="salary" aria-label="Optional note line">Another note can live here, provided it behaves itself and does not become a spreadsheet in disguise.</p>
+
+                <p class="letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="closing" aria-label="Closing paragraph">Thank you for reading. I am looking forward to the next step, ideally one involving fewer open loops and maybe a decent coffee.</p>
+
+                <p class="letter-signoff letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="signoff" aria-label="Letter signoff">Warmly</p>
+                <p class="letter-signature letter-field" contenteditable="plaintext-only" spellcheck="true" data-letter-field="signature" aria-label="Signature">Rafael Polutta</p>
+              </div>
+            </article>
+          </section>
+        </section>
       </div>
     </main>
 
@@ -776,6 +809,7 @@
       <span class="yellow-dock-thumb" aria-hidden="true"></span>
       <button class="yellow-dock-item is-selected" type="button" data-yellow-nav="health" aria-current="page">Health</button>
       <button class="yellow-dock-item" type="button" data-yellow-nav="finance">Finance</button>
+      <button class="yellow-dock-item" type="button" data-yellow-nav="letter">Letter</button>
     </nav>
   </div>
 

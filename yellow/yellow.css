@@ -14,6 +14,14 @@
   src: url("https://cdn.jsdelivr.net/fontsource/fonts/redaction@latest/latin-700-normal.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "Reenie Beanie";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/reeniebeanie/v22/z7NSdR76eDkaJKZJFkkjuvWxbP0.ttf") format("truetype");
+}
+
 :root {
   --paper: #fff6cf;
   --cream: #fff8ea;
@@ -29,6 +37,7 @@
   --lime: #a7ff5b;
   --yellow: #fee300;
   --display: "Redaction", Georgia, serif;
+  --hand: "Reenie Beanie", "Bradley Hand", "Comic Sans MS", cursive;
   --sans: Inter, Arial, sans-serif;
   --mono: "IBM Plex Mono", "Courier New", monospace;
 }
@@ -483,6 +492,185 @@ th {
   line-height: 1.12;
 }
 
+.letter-page {
+  padding-top: clamp(16px, 4vh, 42px);
+}
+
+.letter-workspace {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 210mm);
+  justify-content: center;
+  justify-items: center;
+  align-items: start;
+  gap: 14px;
+  width: min(100%, 210mm);
+  margin-inline: auto;
+  animation: yellow-enter 420ms 100ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.letter-actions {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transform: translate(16px, -50%) rotate(-0.45deg);
+}
+
+.letter-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 118px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border-radius: 15px;
+  background: var(--nav-frame);
+  color: var(--cream);
+  box-shadow:
+    0 7px 0 rgba(16, 16, 16, 0.22),
+    0 18px 26px rgba(20, 19, 19, 0.14);
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 210ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.letter-action:hover,
+.letter-action:focus-visible {
+  transform: translateY(-2px);
+}
+
+.letter-action:active {
+  transform: translateY(1px);
+}
+
+.letter-action:disabled {
+  cursor: wait;
+  opacity: 0.62;
+  transform: none;
+}
+
+.letter-sheet {
+  container: letter-sheet / inline-size;
+  grid-column: 1;
+  grid-row: 1;
+  width: min(100%, 210mm);
+  min-height: 297mm;
+  aspect-ratio: 210 / 297;
+  overflow: hidden;
+  padding: 29% 9.4% 8%;
+  border-radius: 20px;
+  background: #fff;
+  color: #060505;
+  box-shadow:
+    0 8px 0 rgba(45, 5, 4, 0.1),
+    0 24px 56px rgba(45, 5, 4, 0.16);
+}
+
+.letter-field {
+  border-radius: 6px;
+  outline: none;
+  white-space: pre-wrap;
+  caret-color: var(--red);
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.letter-field:hover {
+  background: rgba(254, 227, 0, 0.08);
+  box-shadow: 0 0 0 1px rgba(20, 19, 19, 0.08);
+}
+
+.letter-field:focus {
+  background: rgba(254, 227, 0, 0.14);
+  box-shadow:
+    0 0 0 2px rgba(20, 19, 19, 0.12),
+    0 0 0 5px rgba(254, 227, 0, 0.18);
+}
+
+.letter-headline {
+  width: 112%;
+  max-width: 112%;
+  margin: 0 0 clamp(64px, 12.3cqw, 75px);
+  font-family: var(--display);
+  font-size: clamp(40px, 8.55cqw, 52px);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.84;
+}
+
+.letter-body {
+  width: 68.4%;
+  margin-left: 27.6%;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.32;
+}
+
+.letter-body p {
+  margin: 0 0 clamp(16px, 3cqw, 24px);
+}
+
+.letter-body p.is-empty:not(:focus) {
+  display: none;
+  margin: 0;
+}
+
+.letter-greeting {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.letter-signoff {
+  margin-top: clamp(4px, 0.7cqw, 6px);
+  margin-bottom: 0;
+}
+
+.letter-signature {
+  min-height: clamp(34px, 6.1cqw, 48px);
+  margin-top: clamp(-6px, -0.75cqw, -2px);
+  font-family: var(--hand);
+  font-size: clamp(28px, 6.2cqw, 42px);
+  font-weight: 400;
+  letter-spacing: -2px;
+  line-height: 0.92;
+}
+
+.letter-export-root {
+  position: fixed;
+  top: 0;
+  left: -120vw;
+  z-index: -1;
+  width: 210mm;
+  height: 295.5mm;
+  overflow: hidden;
+  background: #fff;
+}
+
+.letter-export-root .letter-sheet {
+  width: 210mm;
+  height: 295.5mm;
+  padding: 29% 9.4% 8%;
+  box-sizing: border-box;
+  break-after: avoid;
+  page-break-after: avoid;
+  box-shadow: none;
+}
+
 .yellow-dock {
   position: fixed;
   left: 50%;
@@ -490,7 +678,7 @@ th {
   z-index: 40;
   display: flex;
   align-items: center;
-  width: 260px;
+  width: min(372px, calc(100vw - 36px));
   min-height: 48px;
   padding: 6px;
   border-radius: 20px;
@@ -534,7 +722,7 @@ th {
   z-index: 1;
   top: 6px;
   left: 6px;
-  width: calc((100% - 12px) / 2);
+  width: calc((100% - 12px) / 3);
   height: calc(100% - 12px);
   border-radius: 15px;
   background:
@@ -548,6 +736,10 @@ th {
 
 .yellow-dock[data-selected="finance"] .yellow-dock-thumb {
   transform: translateX(100%);
+}
+
+.yellow-dock[data-selected="letter"] .yellow-dock-thumb {
+  transform: translateX(200%);
 }
 
 .yellow-gate {
@@ -677,6 +869,20 @@ body.is-unlocked .yellow-gate {
   }
 }
 
+@media (max-width: 1120px) {
+  .letter-actions {
+    position: relative;
+    right: auto;
+    left: auto;
+    top: auto;
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: row;
+    margin-top: 24px;
+    transform: translateX(10px) rotate(-0.35deg);
+  }
+}
+
 @media (max-width: 680px) {
   .yellow-shell {
     padding-top: 58px;
@@ -702,6 +908,138 @@ body.is-unlocked .yellow-gate {
   }
 
   .yellow-dock {
-    width: min(260px, calc(100vw - 28px));
+    width: min(350px, calc(100vw - 28px));
+  }
+
+  .yellow-dock-item {
+    padding-inline: 10px;
+    font-size: 17px;
+  }
+
+  .letter-actions {
+    right: 10px;
+    left: auto;
+    transform: translateY(-50%) rotate(-0.35deg);
+  }
+
+  .letter-workspace {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .letter-action {
+    width: 104px;
+  }
+
+  .letter-sheet {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: auto;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 210mm;
+    height: 295.5mm;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  body {
+    overflow: hidden !important;
+  }
+
+  body.is-locked .yellow-app,
+  body.is-unlocked .yellow-app {
+    filter: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+
+  .yellow-top-mark,
+  .yellow-dock,
+  .yellow-gate,
+  .letter-actions {
+    display: none !important;
+  }
+
+  .yellow-app,
+  .yellow-shell,
+  .yellow-stage,
+  .yellow-panel,
+  .letter-page,
+  .letter-workspace {
+    display: block !important;
+    width: 210mm !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .yellow-panel:not([data-yellow-page="letter"]) {
+    display: none !important;
+  }
+
+  .letter-sheet {
+    width: 210mm;
+    height: 295.5mm;
+    min-height: 0;
+    aspect-ratio: auto;
+    margin: 0;
+    padding: 29% 9.4% 8%;
+    box-sizing: border-box;
+    break-after: avoid;
+    page-break-after: avoid;
+    box-shadow: none;
+  }
+
+  .letter-field,
+  .letter-field:hover,
+  .letter-field:focus {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .letter-headline {
+    width: 112%;
+    max-width: 112%;
+    margin-bottom: clamp(64px, 12.3cqw, 75px);
+    font-size: clamp(40px, 8.55cqw, 52px);
+    line-height: 0.84;
+  }
+
+  .letter-body {
+    width: 68.4%;
+    margin-left: 27.6%;
+    font-size: 12px;
+    line-height: 1.32;
+  }
+
+  .letter-body p {
+    margin-bottom: clamp(16px, 3cqw, 24px);
+  }
+
+  .letter-greeting {
+    font-size: 14px;
+  }
+
+  .letter-signature {
+    min-height: clamp(34px, 6.1cqw, 48px);
+    font-size: clamp(28px, 6.2cqw, 42px);
+    letter-spacing: -2px;
   }
 }
