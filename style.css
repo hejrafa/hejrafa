@@ -878,79 +878,40 @@ img {
 }
 
 .project-card[data-layout="leadership"] {
-  --project-bg: #f0b429;
-  --project-text: #080607;
-  --project-cta: #df3456;
-  --project-shadow: rgba(111, 78, 8, 0.34);
+  --project-bg: #080607;
+  --project-text: #fffdf5;
+  --project-cta: #fffdf5;
+  --project-shadow: rgba(0, 0, 0, 0.36);
 }
 
 .project-card[data-layout="leadership"] .project-link {
   color: var(--project-cta);
 }
 
-.leadership-notes {
+.phrase-leadership-logo {
   position: absolute;
-  inset: 0;
+  top: clamp(62px, 7vw, 84px);
+  left: 50%;
   z-index: 1;
+  width: min(58%, 244px);
+  height: auto;
   pointer-events: none;
-}
-
-.leadership-note {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 176px;
-  min-width: 176px;
-  min-height: 142px;
-  padding: 20px;
-  border-radius: 8px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 38%),
-    #df3456;
-  color: #ffffff;
-  font-family: var(--hand);
-  font-size: clamp(28px, 3.2vw, 42px);
-  font-weight: 400;
-  line-height: 0.9;
-  text-align: center;
-  box-shadow:
-    0 8px 0 rgba(0, 0, 0, 0.22),
-    0 22px 42px rgba(0, 0, 0, 0.34),
-    inset 0 -12px 18px rgba(8, 6, 7, 0.1);
-  transform: rotate(var(--leadership-rotate));
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.32));
+  transform: translateX(-50%);
   transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 160ms ease;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-.leadership-note--hiring {
-  --leadership-rotate: -7deg;
-  top: clamp(28px, 4vw, 46px);
-  left: clamp(24px, 4vw, 46px);
+.project-card[data-layout="leadership"]:hover .phrase-leadership-logo,
+.project-card[data-layout="leadership"]:focus-visible .phrase-leadership-logo,
+.project-card[data-layout="leadership"]:focus-within .phrase-leadership-logo {
+  transform: translateX(-50%) translateY(-5px);
 }
 
-.leadership-note--taste {
-  --leadership-rotate: 6deg;
-  top: clamp(54px, 6vw, 78px);
-  right: clamp(28px, 4.2vw, 52px);
-}
-
-.project-card[data-layout="leadership"]:hover .leadership-note--hiring,
-.project-card[data-layout="leadership"]:focus-visible .leadership-note--hiring,
-.project-card[data-layout="leadership"]:focus-within .leadership-note--hiring {
-  transform: translate(-5px, -6px) rotate(-8deg);
-}
-
-.project-card[data-layout="leadership"]:hover .leadership-note--taste,
-.project-card[data-layout="leadership"]:focus-visible .leadership-note--taste,
-.project-card[data-layout="leadership"]:focus-within .leadership-note--taste {
-  transform: translate(6px, -4px) rotate(7deg);
-}
-
-.project-card[data-layout="leadership"].is-flipped .leadership-note {
+.project-card[data-layout="leadership"].is-flipped .phrase-leadership-logo {
   opacity: 0;
-  transform: translateY(10px) scale(0.96) rotate(var(--leadership-rotate));
+  transform: translateX(-50%) translateY(10px) scale(0.96);
 }
 
 .project-card[data-layout="system"] {
@@ -2895,10 +2856,6 @@ img {
   .note-card {
     right: 0;
     --home-card-title-size: 31px;
-  }
-
-  .leadership-note {
-    font-size: 30px;
   }
 
   .polaroid-card span,
