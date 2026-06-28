@@ -21,9 +21,25 @@ const routePaths = new Map([
   ["/yellow/letter/index.html", "letter"],
 ]);
 const unlockStorageKey = "hejrafa-yellow-unlocked";
+const healthStorageKey = "hejrafa-yellow-health-v1";
+const healthModeStorageKey = "hejrafa-yellow-health-mode-v1";
+const healthTitleStorageKey = "hejrafa-yellow-health-title-v1";
 const letterStorageKey = "hejrafa-yellow-letter-v2";
 const html2PdfUrl = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
 let html2PdfLoader = null;
+const validHealthModes = new Set(["track", "cook", "train"]);
+const healthTitleOptions = [
+  ["Two months.", "All in."],
+  ["Build strength.", "Stay human."],
+  ["Fuel ready.", "Train clean."],
+  ["Small reps.", "Real change."],
+  ["Show up.", "Recover well."],
+  ["Eat enough.", "Get stronger."],
+  ["Clean reps.", "Quiet proof."],
+  ["Future Rafa.", "Earned daily."],
+  ["Track light.", "Move hard."],
+  ["Health.", "No noise."],
+];
 const letterDrafts = [
   {
     greeting: "Dear future favorite person,",
@@ -86,6 +102,1610 @@ const letterDrafts = [
     signoff: "See you in the future",
   },
 ];
+const healthMeasurementCheckpoints = [
+  { id: "start", label: "Start", date: "Jun 29" },
+  { id: "week4", label: "W4", date: "Jul 20" },
+  { id: "week8", label: "W8", date: "Aug 17" },
+];
+const healthMeasurementMetrics = [
+  { id: "weight", label: "Weight", hint: "weekly average", placeholder: "kg" },
+  { id: "bodyFat", label: "Body fat", hint: "same method", placeholder: "%" },
+  { id: "waist", label: "Waist", hint: "navel, relaxed", placeholder: "cm" },
+  { id: "chest", label: "Chest", hint: "nipple line", placeholder: "cm" },
+  { id: "shoulders", label: "Shoulders", hint: "widest point", placeholder: "cm" },
+  { id: "hips", label: "Hips", hint: "widest point", placeholder: "cm" },
+  { id: "arm", label: "Arm", hint: "same side, relaxed", placeholder: "cm" },
+  { id: "thigh", label: "Thigh", hint: "mid-thigh", placeholder: "cm" },
+];
+const healthPhotoAngles = [
+  { id: "front", label: "Front" },
+  { id: "side", label: "Side" },
+  { id: "back", label: "Back" },
+];
+const healthWarmupItems = [
+  {
+    title: "Dead hang",
+    detail: "1 min",
+    image: "/assets/images/health/warmup-dead-hang.jpg",
+    alt: "Dead hang warm-up from the bodyweight program",
+  },
+  {
+    title: "Deep squat",
+    detail: "1 min",
+    image: "/assets/images/health/warmup-deep-squat.jpg",
+    alt: "Deep squat warm-up from the bodyweight program",
+  },
+  {
+    title: "Leg swings",
+    detail: "10 each leg",
+    image: "/assets/images/health/warmup-leg-swings.jpg",
+    alt: "Leg swings warm-up from the bodyweight program",
+  },
+  {
+    title: "Arm swings",
+    detail: "10 each arm",
+    image: "/assets/images/health/warmup-arm-swings.jpg",
+    alt: "Arm swings warm-up from the bodyweight program",
+  },
+];
+const healthWorkoutDays = [
+  {
+    id: "mon",
+    day: "Mon",
+    title: "Upper I",
+    description: "Pull-ups, push-ups, bodyweight rows, ring chest fly, ring back fly.",
+    image: "/assets/images/health/program-upper-1.jpg",
+    imageAlt: "Upper I pull-up photo from the bodyweight program",
+    items: [
+      { label: "Pull-ups", tooltip: "Pull yourself up until your chin clears the bar. Use assistance if needed." },
+      { label: "Push-ups", tooltip: "Lower your chest, then press back up. Keep your body straight." },
+      { label: "Rows", tooltip: "Lean back holding rings or a bar, then pull your chest toward your hands." },
+      { label: "Chest fly", tooltip: "Open your arms slowly on rings, then squeeze them back together." },
+      { label: "Back fly", tooltip: "Open your arms out to the side to work your upper back." },
+    ],
+    explanation: "Strength day for vertical pull, horizontal pull, and horizontal push. Keep the big moves in the 5-12 clean-rep range, then use the fly work for control and upper-back balance.",
+  },
+  {
+    id: "tue",
+    day: "Tue",
+    title: "Mobility",
+    description: "Active stretching, dynamic stretching, intuitive movement.",
+    image: "/assets/images/health/program-mobility.jpg",
+    imageAlt: "Mobility photo from the bodyweight program",
+    items: [
+      { label: "Active stretching", tooltip: "Move into a stretch using your own strength." },
+      { label: "Dynamic work", tooltip: "Move joints through range: hips, shoulders, ankles, spine." },
+      { label: "Intuitive movement", tooltip: "Spend time on what feels tight or stiff that day." },
+    ],
+    explanation: "A recovery and range day. Move joints through active control, add dynamic stretches, then spend time in positions that feel stiff without forcing them.",
+  },
+  {
+    id: "wed",
+    day: "Wed",
+    title: "Lower",
+    description: "Pistols, hinge or nordics, split squats, hips, calves, toe raises.",
+    image: "/assets/images/health/program-lower.jpg",
+    imageAlt: "Lower-body mobility photo from the bodyweight program",
+    items: [
+      { label: "Pistols", tooltip: "Single-leg squat. Use a box, wall, or support if needed." },
+      { label: "Hinge/Nordics", tooltip: "Hamstring work. Bend at the hips or lower slowly from your knees." },
+      { label: "Split squats", tooltip: "One foot forward, one foot back. Lower down and stand up." },
+      { label: "Hip thrusts", tooltip: "Drive your hips up and squeeze your glutes at the top." },
+      { label: "Calves", tooltip: "Raise your heels slowly, pause, then lower with control." },
+      { label: "Toe raises", tooltip: "Lift your toes toward your shins to train the front of your lower leg." },
+    ],
+    explanation: "Single-leg strength plus posterior-chain work. Track the main leg movement, keep the hinge strict, and use calves and toe raises to round out lower-leg durability.",
+  },
+  {
+    id: "thu",
+    day: "Thu",
+    title: "Core",
+    description: "Hanging leg raises, L-sits, oblique raises, hollow body holds.",
+    image: "/assets/images/health/program-core.jpg",
+    imageAlt: "Core hanging leg raise photo from the bodyweight program",
+    items: [
+      { label: "Hanging raises", tooltip: "Hang and lift your knees or legs without swinging." },
+      { label: "L-sits", tooltip: "Hold yourself up with your legs forward. Tuck your knees if needed." },
+      { label: "Oblique raises", tooltip: "Hang and lift your knees toward each side." },
+      { label: "Hollow holds", tooltip: "Lie on your back, ribs down, arms and legs long." },
+    ],
+    explanation: "Body-control day for compression, bracing, and anti-extension. Regress if the low back or shoulders take over before the abs do.",
+  },
+  {
+    id: "fri",
+    day: "Fri",
+    title: "Upper II",
+    description: "Pike or HSPU, dips, curls, triceps, face pulls.",
+    image: "/assets/images/health/program-upper-2.jpg",
+    imageAlt: "Upper II dips photo from the bodyweight program",
+    items: [
+      { label: "Pike/HSPU", tooltip: "Push like an overhead press. Start with pike push-ups if handstand work is too hard." },
+      { label: "Dips", tooltip: "Lower between bars or rings, then press back up." },
+      { label: "Curls", tooltip: "Pull your hands toward your face or body to train biceps." },
+      { label: "Triceps", tooltip: "Bend and straighten your elbows to train the back of your arms." },
+      { label: "Face pulls", tooltip: "Pull rings or a band toward your face with elbows high." },
+    ],
+    explanation: "Vertical push, dips, arms, and shoulder health. Progress the hardest push first, then use curls, triceps, and face pulls to build volume without wrecking form.",
+  },
+  {
+    id: "sat",
+    day: "Sat",
+    title: "Skill work",
+    description: "Skills, mobility, core, outside work, sport, or play.",
+    image: "/assets/images/health/program-modular.jpg",
+    imageAlt: "Skill day movement photo from the bodyweight program",
+    items: [
+      { label: "Skills", tooltip: "Practice handstands, rings, L-sit, or another skill slowly." },
+      { label: "Mobility", tooltip: "Do extra easy stretching or range work." },
+      { label: "Core", tooltip: "Add a little ab work if you feel fresh." },
+      { label: "Outside", tooltip: "Walk, run, play a sport, or just move outside." },
+    ],
+    explanation: "Flexible slot. Pick the thing that helps most this week: skill practice, extra mobility, easy cardio, core, or something playful outside.",
+  },
+  {
+    id: "sun",
+    day: "Sun",
+    title: "Active rest",
+    description: "Walk, yoga, mobility, de-stress, reset.",
+    items: [
+      { label: "Walk", tooltip: "Easy walk. Keep it relaxed." },
+      { label: "Yoga", tooltip: "Gentle yoga or mobility." },
+      { label: "De-stress", tooltip: "Do the recovery basics: sleep, food, water, calm." },
+      { label: "Reset", tooltip: "Look at the week and make Monday easy." },
+    ],
+    explanation: "Recovery that still moves blood. Keep it easy enough that Monday feels better, not like you snuck in another hard workout.",
+  },
+];
+const healthWeeks = [
+  { id: "week1", label: "Week 1", dates: "Jun 29-Jul 5", focus: "Baseline and form" },
+  { id: "week2", label: "Week 2", dates: "Jul 6-Jul 12", focus: "Add one clean rep" },
+  { id: "week3", label: "Week 3", dates: "Jul 13-Jul 19", focus: "Tempo or harder variation" },
+  { id: "week4", label: "Week 4", dates: "Jul 20-Jul 26", focus: "Form check + midpoint photos" },
+  { id: "week5", label: "Week 5", dates: "Jul 27-Aug 2", focus: "Level up one movement" },
+  { id: "week6", label: "Week 6", dates: "Aug 3-Aug 9", focus: "Hold intensity, own the reps" },
+  { id: "week7", label: "Week 7", dates: "Aug 10-Aug 16", focus: "Push clean top sets" },
+  { id: "week8", label: "Week 8", dates: "Aug 17-Aug 23", focus: "Retest + compare" },
+];
+const healthMealLabels = ["Breakfast", "Lunch", "Dinner"];
+const healthRecipes = {
+  goToBreakfast: {
+    name: "Go-to breakfast",
+    calories: 520,
+    protein: 40,
+    image: "/assets/images/health/food-breakfast-classic.jpg",
+    detail: "2 toasts, eggs, turkey slices, avocado, espresso, fresh lime shot.",
+    cook: [
+      "Toast the bread and cook the eggs how you like them.",
+      "Add turkey slices and avocado on top or on the side.",
+      "Make espresso and squeeze one lime shot fresh.",
+    ],
+    source: "Your default",
+    shopping: [
+      { group: "Breakfast", item: "Toast bread", amount: 2, unit: "slices" },
+      { group: "Breakfast", item: "Eggs", amount: 3, unit: "pcs" },
+      { group: "Breakfast", item: "Turkey slices", amount: 3, unit: "slices" },
+      { group: "Produce", item: "Avocados", amount: 0.5, unit: "pcs" },
+      { group: "Produce", item: "Limes", amount: 1, unit: "pcs" },
+      { group: "Pantry", item: "Espresso coffee", amount: 1, unit: "servings" },
+    ],
+  },
+  stirFry: {
+    name: "The Stir Fry",
+    calories: 1192,
+    protein: 90,
+    image: "/assets/images/health/food-stir-fry.jpg",
+    detail: "Chicken, jasmine rice, broccoli, carrots, mushrooms, sprouts.",
+    cook: [
+      "Cook rice first so it is ready.",
+      "Cut chicken small, salt it, then sear until browned and cooked through.",
+      "Stir-fry the vegetables fast, add soy sauce, then plate with sesame and green onion.",
+    ],
+    prep: "Dice chicken, salt it, and sear in a hot pan until browned and cooked through. Cool in shallow boxes, then refrigerate. Keep soy, sesame, cashews, sprouts, and green onion separate until eating.",
+    prepCook: "Dice chicken, salt it, then sear until cooked. Stir-fry broccoli, carrots, and mushrooms.",
+    prepLater: "Soy, sesame, cashews, sprouts, green onion.",
+    source: "Cookbook p. 9",
+    shopping: [
+      { group: "Proteins", item: "Chicken breast", amount: 340, unit: "g" },
+      { group: "Carbs", item: "Jasmine rice", amount: 90, unit: "g" },
+      { group: "Produce", item: "Broccoli", amount: 300, unit: "g" },
+      { group: "Produce", item: "Carrots", amount: 3, unit: "pcs" },
+      { group: "Produce", item: "Mushrooms", amount: 150, unit: "g" },
+      { group: "Produce", item: "Mung bean sprouts", amount: 100, unit: "g" },
+      { group: "Produce", item: "Green onion", amount: 1, unit: "bunches" },
+      { group: "Pantry", item: "Cashews", amount: 25, unit: "g" },
+      { group: "Pantry", item: "Soy sauce", amount: 1, unit: "bottles", pantry: true },
+      { group: "Pantry", item: "Sesame seeds", amount: 1, unit: "packs", pantry: true },
+    ],
+  },
+  allAmerican: {
+    name: "All American",
+    calories: 1079,
+    protein: 88,
+    image: "/assets/images/health/food-all-american.jpg",
+    detail: "Sirloin, russet potato, asparagus, butter, parmesan.",
+    cook: [
+      "Bake or microwave the potato until soft.",
+      "Salt steak, sear both sides hard, then rest it for a few minutes.",
+      "Saute asparagus and finish the plate with butter and parmesan.",
+    ],
+    source: "Cookbook p. 10",
+    shopping: [
+      { group: "Proteins", item: "Sirloin or steak", amount: 340, unit: "g" },
+      { group: "Carbs", item: "Russet potatoes", amount: 1, unit: "pcs" },
+      { group: "Produce", item: "Asparagus", amount: 1, unit: "bunches" },
+      { group: "Dairy", item: "Butter", amount: 10, unit: "g" },
+      { group: "Dairy", item: "Parmesan", amount: 25, unit: "g" },
+    ],
+  },
+  salmonGuac: {
+    name: "Salmon + Guac",
+    calories: 1047,
+    protein: 85,
+    image: "/assets/images/health/food-salmon-guac.jpg",
+    detail: "Salmon, sweet potato, avocado, cilantro, lime.",
+    cook: [
+      "Bake the sweet potato until soft.",
+      "Salt salmon, then bake or pan-sear until it flakes.",
+      "Mash avocado with cilantro, lime, and salt for quick guac.",
+    ],
+    source: "Cookbook p. 11",
+    shopping: [
+      { group: "Proteins", item: "Salmon", amount: 340, unit: "g" },
+      { group: "Carbs", item: "Sweet potatoes", amount: 1, unit: "pcs" },
+      { group: "Produce", item: "Avocados", amount: 0.5, unit: "pcs" },
+      { group: "Produce", item: "Cilantro", amount: 1, unit: "bunches" },
+      { group: "Produce", item: "Limes", amount: 1, unit: "pcs" },
+    ],
+  },
+  pollos: {
+    name: "Los Pollos",
+    calories: 826,
+    protein: 86,
+    image: "/assets/images/health/food-pollos.jpg",
+    detail: "Chicken tacos with black beans, peppers, onion, salsa.",
+    cook: [
+      "Season chicken with lime, salt, and hot sauce.",
+      "Sear chicken, then saute peppers and onion in the same pan.",
+      "Warm tortillas and build tacos with beans and salsa.",
+    ],
+    prep: "Season chicken with lime, salt, and hot sauce. Sear it, then saute peppers and onion in the same pan. Cool chicken and peppers in shallow boxes. Store tortillas, beans, salsa, and lime separate.",
+    prepCook: "Season chicken with lime, salt, and hot sauce. Sear it, then saute peppers and onion in the same pan.",
+    prepLater: "Tortillas, beans, salsa, lime.",
+    source: "Cookbook p. 12",
+    shopping: [
+      { group: "Proteins", item: "Chicken breast", amount: 340, unit: "g" },
+      { group: "Carbs", item: "Corn tortillas", amount: 3, unit: "pcs" },
+      { group: "Produce", item: "Mini bell peppers", amount: 3, unit: "pcs" },
+      { group: "Produce", item: "Yellow or white onion", amount: 0.25, unit: "pcs" },
+      { group: "Produce", item: "Limes", amount: 1, unit: "pcs" },
+      { group: "Pantry", item: "Black beans", amount: 0.25, unit: "cans" },
+      { group: "Pantry", item: "Salsa or hot sauce", amount: 1, unit: "jars", pantry: true },
+    ],
+  },
+  chipotleBowl: {
+    name: "Chipotle Bowl",
+    calories: 1406,
+    protein: 95,
+    image: "/assets/images/health/food-chipotle-bowl.jpg",
+    detail: "Steak bowl with rice, peppers, onion, beans, lime, salsa.",
+    cook: [
+      "Cook rice and warm the beans.",
+      "Sear steak hot, then rest and slice it.",
+      "Saute peppers and onion, then build the bowl with lime and salsa.",
+    ],
+    source: "Cookbook p. 13",
+    shopping: [
+      { group: "Proteins", item: "Flank steak or carne asada", amount: 340, unit: "g" },
+      { group: "Carbs", item: "Jasmine rice", amount: 180, unit: "g" },
+      { group: "Produce", item: "Mini bell peppers", amount: 3, unit: "pcs" },
+      { group: "Produce", item: "Green onion", amount: 1, unit: "bunches" },
+      { group: "Produce", item: "Yellow or white onion", amount: 0.5, unit: "pcs" },
+      { group: "Produce", item: "Limes", amount: 2, unit: "pcs" },
+      { group: "Pantry", item: "Black beans", amount: 0.25, unit: "cans" },
+      { group: "Dairy", item: "Mozzarella", amount: 30, unit: "g" },
+      { group: "Pantry", item: "Salsa or hot sauce", amount: 1, unit: "jars", pantry: true },
+    ],
+  },
+  pestoPizza: {
+    name: "G-Pie Pesto Pizza",
+    calories: 1280,
+    protein: 89,
+    image: "/assets/images/health/food-pesto-pizza.jpg",
+    detail: "Cauliflower crust, chicken, spinach, mozzarella, pesto.",
+    cook: [
+      "Cook or use pre-cooked chicken.",
+      "Spread pesto on the crust, then add chicken, spinach, and mozzarella.",
+      "Bake until the crust is crisp and the cheese is melted.",
+    ],
+    prep: "Cook the chicken plain or lightly salted, then cool and refrigerate it shredded or sliced in an airtight box. Do not assemble the pizza until eating.",
+    prepCook: "Cook the chicken plain or lightly salted. Shred or slice it once cool.",
+    prepLater: "Assemble and bake the pizza fresh.",
+    source: "Cookbook p. 14",
+    shopping: [
+      { group: "Proteins", item: "Chicken breast", amount: 225, unit: "g" },
+      { group: "Carbs", item: "Cauliflower crust", amount: 1, unit: "pcs" },
+      { group: "Produce", item: "Spinach", amount: 50, unit: "g" },
+      { group: "Dairy", item: "Mozzarella", amount: 110, unit: "g" },
+      { group: "Pantry", item: "Pesto", amount: 60, unit: "g" },
+    ],
+  },
+  bigBison: {
+    name: "Big Bison",
+    calories: 610,
+    protein: 55,
+    image: "/assets/images/health/food-big-bison.jpg",
+    detail: "Bison or lean beef, sourdough, egg, avocado.",
+    cook: [
+      "Form the meat into patties and salt both sides.",
+      "Sear patties until cooked through, then fry one egg.",
+      "Toast bread and stack with avocado.",
+    ],
+    source: "Cookbook p. 15",
+    shopping: [
+      { group: "Proteins", item: "Lean beef or bison", amount: 225, unit: "g" },
+      { group: "Breakfast", item: "Toast bread", amount: 2, unit: "slices" },
+      { group: "Breakfast", item: "Eggs", amount: 1, unit: "pcs" },
+      { group: "Produce", item: "Avocados", amount: 0.25, unit: "pcs" },
+    ],
+  },
+  xarSalad: {
+    name: "Xar Salad",
+    calories: 527,
+    protein: 58,
+    image: "/assets/images/health/food-xar-salad.jpg",
+    detail: "Chicken, spring mix, avocado, feta, pine nuts.",
+    cook: [
+      "Use pre-cooked chicken or sear a quick chicken breast.",
+      "Add greens, avocado, feta, and pine nuts to a bowl.",
+      "Toss with vinaigrette right before eating so it stays crisp.",
+    ],
+    prep: "Sear chicken breast with salt and pepper, cool it, then slice it cold for salads. Store chicken airtight. Keep greens, avocado, feta, pine nuts, and vinaigrette separate.",
+    prepCook: "Sear chicken with salt and pepper. Cool it, then slice it for salads.",
+    prepLater: "Greens, avocado, feta, pine nuts, vinaigrette.",
+    source: "Cookbook p. 16",
+    shopping: [
+      { group: "Proteins", item: "Chicken breast", amount: 225, unit: "g" },
+      { group: "Produce", item: "Spring mix", amount: 120, unit: "g" },
+      { group: "Produce", item: "Avocados", amount: 0.5, unit: "pcs" },
+      { group: "Dairy", item: "Feta", amount: 30, unit: "g" },
+      { group: "Pantry", item: "Pine nuts", amount: 15, unit: "g" },
+      { group: "Pantry", item: "Vinaigrette", amount: 1, unit: "bottles", pantry: true },
+    ],
+  },
+  beefBroc: {
+    name: "Beef Broc",
+    calories: 829,
+    protein: 63,
+    image: "/assets/images/health/food-beef-broc.jpg",
+    detail: "Lean beef, broccoli, egg, jasmine rice, soy sauce.",
+    cook: [
+      "Cook rice while you steam or saute the broccoli.",
+      "Brown the beef with salt and pepper.",
+      "Fry one egg, then serve everything with soy sauce.",
+    ],
+    prep: "Brown lean beef with salt and pepper. Steam or saute broccoli. Cool beef and broccoli in shallow boxes. Keep soy sauce separate and cook the egg fresh.",
+    prepCook: "Brown beef with salt and pepper. Steam or saute broccoli.",
+    prepLater: "Soy sauce. Cook the egg fresh.",
+    source: "Cookbook p. 20",
+    shopping: [
+      { group: "Proteins", item: "Lean ground beef", amount: 225, unit: "g" },
+      { group: "Carbs", item: "Jasmine rice", amount: 90, unit: "g" },
+      { group: "Produce", item: "Broccoli", amount: 250, unit: "g" },
+      { group: "Breakfast", item: "Eggs", amount: 1, unit: "pcs" },
+      { group: "Pantry", item: "Soy sauce", amount: 1, unit: "bottles", pantry: true },
+    ],
+  },
+  omega: {
+    name: "The Omega",
+    calories: 710,
+    protein: 47,
+    image: "/assets/images/health/food-omega.jpg",
+    detail: "Salmon, potatoes, carrots, broccoli, Brussels sprouts.",
+    cook: [
+      "Roast potatoes and vegetables on a tray.",
+      "Bake or pan-sear salmon while the tray finishes.",
+      "Add butter, lemon or lime, salt, and pepper at the end.",
+    ],
+    source: "Cookbook p. 22",
+    shopping: [
+      { group: "Proteins", item: "Salmon", amount: 170, unit: "g" },
+      { group: "Carbs", item: "Potatoes", amount: 250, unit: "g" },
+      { group: "Produce", item: "Carrots", amount: 2, unit: "pcs" },
+      { group: "Produce", item: "Broccoli", amount: 150, unit: "g" },
+      { group: "Produce", item: "Brussels sprouts", amount: 150, unit: "g" },
+      { group: "Dairy", item: "Butter", amount: 10, unit: "g" },
+    ],
+  },
+  buffaloChicken: {
+    name: "Buffalo Chicken",
+    calories: 671,
+    protein: 64,
+    image: "/assets/images/health/food-buffalo-chicken.jpg",
+    detail: "Buffalo chicken, potato wedges, carrots, celery, yogurt dip.",
+    cook: [
+      "Cut potatoes into wedges and bake until crisp.",
+      "Cook chicken, then toss with buffalo sauce.",
+      "Serve with carrots, celery, and Greek yogurt dip.",
+    ],
+    prep: "Cook chicken plain or lightly salted, then cool and refrigerate airtight. Toss with buffalo sauce when reheating. Bake wedges fresh if you want crisp potatoes.",
+    prepCook: "Cook chicken plain or lightly salted.",
+    prepLater: "Buffalo sauce when reheating. Bake wedges fresh if you want crisp potatoes.",
+    source: "Cookbook p. 24",
+    shopping: [
+      { group: "Proteins", item: "Chicken breast", amount: 225, unit: "g" },
+      { group: "Carbs", item: "Russet potatoes", amount: 1, unit: "pcs" },
+      { group: "Produce", item: "Carrots", amount: 2, unit: "pcs" },
+      { group: "Produce", item: "Celery", amount: 4, unit: "sticks" },
+      { group: "Dairy", item: "Greek yogurt", amount: 60, unit: "g" },
+      { group: "Pantry", item: "Buffalo sauce", amount: 1, unit: "bottles", pantry: true },
+    ],
+  },
+};
+const healthFoodPlans = [
+  {
+    id: "week1",
+    focus: "Hit protein every day",
+    days: [
+      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "stirFry", "xarSalad"] },
+      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "omega"] },
+      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "pollos", "beefBroc"] },
+      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "salmonGuac", "bigBison"] },
+      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "pestoPizza", "buffaloChicken"] },
+      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "bigBison", "pollos"] },
+      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "omega", "xarSalad"] },
+    ],
+  },
+  {
+    id: "week2",
+    focus: "Cook protein in bulk",
+    days: [
+      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "chipotleBowl", "xarSalad"] },
+      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "omega", "bigBison"] },
+      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "allAmerican", "pollos"] },
+      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "xarSalad", "beefBroc"] },
+      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "stirFry", "bigBison"] },
+      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "buffaloChicken", "salmonGuac"] },
+      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "xarSalad"] },
+    ],
+  },
+  {
+    id: "week3",
+    focus: "Add carbs around hard days",
+    days: [
+      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "pollos", "stirFry"] },
+      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "bigBison"] },
+      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "chipotleBowl", "beefBroc"] },
+      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "omega", "xarSalad"] },
+      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "pestoPizza", "bigBison"] },
+      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "buffaloChicken", "pollos"] },
+      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "omega"] },
+    ],
+  },
+  {
+    id: "week4",
+    focus: "Midpoint adjust",
+    days: [
+      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "stirFry", "xarSalad"] },
+      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "omega", "buffaloChicken"] },
+      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "allAmerican", "pollos"] },
+      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "beefBroc", "omega"] },
+      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "chipotleBowl", "bigBison"] },
+      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "pestoPizza", "xarSalad"] },
+      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "bigBison"] },
+    ],
+  },
+  {
+    id: "week5",
+    focus: "Eat enough to progress",
+    days: [
+      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "chipotleBowl", "stirFry"] },
+      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "omega"] },
+      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "stirFry", "allAmerican"] },
+      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "omega", "buffaloChicken"] },
+      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "pollos", "pestoPizza"] },
+      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "bigBison", "buffaloChicken"] },
+      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "xarSalad"] },
+    ],
+  },
+  {
+    id: "week6",
+    focus: "Repeat the meals that work",
+    days: [
+      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "beefBroc", "pollos"] },
+      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "bigBison"] },
+      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "chipotleBowl", "pollos"] },
+      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "omega", "xarSalad"] },
+      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "stirFry", "buffaloChicken"] },
+      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "pestoPizza", "salmonGuac"] },
+      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "beefBroc"] },
+    ],
+  },
+  {
+    id: "week7",
+    focus: "Fuel the hard sets",
+    days: [
+      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "pestoPizza", "stirFry"] },
+      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "omega"] },
+      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "allAmerican", "chipotleBowl"] },
+      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "omega", "buffaloChicken"] },
+      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "stirFry", "bigBison"] },
+      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "pollos", "xarSalad"] },
+      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "beefBroc"] },
+    ],
+  },
+  {
+    id: "week8",
+    focus: "Retest and compare",
+    days: [
+      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "stirFry", "xarSalad"] },
+      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "omega", "bigBison"] },
+      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "chipotleBowl", "beefBroc"] },
+      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "salmonGuac", "xarSalad"] },
+      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "pestoPizza", "buffaloChicken"] },
+      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "allAmerican", "pollos"] },
+      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "omega"] },
+    ],
+  },
+];
+const healthFoodPrepWindows = [
+  { plan: "Sun Jun 28", shop: "Mon Jun 29", topUp: "Thu Jul 2" },
+  { plan: "Sun Jul 5", shop: "Mon Jul 6", topUp: "Thu Jul 9" },
+  { plan: "Sun Jul 12", shop: "Mon Jul 13", topUp: "Thu Jul 16" },
+  { plan: "Sun Jul 19", shop: "Mon Jul 20", topUp: "Thu Jul 23" },
+  { plan: "Sun Jul 26", shop: "Mon Jul 27", topUp: "Thu Jul 30" },
+  { plan: "Sun Aug 2", shop: "Mon Aug 3", topUp: "Thu Aug 6" },
+  { plan: "Sun Aug 9", shop: "Mon Aug 10", topUp: "Thu Aug 13" },
+  { plan: "Sun Aug 16", shop: "Mon Aug 17", topUp: "Thu Aug 20" },
+];
+const foodShoppingGroupOrder = [
+  "Breakfast",
+  "Proteins",
+  "Carbs",
+  "Produce",
+  "Dairy",
+  "Pantry",
+];
+const foodUnitLabels = {
+  bottles: ["bottle", "bottles"],
+  bunches: ["bunch", "bunches"],
+  cans: ["can", "cans"],
+  jars: ["jar", "jars"],
+  packs: ["pack", "packs"],
+  pcs: ["pc", "pcs"],
+  servings: ["serving", "servings"],
+  slices: ["slice", "slices"],
+  sticks: ["stick", "sticks"],
+};
+const foodReadableItemNames = {
+  "Avocados": ["avocado", "avocados"],
+  "Cauliflower crust": ["cauliflower crust", "cauliflower crusts"],
+  "Carrots": ["carrot", "carrots"],
+  "Celery": ["celery stick", "celery sticks"],
+  "Corn tortillas": ["corn tortilla", "corn tortillas"],
+  "Eggs": ["egg", "eggs"],
+  "Espresso coffee": ["espresso serving", "espresso servings"],
+  "Limes": ["lime", "limes"],
+  "Mini bell peppers": ["mini bell pepper", "mini bell peppers"],
+  "Russet potatoes": ["russet potato", "russet potatoes"],
+  "Sweet potatoes": ["sweet potato", "sweet potatoes"],
+  "Toast bread": ["toast slice", "toast slices"],
+  "Turkey slices": ["turkey slice", "turkey slices"],
+  "Yellow or white onion": ["yellow or white onion", "yellow or white onions"],
+};
+const foodBatchPrepRecipeIds = new Set(["stirFry", "xarSalad", "pollos", "pestoPizza", "beefBroc", "buffaloChicken"]);
+const foodPrepAheadCarbItems = new Set(["Jasmine rice", "Potatoes", "Sweet potatoes"]);
+
+function escapeHtml(value) {
+  const replacements = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;",
+  };
+
+  return String(value ?? "").replace(/[&<>"']/g, (character) => replacements[character]);
+}
+
+function applyRandomHealthTitle() {
+  const title = document.querySelector("[data-health-title]");
+
+  if (!title) {
+    return;
+  }
+
+  let titleIndex = Math.floor(Math.random() * healthTitleOptions.length);
+
+  try {
+    const savedTitleIndex = localStorage.getItem(healthTitleStorageKey);
+    const lastTitleIndex = savedTitleIndex === null ? -1 : Number(savedTitleIndex);
+
+    if (Number.isInteger(lastTitleIndex) && healthTitleOptions.length > 1 && titleIndex === lastTitleIndex) {
+      titleIndex = (titleIndex + 1 + Math.floor(Math.random() * (healthTitleOptions.length - 1))) % healthTitleOptions.length;
+    }
+
+    localStorage.setItem(healthTitleStorageKey, String(titleIndex));
+  } catch {
+    // Cosmetic only; the page still works if title memory is unavailable.
+  }
+
+  const lines = healthTitleOptions[titleIndex];
+  title.innerHTML = lines.map((line) => `<span>${escapeHtml(line)}</span>`).join(" ");
+}
+
+function getDefaultHealthState() {
+  const state = {
+    activeWorkoutWeek: healthWeeks[0].id,
+    activeFoodWeek: healthWeeks[0].id,
+    measurements: {},
+    photos: {},
+    shopping: {},
+    workouts: {},
+  };
+
+  healthMeasurementMetrics.forEach((metric) => {
+    state.measurements[metric.id] = {};
+
+    healthMeasurementCheckpoints.forEach((checkpoint) => {
+      state.measurements[metric.id][checkpoint.id] = "";
+    });
+  });
+
+  healthMeasurementCheckpoints.forEach((checkpoint) => {
+    state.photos[checkpoint.id] = {};
+
+    healthPhotoAngles.forEach((angle) => {
+      state.photos[checkpoint.id][angle.id] = "";
+    });
+  });
+
+  healthFoodPlans.forEach((week) => {
+    state.shopping[week.id] = {};
+  });
+
+  healthWeeks.forEach((week) => {
+    state.workouts[week.id] = {
+      target: "",
+      review: "",
+      days: {},
+    };
+
+    healthWorkoutDays.forEach((day) => {
+      state.workouts[week.id].days[day.id] = {
+        done: false,
+        log: "",
+        result: "",
+        notes: "",
+      };
+    });
+  });
+
+  return state;
+}
+
+function mergeHealthState(savedState) {
+  const state = getDefaultHealthState();
+
+  if (!savedState || typeof savedState !== "object") {
+    return state;
+  }
+
+  if (healthWeeks.some((week) => week.id === savedState.activeWorkoutWeek)) {
+    state.activeWorkoutWeek = savedState.activeWorkoutWeek;
+  }
+
+  if (healthWeeks.some((week) => week.id === savedState.activeFoodWeek)) {
+    state.activeFoodWeek = savedState.activeFoodWeek;
+  }
+
+  healthMeasurementMetrics.forEach((metric) => {
+    const savedMetric = savedState.measurements?.[metric.id];
+
+    if (!savedMetric || typeof savedMetric !== "object") {
+      return;
+    }
+
+    healthMeasurementCheckpoints.forEach((checkpoint) => {
+      const value = savedMetric[checkpoint.id];
+
+      if (typeof value === "string") {
+        state.measurements[metric.id][checkpoint.id] = value;
+      }
+    });
+  });
+
+  healthMeasurementCheckpoints.forEach((checkpoint) => {
+    const savedCheckpoint = savedState.photos?.[checkpoint.id];
+
+    if (!savedCheckpoint || typeof savedCheckpoint !== "object") {
+      return;
+    }
+
+    healthPhotoAngles.forEach((angle) => {
+      const value = savedCheckpoint[angle.id];
+
+      if (typeof value === "string") {
+        state.photos[checkpoint.id][angle.id] = value;
+      }
+    });
+  });
+
+  healthFoodPlans.forEach((week) => {
+    const savedWeek = savedState.shopping?.[week.id];
+
+    if (!savedWeek || typeof savedWeek !== "object") {
+      return;
+    }
+
+    Object.entries(savedWeek).forEach(([key, value]) => {
+      if (typeof key === "string" && value === true) {
+        state.shopping[week.id][key] = true;
+      }
+    });
+  });
+
+  healthWeeks.forEach((week) => {
+    const savedWeek = savedState.workouts?.[week.id];
+
+    if (!savedWeek || typeof savedWeek !== "object") {
+      return;
+    }
+
+    if (typeof savedWeek.target === "string") {
+      state.workouts[week.id].target = savedWeek.target;
+    }
+
+    if (typeof savedWeek.review === "string") {
+      state.workouts[week.id].review = savedWeek.review;
+    }
+
+    healthWorkoutDays.forEach((day) => {
+      const savedDay = savedWeek.days?.[day.id];
+
+      if (!savedDay || typeof savedDay !== "object") {
+        return;
+      }
+
+      state.workouts[week.id].days[day.id] = {
+        done: savedDay.done === true,
+        log: typeof savedDay.log === "string" ? savedDay.log : [savedDay.result, savedDay.notes].filter((value) => typeof value === "string" && value.trim()).join(" | "),
+        result: typeof savedDay.result === "string" ? savedDay.result : "",
+        notes: typeof savedDay.notes === "string" ? savedDay.notes : "",
+      };
+    });
+  });
+
+  return state;
+}
+
+function readHealthState() {
+  try {
+    const value = localStorage.getItem(healthStorageKey);
+    return mergeHealthState(value ? JSON.parse(value) : null);
+  } catch {
+    return getDefaultHealthState();
+  }
+}
+
+function saveHealthState(state) {
+  try {
+    localStorage.setItem(healthStorageKey, JSON.stringify(state));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function readHealthMode() {
+  try {
+    const mode = localStorage.getItem(healthModeStorageKey);
+    return validHealthModes.has(mode) ? mode : "track";
+  } catch {
+    return "track";
+  }
+}
+
+function saveHealthMode(mode) {
+  try {
+    localStorage.setItem(healthModeStorageKey, mode);
+  } catch {
+    // Best effort only; the page still works without saved tab state.
+  }
+}
+
+function setHealthMode(mode) {
+  if (!validHealthModes.has(mode)) {
+    return;
+  }
+
+  const healthPanel = document.querySelector("[data-yellow-page=\"health\"]");
+  const healthModeNav = document.querySelector("[data-health-mode-selected]");
+  const buttons = document.querySelectorAll("[data-health-mode-button]");
+  const panels = document.querySelectorAll("[data-health-mode-panel]");
+
+  if (healthPanel) {
+    healthPanel.dataset.healthMode = mode;
+  }
+
+  if (healthModeNav) {
+    healthModeNav.dataset.healthModeSelected = mode;
+  }
+
+  buttons.forEach((button) => {
+    const isSelected = button.dataset.healthModeButton === mode;
+    button.classList.toggle("is-selected", isSelected);
+    button.setAttribute("aria-pressed", isSelected ? "true" : "false");
+  });
+
+  panels.forEach((panel) => {
+    panel.hidden = panel.dataset.healthModePanel !== mode;
+  });
+}
+
+function setupHealthModeNavigation() {
+  const buttons = document.querySelectorAll("[data-health-mode-button]");
+
+  if (!buttons.length) {
+    return;
+  }
+
+  setHealthMode(readHealthMode());
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const mode = button.dataset.healthModeButton;
+
+      if (!validHealthModes.has(mode)) {
+        return;
+      }
+
+      setHealthMode(mode);
+      saveHealthMode(mode);
+    });
+  });
+}
+
+function getActiveWorkoutWeekIndex(state) {
+  const index = healthWeeks.findIndex((week) => week.id === state.activeWorkoutWeek);
+  return index >= 0 ? index : 0;
+}
+
+function getActiveFoodWeekIndex(state) {
+  const index = healthFoodPlans.findIndex((week) => week.id === state.activeFoodWeek);
+  return index >= 0 ? index : 0;
+}
+
+function setActiveWorkoutWeek(root, state, nextIndex) {
+  const clampedIndex = Math.max(0, Math.min(healthWeeks.length - 1, nextIndex));
+  state.activeWorkoutWeek = healthWeeks[clampedIndex].id;
+  saveHealthState(state);
+  renderHealthProgram(root, state);
+}
+
+function setActiveFoodWeek(root, state, nextIndex) {
+  const clampedIndex = Math.max(0, Math.min(healthFoodPlans.length - 1, nextIndex));
+  state.activeFoodWeek = healthFoodPlans[clampedIndex].id;
+  saveHealthState(state);
+  renderHealthFood(root, state);
+}
+
+function getFoodPlanProtein(day) {
+  return day.meals.reduce((total, recipeId) => total + (healthRecipes[recipeId]?.protein || 0), 0);
+}
+
+function getFoodPlanCalories(day) {
+  return day.meals.reduce((total, recipeId) => total + (healthRecipes[recipeId]?.calories || 0), 0);
+}
+
+function getFoodRecipeCounts(foodWeek) {
+  return getFoodRecipeCountsForDays(foodWeek.days);
+}
+
+function getFoodRecipeCountsForDays(days) {
+  const counts = new Map();
+
+  days.forEach((day) => {
+    day.meals.forEach((recipeId) => {
+      counts.set(recipeId, (counts.get(recipeId) || 0) + 1);
+    });
+  });
+
+  return counts;
+}
+
+function getFoodShoppingGroups(foodWeek) {
+  const groups = new Map();
+
+  getFoodRecipeCounts(foodWeek).forEach((count, recipeId) => {
+    const recipe = healthRecipes[recipeId];
+
+    recipe?.shopping?.forEach((entry) => {
+      const group = groups.get(entry.group) || new Map();
+      const key = `${entry.item}|${entry.unit}`;
+      const existing = group.get(key) || {
+        amount: 0,
+        item: entry.item,
+        pantry: false,
+        unit: entry.unit,
+      };
+      const amount = entry.pantry ? entry.amount : entry.amount * count;
+
+      existing.amount = entry.pantry ? Math.max(existing.amount, amount) : existing.amount + amount;
+      existing.pantry = existing.pantry || Boolean(entry.pantry);
+      group.set(key, existing);
+      groups.set(entry.group, group);
+    });
+  });
+
+  return foodShoppingGroupOrder
+    .map((label) => ({ label, items: Array.from(groups.get(label)?.values() || []) }))
+    .filter((group) => group.items.length);
+}
+
+function formatFoodShoppingAmount(amount, unit) {
+  if (unit === "g") {
+    if (amount >= 1000) {
+      return `${(amount / 1000).toFixed(amount % 1000 === 0 ? 0 : 1)} kg`;
+    }
+
+    return `${Math.round(amount)} g`;
+  }
+
+  const rounded = Math.max(1, Math.ceil(amount - 0.001));
+  const labels = foodUnitLabels[unit];
+
+  if (!labels) {
+    return `${rounded} ${unit}`;
+  }
+
+  return `${rounded} ${rounded === 1 ? labels[0] : labels[1]}`;
+}
+
+function formatFoodShoppingLine(item) {
+  const readableNames = foodReadableItemNames[item.item];
+
+  if (readableNames && ["pcs", "servings", "slices", "sticks"].includes(item.unit)) {
+    const rounded = Math.max(1, Math.ceil(item.amount - 0.001));
+    return `${rounded} ${rounded === 1 ? readableNames[0] : readableNames[1]}`;
+  }
+
+  return `${formatFoodShoppingAmount(item.amount, item.unit)} ${item.item}`;
+}
+
+function getFoodShoppingItemKey(groupLabel, item) {
+  return `${groupLabel}|${item.item}|${item.unit}`;
+}
+
+function getFoodShoppingTotalsForCounts(counts, shouldInclude) {
+  const totals = new Map();
+
+  counts.forEach((count, recipeId) => {
+    const recipe = healthRecipes[recipeId];
+
+    recipe?.shopping?.forEach((entry) => {
+      if (entry.pantry || !shouldInclude(entry)) {
+        return;
+      }
+
+      const key = `${entry.item}|${entry.unit}`;
+      const existing = totals.get(key) || { amount: 0, item: entry.item, unit: entry.unit };
+      existing.amount += entry.amount * count;
+      totals.set(key, existing);
+    });
+  });
+
+  return Array.from(totals.values());
+}
+
+function formatFoodPrepItemList(items) {
+  return items.length
+    ? items.map((item) => formatFoodShoppingLine(item)).join(", ")
+    : "";
+}
+
+function formatFoodRecipeCountList(counts, allowedIds) {
+  const items = Array.from(counts.entries())
+    .filter(([recipeId]) => allowedIds.has(recipeId))
+    .map(([recipeId, count]) => {
+      const recipeName = healthRecipes[recipeId]?.name || recipeId;
+      return count > 1 ? `${recipeName} x${count}` : recipeName;
+    });
+
+  return items.join(", ");
+}
+
+function getFilteredFoodRecipeCounts(counts, allowedIds) {
+  return new Map(Array.from(counts.entries()).filter(([recipeId]) => allowedIds.has(recipeId)));
+}
+
+function getFoodPrepCarbMealCount(counts) {
+  return Array.from(counts.entries()).reduce((total, [recipeId, count]) => {
+    const recipe = healthRecipes[recipeId];
+    const hasPrepCarb = recipe?.shopping?.some((entry) => foodPrepAheadCarbItems.has(entry.item));
+
+    return hasPrepCarb ? total + count : total;
+  }, 0);
+}
+
+function getFoodPrepDayRange(days) {
+  if (!days.length) {
+    return "";
+  }
+
+  return `${days[0].day}-${days[days.length - 1].day}`;
+}
+
+function getFoodBatchPrepSummary(days) {
+  const counts = getFoodRecipeCountsForDays(days);
+  const batchCounts = getFilteredFoodRecipeCounts(counts, foodBatchPrepRecipeIds);
+  const batchRecipeNames = formatFoodRecipeCountList(batchCounts, foodBatchPrepRecipeIds);
+  const batchProteins = getFoodShoppingTotalsForCounts(batchCounts, (entry) => entry.group === "Proteins");
+  const prepCarbs = getFoodShoppingTotalsForCounts(counts, (entry) => entry.group === "Carbs" && foodPrepAheadCarbItems.has(entry.item));
+  const batchServings = Array.from(counts.entries()).reduce((total, [recipeId, count]) => foodBatchPrepRecipeIds.has(recipeId) ? total + count : total, 0);
+
+  return {
+    carbs: formatFoodPrepItemList(prepCarbs),
+    carbMeals: getFoodPrepCarbMealCount(counts),
+    dayRange: getFoodPrepDayRange(days),
+    proteinItems: batchProteins,
+    proteins: formatFoodPrepItemList(batchProteins),
+    recipes: batchRecipeNames,
+    servings: batchServings,
+  };
+}
+
+function getFoodPrepProteinSentences(batch) {
+  const items = batch.proteinItems || [];
+  const hasChicken = items.some((item) => item.item === "Chicken breast");
+  const hasGroundBeef = items.some((item) => item.item === "Lean ground beef");
+  const sentences = [];
+
+  if (hasChicken) {
+    sentences.push("Chicken: cut into strips or cubes for bowls, salads, tacos, and pizza; salt it, then sear it in a hot pan with a little oil until cooked through.");
+  }
+
+  if (hasGroundBeef) {
+    sentences.push("Beef: brown it loose with salt and pepper for the Beef Broc rice bowl; do not make burger patties.");
+  }
+
+  if (!sentences.length && batch.proteins) {
+    sentences.push(`Protein: cook ${batch.proteins}.`);
+  }
+
+  return sentences;
+}
+
+function renderFoodBatchPrepDetail(batch) {
+  const cookSentences = getFoodPrepProteinSentences(batch);
+  const carbSentence = batch.carbs ? `Also cook ${batch.carbs}.` : "";
+  const packSentence = batch.servings
+    ? `Make ${batch.servings} boxes for ${batch.dayRange}; add the fresh bits when you eat.`
+    : `Prep only what helps ${batch.dayRange}; cook the rest fresh.`;
+
+  return `
+                        <p>${escapeHtml([...cookSentences, carbSentence, packSentence].filter(Boolean).join(" "))}</p>`;
+}
+
+function getFoodPrepSteps(foodWeek, activeIndex) {
+  const window = healthFoodPrepWindows[activeIndex] || healthFoodPrepWindows[0];
+  const mondayBatch = getFoodBatchPrepSummary(foodWeek.days.slice(0, 3));
+  const thursdayBatch = getFoodBatchPrepSummary(foodWeek.days.slice(3));
+
+  return [
+    { label: `${window.shop} - ${mondayBatch.dayRange}`, detail: renderFoodBatchPrepDetail(mondayBatch) },
+    { label: `${window.topUp} - ${thursdayBatch.dayRange}`, detail: renderFoodBatchPrepDetail(thursdayBatch) },
+  ].filter((step) => step.detail);
+}
+
+function renderFoodShopping(foodWeek, state) {
+  return getFoodShoppingGroups(foodWeek).map((group) => `
+                      <div>
+                        <strong>${escapeHtml(group.label)}</strong>
+                        <ul>${group.items.map((item) => {
+                          const itemKey = getFoodShoppingItemKey(group.label, item);
+                          const isChecked = state.shopping?.[foodWeek.id]?.[itemKey] === true;
+
+                          return `
+                          <li>
+                            <label class="food-shopping-check">
+                              <input type="checkbox" data-health-shopping-week="${escapeHtml(foodWeek.id)}" data-health-shopping-item="${escapeHtml(itemKey)}"${isChecked ? " checked" : ""}>
+                              <span>${escapeHtml(formatFoodShoppingLine(item))}${item.pantry ? " (buy once if missing)" : ""}</span>
+                            </label>
+                          </li>`;
+                        }).join("")}
+                        </ul>
+                      </div>`).join("");
+}
+
+function renderFoodPrep(foodWeek, activeIndex, state) {
+  const window = healthFoodPrepWindows[activeIndex] || healthFoodPrepWindows[0];
+  const weekMeta = healthWeeks[activeIndex] || { label: `Week ${activeIndex + 1}` };
+  const prep = getFoodPrepSteps(foodWeek, activeIndex).map((step) => `
+                      <article class="food-prep-batch">
+                        <h4>${escapeHtml(step.label)}</h4>${step.detail}
+                      </article>`).join("");
+
+  return `
+                <section class="food-prep" aria-label="Food prep and shopping list">
+                  <div class="food-prep-panel">
+                    <span>Meal prep</span>
+                    <h3>Shop ${escapeHtml(window.shop)}</h3>
+                    <div class="food-prep-batches">${prep}
+                    </div>
+                  </div>
+                  <div class="food-prep-panel">
+                    <span>Shopping list</span>
+                    <h3>${escapeHtml(weekMeta.label)} shopping list</h3>
+                    <div class="food-shopping-list">${renderFoodShopping(foodWeek, state)}
+                    </div>
+                  </div>
+                </section>`;
+}
+
+function renderFoodMealCards(recipeIds) {
+  return recipeIds.map((recipeId, index) => {
+    const recipe = healthRecipes[recipeId];
+
+    if (!recipe) {
+      return "";
+    }
+
+    const cookSteps = (Array.isArray(recipe.cook) ? recipe.cook : [recipe.cook])
+      .filter(Boolean)
+      .map((step) => `<li>${escapeHtml(step)}</li>`)
+      .join("");
+
+    return `
+                        <article class="food-meal-card">
+                          <img src="${escapeHtml(recipe.image)}" alt="${escapeHtml(recipe.name)}" loading="lazy">
+                          <div>
+                            <span>${escapeHtml(healthMealLabels[index] || "Meal")}</span>
+                            <h5>${escapeHtml(recipe.name)}</h5>
+                            <p>${escapeHtml(recipe.detail)}</p>
+                            <details class="food-cook">
+                            <summary>Cook steps</summary>
+                              <ol>${cookSteps}</ol>
+                            </details>
+                            <small>${escapeHtml(recipe.protein)}g protein - ${escapeHtml(recipe.calories)} cal - ${escapeHtml(recipe.source)}</small>
+                          </div>
+                        </article>`;
+  }).filter(Boolean).join("");
+}
+
+function renderHealthMeasurements(root, state) {
+  const headerCells = healthMeasurementCheckpoints.map((checkpoint) => `
+                  <span><strong>${escapeHtml(checkpoint.label)}</strong><small>${escapeHtml(checkpoint.date)}</small></span>`).join("");
+  const rows = healthMeasurementMetrics.map((metric) => {
+    const inputs = healthMeasurementCheckpoints.map((checkpoint) => {
+      const value = state.measurements[metric.id]?.[checkpoint.id] ?? "";
+
+      return `
+                  <input class="measurement-input" type="text" inputmode="decimal" autocomplete="off" aria-label="${escapeHtml(metric.label)} ${escapeHtml(checkpoint.label)}" data-health-measurement="${escapeHtml(metric.id)}" data-health-checkpoint="${escapeHtml(checkpoint.id)}" value="${escapeHtml(value)}" placeholder="${escapeHtml(metric.placeholder)}">`;
+    }).join("");
+
+    return `
+                <div class="measurement-row" role="row">
+                  <span><strong>${escapeHtml(metric.label)}</strong><small>${escapeHtml(metric.hint)}</small></span>${inputs}
+                </div>`;
+  }).join("");
+
+  root.innerHTML = `
+                <div class="measurement-row measurement-row--head" role="row">
+                  <span>Metric</span>${headerCells}
+                </div>${rows}`;
+}
+
+function renderHealthPhotos(root, state) {
+  const slots = healthMeasurementCheckpoints.flatMap((checkpoint) => healthPhotoAngles.map((angle) => {
+    const image = state.photos[checkpoint.id]?.[angle.id] ?? "";
+    const label = `${checkpoint.label} ${angle.label}`;
+
+    return `
+                  <div class="photo-upload-card${image ? " has-photo" : ""}">
+                    <label class="photo-upload-label">
+                      <span>${escapeHtml(label)}</span>
+                      <span class="photo-frame">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(label)} progress photo">` : "<span>Upload</span>"}</span>
+                      <input class="photo-file-input" type="file" accept="image/*" data-health-photo-checkpoint="${escapeHtml(checkpoint.id)}" data-health-photo-angle="${escapeHtml(angle.id)}">
+                    </label>
+                    <button class="photo-remove" type="button" data-health-photo-checkpoint="${escapeHtml(checkpoint.id)}" data-health-photo-remove="${escapeHtml(angle.id)}">Remove</button>
+                  </div>`;
+  })).join("");
+
+  root.innerHTML = `${slots}
+                <p class="photo-error" data-health-photo-error hidden></p>`;
+}
+
+function renderWorkoutItems(items) {
+  return items.map((item) => `<span class="program-exercise" tabindex="0" data-tooltip="${escapeHtml(item.tooltip)}">${escapeHtml(item.label)}</span>`).join("<span>, </span>");
+}
+
+function renderWarmup() {
+  const items = healthWarmupItems.map((item) => `
+                  <figure class="warmup-card">
+                    <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.alt)}" loading="lazy">
+                    <figcaption><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.detail)}</span></figcaption>
+                  </figure>`).join("");
+
+  return `
+                <section class="workout-warmup" aria-label="Warm-up">
+                  <header class="workout-warmup-header">
+                    <div>
+                      <span>Warm-up</span>
+                      <h3>Before every session</h3>
+                    </div>
+                    <p>3 rounds, then one easy first set.</p>
+                  </header>
+                  <div class="warmup-grid">${items}
+                  </div>
+                </section>`;
+}
+
+function renderHealthFood(root, state) {
+  const activeIndex = getActiveFoodWeekIndex(state);
+  const foodWeek = healthFoodPlans[activeIndex];
+  const weekMeta = healthWeeks.find((week) => week.id === foodWeek.id) || healthWeeks[activeIndex];
+  const weekButtons = healthFoodPlans.map((navWeek, index) => `
+                    <button class="workout-week-pill${index === activeIndex ? " is-selected" : ""}" type="button" data-health-food-week-select="${escapeHtml(navWeek.id)}" aria-label="${escapeHtml(healthWeeks[index].label)} ${escapeHtml(healthWeeks[index].dates)}" aria-current="${index === activeIndex ? "true" : "false"}">W${index + 1}</button>`).join("");
+  const days = foodWeek.days.map((day) => {
+    const plannedProtein = getFoodPlanProtein(day);
+    const plannedCalories = getFoodPlanCalories(day);
+
+    return `
+                  <section class="food-day">
+                    <header class="food-day-header">
+                      <div class="food-day-info">
+                        <span class="food-day-kicker">${escapeHtml(day.day)}</span>
+                        <h4>${escapeHtml(day.title)}</h4>
+                      </div>
+                      <div class="food-day-protein">
+                        <strong>${plannedProtein}g protein</strong>
+                        <span>${plannedCalories} cal</span>
+                      </div>
+                    </header>
+                    <div class="food-meal-grid">${renderFoodMealCards(day.meals)}
+                    </div>
+                  </section>`;
+  }).join("");
+
+  state.activeFoodWeek = foodWeek.id;
+  root.innerHTML = `
+${renderFoodPrep(foodWeek, activeIndex, state)}
+                <div class="food-carousel">
+                  <nav class="workout-carousel-nav" aria-label="Food week navigation">
+                    <button class="workout-week-arrow" type="button" data-health-food-week-nav="prev" aria-label="Previous food week"${activeIndex === 0 ? " disabled" : ""}>&lt;</button>
+                    <div class="workout-week-pills">${weekButtons}
+                    </div>
+                    <button class="workout-week-arrow" type="button" data-health-food-week-nav="next" aria-label="Next food week"${activeIndex === healthFoodPlans.length - 1 ? " disabled" : ""}>&gt;</button>
+                  </nav>
+                  <article class="food-week">
+                    <header class="food-week-header">
+                      <span class="food-week-kicker">${escapeHtml(weekMeta.label)} - ${escapeHtml(weekMeta.dates)}</span>
+                      <h3>${escapeHtml(foodWeek.focus)}</h3>
+                    </header>
+                    <div class="food-day-list">${days}
+                    </div>
+                  </article>
+                </div>`;
+}
+
+function renderHealthProgram(root, state) {
+  const activeIndex = getActiveWorkoutWeekIndex(state);
+  const week = healthWeeks[activeIndex];
+  const weekState = state.workouts[week.id];
+  const weekButtons = healthWeeks.map((navWeek, index) => `
+                    <button class="workout-week-pill${index === activeIndex ? " is-selected" : ""}" type="button" data-health-week-select="${escapeHtml(navWeek.id)}" aria-label="${escapeHtml(navWeek.label)} ${escapeHtml(navWeek.dates)}" aria-current="${index === activeIndex ? "true" : "false"}">W${index + 1}</button>`).join("");
+  const days = healthWorkoutDays.map((day) => {
+    const dayState = weekState.days[day.id];
+    const logValue = dayState.log || [dayState.result, dayState.notes].filter((value) => value && value.trim()).join(" | ");
+    const image = day.image ? `
+                      <figure class="workout-day-media">
+                        <img src="${escapeHtml(day.image)}" alt="${escapeHtml(day.imageAlt)}" loading="lazy">
+                      </figure>` : "";
+
+    return `
+                  <section class="workout-day${day.image ? " has-media" : ""}">
+                    <div class="workout-day-main">
+                      <input class="health-checkbox" type="checkbox" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} done" data-health-day-done="${escapeHtml(day.id)}" data-health-week="${escapeHtml(week.id)}"${dayState.done ? " checked" : ""}>
+${image}
+                      <div class="workout-day-info">
+                        <span class="workout-day-kicker">${escapeHtml(day.day)}</span>
+                        <div class="workout-day-title">
+                          <h4>${escapeHtml(day.title)}</h4>
+                        </div>
+                        <p class="workout-day-summary">${renderWorkoutItems(day.items)}</p>
+                      </div>
+                    </div>
+                    <div class="workout-day-fields">
+                      <textarea class="health-textarea workout-day-log" rows="2" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} log" data-health-day-log="${escapeHtml(day.id)}" data-health-week="${escapeHtml(week.id)}" placeholder="Log: 5/5/4. Clean. Next +1.">${escapeHtml(logValue)}</textarea>
+                    </div>
+                  </section>`;
+  }).join("");
+
+  state.activeWorkoutWeek = week.id;
+  root.innerHTML = `
+${renderWarmup()}
+                <div class="workout-carousel">
+                  <nav class="workout-carousel-nav" aria-label="Workout week navigation">
+                    <button class="workout-week-arrow" type="button" data-health-week-nav="prev" aria-label="Previous week"${activeIndex === 0 ? " disabled" : ""}>&lt;</button>
+                    <div class="workout-week-pills">${weekButtons}
+                    </div>
+                    <button class="workout-week-arrow" type="button" data-health-week-nav="next" aria-label="Next week"${activeIndex === healthWeeks.length - 1 ? " disabled" : ""}>&gt;</button>
+                  </nav>
+                <article class="workout-week">
+                  <header class="workout-week-header">
+                    <div>
+                      <span class="workout-week-kicker">${escapeHtml(week.label)} · ${escapeHtml(week.dates)}</span>
+                      <h3><span class="workout-week-focus">${escapeHtml(week.focus)}</span></h3>
+                    </div>
+                  </header>
+                  <div class="workout-day-list">${days}
+                  </div>
+                </article>
+                </div>`;
+}
+
+function setHealthPhotoError(root, message) {
+  const error = root.querySelector("[data-health-photo-error]");
+
+  if (!error) {
+    return;
+  }
+
+  error.textContent = message;
+  error.hidden = !message;
+}
+
+function resizeHealthPhoto(file) {
+  const maxSize = 1100;
+  const quality = 0.74;
+
+  return new Promise((resolve, reject) => {
+    if (!file.type.startsWith("image/")) {
+      reject(new Error("Please choose an image file."));
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onerror = () => reject(new Error("Could not read that image."));
+    reader.onload = () => {
+      const image = new Image();
+
+      image.onerror = () => reject(new Error("Could not load that image."));
+      image.onload = () => {
+        const largestSide = Math.max(image.naturalWidth, image.naturalHeight);
+        const scale = largestSide > maxSize ? maxSize / largestSide : 1;
+        const width = Math.max(1, Math.round(image.naturalWidth * scale));
+        const height = Math.max(1, Math.round(image.naturalHeight * scale));
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+
+        if (!context) {
+          reject(new Error("Could not prepare that image."));
+          return;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        context.drawImage(image, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+
+      image.src = String(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+function setupHealthTracker() {
+  const measurementRoot = document.querySelector("[data-health-measurements]");
+  const photoRoot = document.querySelector("[data-health-photos]");
+  const foodRoot = document.querySelector("[data-health-food]");
+  const programRoot = document.querySelector("[data-health-program]");
+  const modeButtons = document.querySelectorAll("[data-health-mode-button]");
+
+  if (!measurementRoot && !photoRoot && !foodRoot && !programRoot && !modeButtons.length) {
+    return;
+  }
+
+  setupHealthModeNavigation();
+
+  if (!measurementRoot && !photoRoot && !foodRoot && !programRoot) {
+    return;
+  }
+
+  const state = readHealthState();
+
+  if (measurementRoot) {
+    renderHealthMeasurements(measurementRoot, state);
+
+    measurementRoot.addEventListener("input", (event) => {
+      const input = event.target;
+
+      if (!(input instanceof HTMLInputElement) || !input.dataset.healthMeasurement || !input.dataset.healthCheckpoint) {
+        return;
+      }
+
+      state.measurements[input.dataset.healthMeasurement][input.dataset.healthCheckpoint] = input.value;
+      saveHealthState(state);
+    });
+  }
+
+  if (photoRoot) {
+    renderHealthPhotos(photoRoot, state);
+
+    photoRoot.addEventListener("change", async (event) => {
+      const input = event.target;
+
+      if (!(input instanceof HTMLInputElement) || !input.dataset.healthPhotoCheckpoint || !input.dataset.healthPhotoAngle) {
+        return;
+      }
+
+      const file = input.files?.[0];
+
+      if (!file) {
+        return;
+      }
+
+      setHealthPhotoError(photoRoot, "");
+
+      try {
+        const checkpoint = input.dataset.healthPhotoCheckpoint;
+        const angle = input.dataset.healthPhotoAngle;
+        const previousValue = state.photos[checkpoint][angle];
+        state.photos[checkpoint][angle] = await resizeHealthPhoto(file);
+
+        if (!saveHealthState(state)) {
+          state.photos[checkpoint][angle] = previousValue;
+          setHealthPhotoError(photoRoot, "That photo is too large to save here.");
+          return;
+        }
+
+        renderHealthPhotos(photoRoot, state);
+      } catch (error) {
+        setHealthPhotoError(photoRoot, error.message || "That photo could not be saved.");
+      } finally {
+        input.value = "";
+      }
+    });
+
+    photoRoot.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
+      const button = event.target.closest("[data-health-photo-remove]");
+
+      if (!button) {
+        return;
+      }
+
+      const checkpoint = button.dataset.healthPhotoCheckpoint;
+      const angle = button.dataset.healthPhotoRemove;
+
+      state.photos[checkpoint][angle] = "";
+      saveHealthState(state);
+      renderHealthPhotos(photoRoot, state);
+    });
+  }
+
+  if (foodRoot) {
+    renderHealthFood(foodRoot, state);
+
+    foodRoot.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
+      const navButton = event.target.closest("[data-health-food-week-nav]");
+      const weekButton = event.target.closest("[data-health-food-week-select]");
+
+      if (navButton instanceof HTMLButtonElement && !navButton.disabled) {
+        const currentIndex = getActiveFoodWeekIndex(state);
+        const direction = navButton.dataset.healthFoodWeekNav === "next" ? 1 : -1;
+        setActiveFoodWeek(foodRoot, state, currentIndex + direction);
+        return;
+      }
+
+      if (weekButton instanceof HTMLButtonElement) {
+        const selectedIndex = healthFoodPlans.findIndex((week) => week.id === weekButton.dataset.healthFoodWeekSelect);
+
+        if (selectedIndex >= 0) {
+          setActiveFoodWeek(foodRoot, state, selectedIndex);
+        }
+      }
+    });
+
+    foodRoot.addEventListener("change", (event) => {
+      const checkbox = event.target;
+
+      if (!(checkbox instanceof HTMLInputElement) || !checkbox.dataset.healthShoppingWeek || !checkbox.dataset.healthShoppingItem) {
+        return;
+      }
+
+      const weekId = checkbox.dataset.healthShoppingWeek;
+      const itemKey = checkbox.dataset.healthShoppingItem;
+
+      state.shopping[weekId] = state.shopping[weekId] || {};
+
+      if (checkbox.checked) {
+        state.shopping[weekId][itemKey] = true;
+      } else {
+        delete state.shopping[weekId][itemKey];
+      }
+
+      saveHealthState(state);
+    });
+
+  }
+
+  if (programRoot) {
+    renderHealthProgram(programRoot, state);
+
+    programRoot.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
+      const navButton = event.target.closest("[data-health-week-nav]");
+      const weekButton = event.target.closest("[data-health-week-select]");
+
+      if (navButton instanceof HTMLButtonElement && !navButton.disabled) {
+        const currentIndex = getActiveWorkoutWeekIndex(state);
+        const direction = navButton.dataset.healthWeekNav === "next" ? 1 : -1;
+        setActiveWorkoutWeek(programRoot, state, currentIndex + direction);
+        return;
+      }
+
+      if (weekButton instanceof HTMLButtonElement) {
+        const selectedIndex = healthWeeks.findIndex((week) => week.id === weekButton.dataset.healthWeekSelect);
+
+        if (selectedIndex >= 0) {
+          setActiveWorkoutWeek(programRoot, state, selectedIndex);
+        }
+      }
+    });
+
+    programRoot.addEventListener("input", (event) => {
+      const field = event.target;
+
+      if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) {
+        return;
+      }
+
+      if (field.dataset.healthWeekTarget) {
+        state.workouts[field.dataset.healthWeekTarget].target = field.value;
+      } else if (field.dataset.healthWeekReview) {
+        state.workouts[field.dataset.healthWeekReview].review = field.value;
+      } else if (field.dataset.healthDayLog && field.dataset.healthWeek) {
+        const dayState = state.workouts[field.dataset.healthWeek].days[field.dataset.healthDayLog];
+        dayState.log = field.value;
+        dayState.result = field.value;
+        dayState.notes = "";
+      } else if (field.dataset.healthDayResult && field.dataset.healthWeek) {
+        state.workouts[field.dataset.healthWeek].days[field.dataset.healthDayResult].result = field.value;
+      } else if (field.dataset.healthDayNotes && field.dataset.healthWeek) {
+        state.workouts[field.dataset.healthWeek].days[field.dataset.healthDayNotes].notes = field.value;
+      } else {
+        return;
+      }
+
+      saveHealthState(state);
+    });
+
+    programRoot.addEventListener("change", (event) => {
+      const checkbox = event.target;
+
+      if (!(checkbox instanceof HTMLInputElement) || !checkbox.dataset.healthDayDone || !checkbox.dataset.healthWeek) {
+        return;
+      }
+
+      state.workouts[checkbox.dataset.healthWeek].days[checkbox.dataset.healthDayDone].done = checkbox.checked;
+      saveHealthState(state);
+    });
+  }
+}
 
 function normalizePathname(pathname) {
   if (pathname !== "/" && pathname.endsWith("/")) {
@@ -765,5 +2385,7 @@ function setupLetterEditor() {
 
 setupNavigation();
 setupFinanceTotals();
+applyRandomHealthTitle();
+setupHealthTracker();
 setupLetterEditor();
 setupGate();

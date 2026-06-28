@@ -10,8 +10,8 @@
   <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
   <link rel="stylesheet" href="/yellow/finance.css?v=20260616-letter-mobile-actions-gap">
-  <link rel="stylesheet" href="/yellow/yellow.css?v=20260616-letter-mobile-actions-gap">
-  <script src="/yellow/yellow.js?v=20260616-letter-mobile-actions-gap" defer=""></script>
+  <link rel="stylesheet" href="/yellow/yellow.css?v=20260628-health-prep-protein">
+  <script src="/yellow/yellow.js?v=20260628-health-prep-protein" defer=""></script>
 </head>
 <body class="is-locked" data-view="health">
   <div class="yellow-app" aria-live="polite">
@@ -23,13 +23,74 @@
       </header>
 
       <div class="yellow-stage">
-        <section class="yellow-panel health-page is-active" data-yellow-page="health" aria-label="Health" aria-hidden="false">
+        <section class="yellow-panel health-page is-active" data-yellow-page="health" data-health-mode="track" aria-label="Health" aria-hidden="false">
           <header class="health-headline" aria-label="Health overview">
-            <h1><span>Health.</span> <span>Just the signal.</span></h1>
-            <p>Bloodwork that makes the next move obvious.</p>
+            <h1 data-health-title><span>Health.</span> <span>Just the signal.</span></h1>
           </header>
 
-          <section class="biomarker-section">
+          <nav class="health-mode-nav" data-health-mode-selected="track" aria-label="Health sections">
+            <span class="health-mode-thumb" aria-hidden="true"></span>
+            <button class="health-mode-button is-selected" type="button" data-health-mode-button="track" aria-pressed="true"><span aria-hidden="true">📏</span>Track</button>
+            <button class="health-mode-button" type="button" data-health-mode-button="cook" aria-pressed="false"><span aria-hidden="true">🍳</span>Cook</button>
+            <button class="health-mode-button" type="button" data-health-mode-button="train" aria-pressed="false"><span aria-hidden="true">💪</span>Train</button>
+          </nav>
+
+          <section class="health-card-grid" aria-label="Two month health push">
+            <article class="health-card health-card--measurements" data-health-mode-panel="track">
+              <header class="health-card-header">
+                <span class="section-label">Check-in</span>
+                <h2>Body measurements</h2>
+              </header>
+              <div class="measurement-table" data-health-measurements role="table" aria-label="Body measurement tracker"></div>
+              <section class="photo-tracker" aria-label="Progress photo tracker">
+                <header class="photo-tracker-header">
+                  <div>
+                    <span class="section-label">Photos</span>
+                    <h3>Front, side, back</h3>
+                  </div>
+                </header>
+                <div class="photo-slot-grid" data-health-photos></div>
+              </section>
+            </article>
+
+            <article class="health-card health-card--food" data-health-mode-panel="cook">
+              <header class="health-card-header">
+                <span class="section-label">Food</span>
+                <h2>Eat to grow</h2>
+              </header>
+              <div class="food-tracker" data-health-food aria-label="Eight week food tracker"></div>
+            </article>
+
+            <article class="health-card health-card--program" data-health-mode-panel="train">
+              <header class="health-card-header">
+                <span class="section-label">Jun 29 - Aug 23, 2026</span>
+                <h2>Xaryu strength block</h2>
+              </header>
+              <div class="program-focus" aria-label="Program rules">
+                <div>
+                  <span>Progression rule</span>
+                  <strong>5-12 clean reps</strong>
+                </div>
+                <div>
+                  <span>Recovery</span>
+                  <strong>Sleep, food, water</strong>
+                </div>
+              </div>
+              <ol class="program-week" aria-label="Weekly workout split">
+                <li><span>Mon</span><strong>Upper I</strong><p><span class="program-exercise" tabindex="0" data-tooltip="Pull yourself up until your chin clears the bar. Use assistance if needed.">Pull-ups</span>, <span class="program-exercise" tabindex="0" data-tooltip="Lower your chest, then press back up. Keep your body straight.">push-ups</span>, <span class="program-exercise" tabindex="0" data-tooltip="Lean back holding rings or a bar, then pull your chest toward your hands.">rows</span>, <span class="program-exercise" tabindex="0" data-tooltip="Open your arms slowly on rings, then squeeze them back together.">chest fly</span>, <span class="program-exercise" tabindex="0" data-tooltip="Open your arms out to the side to work your upper back.">back fly</span>.</p></li>
+                <li><span>Tue</span><strong>Mobility</strong><p><span class="program-exercise" tabindex="0" data-tooltip="Move into a stretch using your own strength.">Active stretching</span>, <span class="program-exercise" tabindex="0" data-tooltip="Move joints through range: hips, shoulders, ankles, spine.">dynamic work</span>, <span class="program-exercise" tabindex="0" data-tooltip="Spend time on what feels tight or stiff that day.">intuitive movement</span>.</p></li>
+                <li><span>Wed</span><strong>Lower</strong><p><span class="program-exercise" tabindex="0" data-tooltip="Single-leg squat. Use a box, wall, or support if needed.">Pistols</span>, <span class="program-exercise" tabindex="0" data-tooltip="Hamstring work. Bend at the hips or lower slowly from your knees.">hinge/Nordics</span>, <span class="program-exercise" tabindex="0" data-tooltip="One foot forward, one foot back. Lower down and stand up.">split squats</span>, <span class="program-exercise" tabindex="0" data-tooltip="Drive your hips up and squeeze your glutes at the top.">hip thrusts</span>, <span class="program-exercise" tabindex="0" data-tooltip="Raise your heels slowly, pause, then lower with control.">calves</span>.</p></li>
+                <li><span>Thu</span><strong>Core</strong><p><span class="program-exercise" tabindex="0" data-tooltip="Hang and lift your knees or legs without swinging.">Hanging raises</span>, <span class="program-exercise" tabindex="0" data-tooltip="Hold yourself up with your legs forward. Tuck your knees if needed.">L-sits</span>, <span class="program-exercise" tabindex="0" data-tooltip="Hang and lift your knees toward each side.">oblique raises</span>, <span class="program-exercise" tabindex="0" data-tooltip="Lie on your back, ribs down, arms and legs long.">hollow holds</span>.</p></li>
+                <li><span>Fri</span><strong>Upper II</strong><p><span class="program-exercise" tabindex="0" data-tooltip="Push like an overhead press. Start with pike push-ups if handstand work is too hard.">Pike/HSPU</span>, <span class="program-exercise" tabindex="0" data-tooltip="Lower between bars or rings, then press back up.">dips</span>, <span class="program-exercise" tabindex="0" data-tooltip="Pull your hands toward your face or body to train biceps.">curls</span>, <span class="program-exercise" tabindex="0" data-tooltip="Bend and straighten your elbows to train the back of your arms.">triceps</span>, <span class="program-exercise" tabindex="0" data-tooltip="Pull rings or a band toward your face with elbows high.">face pulls</span>.</p></li>
+                <li><span>Sat</span><strong>Skill work</strong><p><span class="program-exercise" tabindex="0" data-tooltip="Practice handstands, rings, L-sit, or another skill slowly.">Skills</span>, <span class="program-exercise" tabindex="0" data-tooltip="Do extra easy stretching or range work.">mobility</span>, <span class="program-exercise" tabindex="0" data-tooltip="Add a little ab work if you feel fresh.">core</span>, <span class="program-exercise" tabindex="0" data-tooltip="Walk, run, play a sport, or just move outside.">outside</span>.</p></li>
+                <li><span>Sun</span><strong>Active rest</strong><p><span class="program-exercise" tabindex="0" data-tooltip="Easy walk. Keep it relaxed.">Walk</span>, <span class="program-exercise" tabindex="0" data-tooltip="Gentle yoga or mobility.">yoga</span>, <span class="program-exercise" tabindex="0" data-tooltip="Do the recovery basics: sleep, food, water, calm.">de-stress</span>, <span class="program-exercise" tabindex="0" data-tooltip="Look at the week and make Monday easy.">reset</span>.</p></li>
+              </ol>
+              <div class="workout-tracker" data-health-program aria-label="Eight week workout tracker"></div>
+              <p class="health-card-note">Below 5: regress. Above 12: level up.</p>
+            </article>
+          </section>
+
+          <section class="biomarker-section" data-health-mode-panel="track">
             <article class="biomarker-sheet">
               <header class="sheet-header">
                 <div>
