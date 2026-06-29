@@ -102,6 +102,29 @@ const letterDrafts = [
     signoff: "See you in the future",
   },
 ];
+const healthProfileFields = [
+  { id: "height", label: "Height", placeholder: "cm", inputmode: "decimal", type: "text" },
+  { id: "age", label: "Age", placeholder: "years", inputmode: "numeric", type: "text" },
+];
+const healthProfileSexOptions = [
+  { id: "male", label: "Male" },
+  { id: "female", label: "Female" },
+];
+const healthProfileActivityOptions = [
+  { id: "sedentary", label: "Sedentary", factor: 1.2, hint: "desk + little movement" },
+  { id: "light", label: "Light", factor: 1.375, hint: "1-3 light sessions/wk" },
+  { id: "moderate", label: "Moderate", factor: 1.55, hint: "3-5 real sessions/wk" },
+  { id: "heavy", label: "Heavy", factor: 1.725, hint: "6+ sessions or physical job" },
+];
+const healthProfileGoalFields = [
+  { id: "goalWeight", label: "Goal weight", placeholder: "kg" },
+  { id: "goalBodyFat", label: "Goal body fat", placeholder: "%" },
+];
+const healthXaryuReference = {
+  height: 180,
+  weight: 80,
+  bodyFat: 10,
+};
 const healthMeasurementCheckpoints = [
   { id: "start", label: "Start", date: "Jun 29" },
   { id: "week4", label: "W4", date: "Jul 20" },
@@ -270,13 +293,13 @@ const healthMealLabels = ["Breakfast", "Lunch", "Dinner"];
 const healthRecipes = {
   goToBreakfast: {
     name: "Go-to breakfast",
-    calories: 520,
-    protein: 40,
+    calories: 640,
+    protein: 54,
     image: "/assets/images/health/food-breakfast-classic.jpg",
-    detail: "2 toasts, eggs, turkey slices, avocado, espresso, fresh lime shot.",
+    detail: "2 toasts, eggs, turkey, avocado, cottage cheese, espresso, fresh lime shot.",
     cook: [
       "Toast the bread and cook the eggs how you like them.",
-      "Add turkey slices and avocado on top or on the side.",
+      "Add turkey slices, avocado, and a couple scoops of cottage cheese to the plate.",
       "Make espresso and squeeze one lime shot fresh.",
     ],
     source: "Your default",
@@ -284,6 +307,7 @@ const healthRecipes = {
       { group: "Breakfast", item: "Toast bread", amount: 2, unit: "slices" },
       { group: "Breakfast", item: "Eggs", amount: 3, unit: "pcs" },
       { group: "Breakfast", item: "Turkey slices", amount: 3, unit: "slices" },
+      { group: "Dairy", item: "Cottage cheese", amount: 120, unit: "g" },
       { group: "Produce", item: "Avocados", amount: 0.5, unit: "pcs" },
       { group: "Produce", item: "Limes", amount: 1, unit: "pcs" },
       { group: "Pantry", item: "Espresso coffee", amount: 1, unit: "servings" },
@@ -516,6 +540,128 @@ const healthRecipes = {
       { group: "Dairy", item: "Butter", amount: 10, unit: "g" },
     ],
   },
+  xarShake: {
+    name: "Xar-Shake",
+    calories: 155,
+    protein: 20,
+    image: "/assets/images/health/food-snack-xar-shake.jpg",
+    detail: "Berry collagen shake with coconut milk and maca.",
+    cook: [
+      "Blend frozen berries, water, ice, collagen, maca, and stevia.",
+      "Pour in coconut milk last and blend smooth.",
+    ],
+    source: "Cookbook p. 37",
+    shopping: [
+      { group: "Produce", item: "Frozen berries", amount: 75, unit: "g" },
+      { group: "Pantry", item: "Collagen powder", amount: 1, unit: "packs", pantry: true },
+      { group: "Pantry", item: "Coconut milk", amount: 1, unit: "cans", pantry: true },
+      { group: "Pantry", item: "Maca powder", amount: 1, unit: "packs", pantry: true },
+    ],
+  },
+  dilla: {
+    name: "The Dilla",
+    calories: 227,
+    protein: 19,
+    image: "/assets/images/health/food-snack-dilla.jpg",
+    detail: "Mini chicken-mozzarella quesadilla, crisp and fast.",
+    cook: [
+      "Heat skillet. Crisp one tortilla, then add cheese.",
+      "Add shredded chicken, top with second tortilla, flip until melted.",
+    ],
+    source: "Cookbook p. 41",
+    shopping: [
+      { group: "Carbs", item: "Corn tortillas", amount: 2, unit: "pcs" },
+      { group: "Dairy", item: "Mozzarella", amount: 30, unit: "g" },
+      { group: "Proteins", item: "Chicken breast", amount: 30, unit: "g" },
+    ],
+  },
+  bananaPancakes: {
+    name: "Banana Pancakes",
+    calories: 286,
+    protein: 13,
+    image: "/assets/images/health/food-snack-banana-pancakes.jpg",
+    detail: "Banana + egg pancakes. Two ingredients, mini-stack.",
+    cook: [
+      "Mash banana, whisk in eggs.",
+      "Spoon small pancakes into a hot pan and flip when golden.",
+    ],
+    source: "Cookbook p. 39",
+    shopping: [
+      { group: "Produce", item: "Bananas", amount: 1, unit: "pcs" },
+      { group: "Breakfast", item: "Eggs", amount: 2, unit: "pcs" },
+    ],
+  },
+  roastedChickies: {
+    name: "Roasted Chickies",
+    calories: 506,
+    protein: 25,
+    image: "/assets/images/health/food-snack-roasted-chickies.jpg",
+    detail: "Crispy roasted chickpeas, big-batch snack jar.",
+    cook: [
+      "Dry chickpeas thoroughly, toss with oil and seasoning.",
+      "Roast at 230°C until crispy, ~25 min, shaking pan halfway.",
+    ],
+    source: "Cookbook p. 43",
+    shopping: [
+      { group: "Pantry", item: "Chickpeas", amount: 1, unit: "cans" },
+      { group: "Pantry", item: "Everything bagel seasoning", amount: 1, unit: "packs", pantry: true },
+    ],
+  },
+  fireballNachos: {
+    name: "Fireball Nachos",
+    calories: 506,
+    protein: 40,
+    image: "/assets/images/health/food-snack-fireball-nachos.jpg",
+    detail: "Nut-thin nachos with chicken, beans, mozzarella, hot sauce.",
+    cook: [
+      "Layer crackers with cheese on a microwave-safe plate, melt 30s.",
+      "Top with chicken, black beans, salsa, and green onion.",
+    ],
+    source: "Cookbook p. 36",
+    shopping: [
+      { group: "Pantry", item: "Nut-thin crackers", amount: 16, unit: "pcs" },
+      { group: "Dairy", item: "Mozzarella", amount: 30, unit: "g" },
+      { group: "Pantry", item: "Black beans", amount: 0.25, unit: "cans" },
+      { group: "Proteins", item: "Chicken breast", amount: 85, unit: "g" },
+      { group: "Produce", item: "Green onion", amount: 1, unit: "bunches" },
+      { group: "Pantry", item: "Salsa or hot sauce", amount: 1, unit: "jars", pantry: true },
+    ],
+  },
+  hungerHack: {
+    name: "Hunger Hack",
+    calories: 133,
+    protein: 2,
+    image: "/assets/images/health/food-snack-hunger-hack.jpg",
+    detail: "One medjool date + a teaspoon of nut butter. Pre-workout fuel.",
+    cook: [
+      "Pit a medjool date and stuff with nut butter. That's it.",
+    ],
+    source: "Cookbook p. 46",
+    shopping: [
+      { group: "Pantry", item: "Medjool dates", amount: 1, unit: "pcs" },
+      { group: "Pantry", item: "Nut butter", amount: 1, unit: "jars", pantry: true },
+    ],
+  },
+  popeyeEffect: {
+    name: "Popeye Effect",
+    calories: 325,
+    protein: 21,
+    image: "/assets/images/health/food-snack-popeye-effect.jpg",
+    detail: "Green smoothie: spinach, banana, peanut butter, collagen.",
+    cook: [
+      "Blend coconut milk, ice, spinach, banana, collagen, and nut butter.",
+      "Add maca and stevia, blend smooth.",
+    ],
+    source: "Cookbook p. 45",
+    shopping: [
+      { group: "Produce", item: "Spinach", amount: 30, unit: "g" },
+      { group: "Produce", item: "Bananas", amount: 1, unit: "pcs" },
+      { group: "Pantry", item: "Collagen powder", amount: 1, unit: "packs", pantry: true },
+      { group: "Pantry", item: "Coconut milk", amount: 1, unit: "cans", pantry: true },
+      { group: "Pantry", item: "Peanut butter", amount: 1, unit: "jars", pantry: true },
+      { group: "Pantry", item: "Maca powder", amount: 1, unit: "packs", pantry: true },
+    ],
+  },
   buffaloChicken: {
     name: "Buffalo Chicken",
     calories: 671,
@@ -693,6 +839,17 @@ const foodReadableItemNames = {
   "Yellow or white onion": ["yellow or white onion", "yellow or white onions"],
 };
 const foodBatchPrepRecipeIds = new Set(["stirFry", "xarSalad", "pollos", "pestoPizza", "beefBroc", "buffaloChicken"]);
+const healthSnackOptions = [
+  "xarShake",
+  "dilla",
+  "bananaPancakes",
+  "roastedChickies",
+  "fireballNachos",
+  "hungerHack",
+  "popeyeEffect",
+];
+const defaultHealthSnackId = "xarShake";
+const validHealthSnackIds = new Set(healthSnackOptions);
 const foodPrepAheadCarbItems = new Set(["Jasmine rice", "Potatoes", "Sweet potatoes"]);
 
 function escapeHtml(value) {
@@ -733,13 +890,26 @@ function applyRandomHealthTitle() {
   title.innerHTML = lines.map((line) => `<span>${escapeHtml(line)}</span>`).join(" ");
 }
 
+function getDefaultHealthProfile() {
+  return {
+    height: "",
+    age: "",
+    sex: "male",
+    activity: "moderate",
+    goalWeight: "",
+    goalBodyFat: "",
+  };
+}
+
 function getDefaultHealthState() {
   const state = {
     activeWorkoutWeek: healthWeeks[0].id,
     activeFoodWeek: healthWeeks[0].id,
+    profile: getDefaultHealthProfile(),
     measurements: {},
     photos: {},
     shopping: {},
+    snacks: {},
     workouts: {},
   };
 
@@ -776,11 +946,53 @@ function getDefaultHealthState() {
         log: "",
         result: "",
         notes: "",
+        sets: createDefaultDaySets(day),
       };
     });
   });
 
   return state;
+}
+
+const workoutSetCount = 3;
+
+function createDefaultDaySets(day) {
+  const sets = {};
+  day.items.forEach((_, exerciseIndex) => {
+    sets[exerciseIndex] = Array.from({ length: workoutSetCount }, () => ({ reps: "", weight: "" }));
+  });
+  return sets;
+}
+
+function normalizeDaySets(day, savedSets) {
+  const sets = createDefaultDaySets(day);
+
+  if (!savedSets || typeof savedSets !== "object") {
+    return sets;
+  }
+
+  day.items.forEach((_, exerciseIndex) => {
+    const saved = savedSets[exerciseIndex];
+
+    if (!Array.isArray(saved)) {
+      return;
+    }
+
+    for (let setIndex = 0; setIndex < workoutSetCount; setIndex += 1) {
+      const entry = saved[setIndex];
+
+      if (entry && typeof entry === "object") {
+        if (typeof entry.reps === "string") {
+          sets[exerciseIndex][setIndex].reps = entry.reps;
+        }
+        if (typeof entry.weight === "string") {
+          sets[exerciseIndex][setIndex].weight = entry.weight;
+        }
+      }
+    }
+  });
+
+  return sets;
 }
 
 function mergeHealthState(savedState) {
@@ -796,6 +1008,22 @@ function mergeHealthState(savedState) {
 
   if (healthWeeks.some((week) => week.id === savedState.activeFoodWeek)) {
     state.activeFoodWeek = savedState.activeFoodWeek;
+  }
+
+  if (savedState.profile && typeof savedState.profile === "object") {
+    ["height", "age", "goalWeight", "goalBodyFat"].forEach((key) => {
+      if (typeof savedState.profile[key] === "string") {
+        state.profile[key] = savedState.profile[key];
+      }
+    });
+
+    if (healthProfileSexOptions.some((option) => option.id === savedState.profile.sex)) {
+      state.profile.sex = savedState.profile.sex;
+    }
+
+    if (healthProfileActivityOptions.some((option) => option.id === savedState.profile.activity)) {
+      state.profile.activity = savedState.profile.activity;
+    }
   }
 
   healthMeasurementMetrics.forEach((metric) => {
@@ -844,6 +1072,26 @@ function mergeHealthState(savedState) {
     });
   });
 
+  healthFoodPlans.forEach((week) => {
+    const savedWeek = savedState.snacks?.[week.id];
+
+    if (!savedWeek || typeof savedWeek !== "object") {
+      return;
+    }
+
+    state.snacks[week.id] = state.snacks[week.id] || {};
+
+    week.days.forEach((day) => {
+      const value = savedWeek[day.id];
+
+      if (value === null || value === "none") {
+        state.snacks[week.id][day.id] = null;
+      } else if (typeof value === "string" && validHealthSnackIds.has(value)) {
+        state.snacks[week.id][day.id] = value;
+      }
+    });
+  });
+
   healthWeeks.forEach((week) => {
     const savedWeek = savedState.workouts?.[week.id];
 
@@ -871,6 +1119,7 @@ function mergeHealthState(savedState) {
         log: typeof savedDay.log === "string" ? savedDay.log : [savedDay.result, savedDay.notes].filter((value) => typeof value === "string" && value.trim()).join(" | "),
         result: typeof savedDay.result === "string" ? savedDay.result : "",
         notes: typeof savedDay.notes === "string" ? savedDay.notes : "",
+        sets: normalizeDaySets(day, savedDay.sets),
       };
     });
   });
@@ -989,12 +1238,104 @@ function setActiveFoodWeek(root, state, nextIndex) {
   renderHealthFood(root, state);
 }
 
+function getDaySnackId(state, weekId, dayId) {
+  const stored = state.snacks?.[weekId]?.[dayId];
+
+  if (stored === null) {
+    return null;
+  }
+
+  if (typeof stored === "string" && validHealthSnackIds.has(stored)) {
+    return stored;
+  }
+
+  return defaultHealthSnackId;
+}
+
+function augmentDayWithSnack(day, state, weekId) {
+  const snackId = getDaySnackId(state, weekId, day.id);
+
+  if (!snackId) {
+    return day;
+  }
+
+  return { ...day, meals: [...day.meals, snackId] };
+}
+
+function getAugmentedFoodDays(foodWeek, state) {
+  return foodWeek.days.map((day) => augmentDayWithSnack(day, state, foodWeek.id));
+}
+
 function getFoodPlanProtein(day) {
   return day.meals.reduce((total, recipeId) => total + (healthRecipes[recipeId]?.protein || 0), 0);
 }
 
 function getFoodPlanCalories(day) {
   return day.meals.reduce((total, recipeId) => total + (healthRecipes[recipeId]?.calories || 0), 0);
+}
+
+function getHealthDailyTargets(state) {
+  const profile = state.profile || getDefaultHealthProfile();
+  const height = parseHealthNumber(profile.height);
+  const age = parseHealthNumber(profile.age);
+  const goalWeight = parseHealthNumber(profile.goalWeight);
+  const latestWeight = getLatestMeasurement(state, "weight");
+  const activity = healthProfileActivityOptions.find((option) => option.id === profile.activity) || healthProfileActivityOptions[2];
+
+  if (!latestWeight) {
+    return { hasProfile: false };
+  }
+
+  const proteinTarget = Math.round(latestWeight.value * 2);
+
+  if (!height || !age) {
+    return {
+      hasProfile: true,
+      proteinTarget,
+      hasCalorieTarget: false,
+    };
+  }
+
+  const sexOffset = profile.sex === "female" ? -161 : 5;
+  const bmr = 10 * latestWeight.value + 6.25 * height - 5 * age + sexOffset;
+  const maintenance = bmr * activity.factor;
+
+  let direction = "maintain";
+  let calorieTarget = Math.round(maintenance);
+
+  if (goalWeight !== null) {
+    const delta = latestWeight.value - goalWeight;
+    if (delta > 0.5) {
+      direction = "cut";
+      calorieTarget = Math.round(maintenance - 400);
+    } else if (delta < -0.5) {
+      direction = "bulk";
+      calorieTarget = Math.round(maintenance + 250);
+    }
+  }
+
+  return {
+    hasProfile: true,
+    hasCalorieTarget: true,
+    proteinTarget,
+    calorieTarget,
+    direction,
+    maintenance: Math.round(maintenance),
+  };
+}
+
+function formatDelta(value, unit) {
+  if (value === 0) return `±0 ${unit}`;
+  const sign = value > 0 ? "+" : "−";
+  return `${sign}${Math.abs(value)} ${unit}`;
+}
+
+function getFoodTargetBand(planned, target, tolerance) {
+  const delta = planned - target;
+  if (delta >= 0 && delta <= tolerance * 2) return "on";
+  if (delta > tolerance * 2) return "over";
+  if (delta >= -tolerance) return "near";
+  return "under";
 }
 
 function getFoodRecipeCounts(foodWeek) {
@@ -1013,10 +1354,10 @@ function getFoodRecipeCountsForDays(days) {
   return counts;
 }
 
-function getFoodShoppingGroups(foodWeek) {
+function getFoodShoppingGroupsForDays(days) {
   const groups = new Map();
 
-  getFoodRecipeCounts(foodWeek).forEach((count, recipeId) => {
+  getFoodRecipeCountsForDays(days).forEach((count, recipeId) => {
     const recipe = healthRecipes[recipeId];
 
     recipe?.shopping?.forEach((entry) => {
@@ -1040,6 +1381,10 @@ function getFoodShoppingGroups(foodWeek) {
   return foodShoppingGroupOrder
     .map((label) => ({ label, items: Array.from(groups.get(label)?.values() || []) }))
     .filter((group) => group.items.length);
+}
+
+function getFoodShoppingGroups(foodWeek) {
+  return getFoodShoppingGroupsForDays(foodWeek.days);
 }
 
 function formatFoodShoppingAmount(amount, unit) {
@@ -1186,60 +1531,164 @@ function renderFoodBatchPrepDetail(batch) {
                         <p>${escapeHtml([...cookSentences, carbSentence, packSentence].filter(Boolean).join(" "))}</p>`;
 }
 
-function getFoodPrepSteps(foodWeek, activeIndex) {
+function getFoodPrepJourneys(foodWeek, activeIndex, state) {
   const window = healthFoodPrepWindows[activeIndex] || healthFoodPrepWindows[0];
-  const mondayBatch = getFoodBatchPrepSummary(foodWeek.days.slice(0, 3));
-  const thursdayBatch = getFoodBatchPrepSummary(foodWeek.days.slice(3));
+  const augmentedDays = state ? getAugmentedFoodDays(foodWeek, state) : foodWeek.days;
+  const mondayDays = augmentedDays.slice(0, 3);
+  const thursdayDays = augmentedDays.slice(3);
 
   return [
-    { label: `${window.shop} - ${mondayBatch.dayRange}`, detail: renderFoodBatchPrepDetail(mondayBatch) },
-    { label: `${window.topUp} - ${thursdayBatch.dayRange}`, detail: renderFoodBatchPrepDetail(thursdayBatch) },
-  ].filter((step) => step.detail);
+    {
+      id: "shop",
+      shopDate: window.shop,
+      days: mondayDays,
+      batch: getFoodBatchPrepSummary(mondayDays),
+      groups: getFoodShoppingGroupsForDays(mondayDays),
+    },
+    {
+      id: "topUp",
+      shopDate: window.topUp,
+      days: thursdayDays,
+      batch: getFoodBatchPrepSummary(thursdayDays),
+      groups: getFoodShoppingGroupsForDays(thursdayDays),
+    },
+  ].filter((journey) => journey.days.length && (journey.groups.length || journey.batch.servings));
 }
 
-function renderFoodShopping(foodWeek, state) {
-  return getFoodShoppingGroups(foodWeek).map((group) => `
-                      <div>
-                        <strong>${escapeHtml(group.label)}</strong>
-                        <ul>${group.items.map((item) => {
-                          const itemKey = getFoodShoppingItemKey(group.label, item);
-                          const isChecked = state.shopping?.[foodWeek.id]?.[itemKey] === true;
+function renderFoodJourneyShopping(journey, foodWeek, state) {
+  return journey.groups.map((group) => `
+                          <div>
+                            <strong>${escapeHtml(group.label)}</strong>
+                            <ul>${group.items.map((item) => {
+                              const itemKey = `${journey.id}|${getFoodShoppingItemKey(group.label, item)}`;
+                              const isChecked = state.shopping?.[foodWeek.id]?.[itemKey] === true;
 
-                          return `
-                          <li>
-                            <label class="food-shopping-check">
-                              <input type="checkbox" data-health-shopping-week="${escapeHtml(foodWeek.id)}" data-health-shopping-item="${escapeHtml(itemKey)}"${isChecked ? " checked" : ""}>
-                              <span>${escapeHtml(formatFoodShoppingLine(item))}${item.pantry ? " (buy once if missing)" : ""}</span>
-                            </label>
-                          </li>`;
-                        }).join("")}
-                        </ul>
-                      </div>`).join("");
+                              return `
+                              <li>
+                                <label class="food-shopping-check">
+                                  <input type="checkbox" data-health-shopping-week="${escapeHtml(foodWeek.id)}" data-health-shopping-item="${escapeHtml(itemKey)}"${isChecked ? " checked" : ""}>
+                                  <span>${escapeHtml(formatFoodShoppingLine(item))}</span>
+                                </label>
+                              </li>`;
+                            }).join("")}
+                            </ul>
+                          </div>`).join("");
+}
+
+function buildFoodJourneyCopyText(journey) {
+  return journey.groups
+    .flatMap((group) => group.items.map((item) => formatFoodShoppingLine(item)))
+    .join("\n");
+}
+
+function copyShoppingTextToClipboard(text, button) {
+  const flashFeedback = (label) => {
+    if (!button) {
+      return;
+    }
+
+    const previousLabel = button.dataset.previousLabel || button.textContent;
+    button.dataset.previousLabel = previousLabel;
+    button.textContent = label;
+    button.classList.add("is-feedback");
+
+    window.setTimeout(() => {
+      button.textContent = previousLabel;
+      button.classList.remove("is-feedback");
+      delete button.dataset.previousLabel;
+    }, 1400);
+  };
+
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => flashFeedback("Copied"))
+      .catch(() => flashFeedback("Copy failed"));
+    return;
+  }
+
+  try {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    flashFeedback("Copied");
+  } catch {
+    flashFeedback("Copy failed");
+  }
 }
 
 function renderFoodPrep(foodWeek, activeIndex, state) {
-  const window = healthFoodPrepWindows[activeIndex] || healthFoodPrepWindows[0];
-  const weekMeta = healthWeeks[activeIndex] || { label: `Week ${activeIndex + 1}` };
-  const prep = getFoodPrepSteps(foodWeek, activeIndex).map((step) => `
-                      <article class="food-prep-batch">
-                        <h4>${escapeHtml(step.label)}</h4>${step.detail}
-                      </article>`).join("");
+  const journeys = getFoodPrepJourneys(foodWeek, activeIndex, state);
+
+  const journeyHtml = journeys.map((journey, index) => {
+    const detail = journey.batch.servings || journey.batch.carbs ? renderFoodBatchPrepDetail(journey.batch) : "";
+    const dayRange = journey.batch.dayRange || (journey.days.length ? `${journey.days[0].day}-${journey.days[journey.days.length - 1].day}` : "");
+    const shopping = renderFoodJourneyShopping(journey, foodWeek, state);
+    const copyKey = `${foodWeek.id}|${journey.id}`;
+
+    return `
+                      <article class="food-prep-journey" data-food-journey-index="${index}">
+                        <header class="food-prep-journey-header">
+                          <span class="food-prep-kicker">Journey ${index + 1} · Shop ${escapeHtml(journey.shopDate)}</span>
+                          <h3>For ${escapeHtml(dayRange)}</h3>
+                        </header>
+                        ${detail ? `<div class="food-prep-journey-cook"><h4>Cook</h4>${detail}</div>` : ""}
+                        <div class="food-prep-journey-shop">
+                          <header class="food-prep-journey-shop-header">
+                            <h4>Shop</h4>
+                            <button class="food-prep-copy" type="button" data-health-shopping-copy="${escapeHtml(copyKey)}" aria-label="Copy this shopping list to clipboard">Copy list</button>
+                          </header>
+                          <div class="food-shopping-list">${shopping}
+                          </div>
+                        </div>
+                      </article>`;
+  }).join("");
 
   return `
-                <section class="food-prep" aria-label="Food prep and shopping list">
-                  <div class="food-prep-panel">
-                    <span>Meal prep</span>
-                    <h3>Shop ${escapeHtml(window.shop)}</h3>
-                    <div class="food-prep-batches">${prep}
-                    </div>
-                  </div>
-                  <div class="food-prep-panel">
-                    <span>Shopping list</span>
-                    <h3>${escapeHtml(weekMeta.label)} shopping list</h3>
-                    <div class="food-shopping-list">${renderFoodShopping(foodWeek, state)}
-                    </div>
-                  </div>
+                <section class="food-prep" aria-label="Food prep and shopping list">${journeyHtml}
                 </section>`;
+}
+
+function renderFoodSnackCard(weekId, day, snackId) {
+  const recipe = snackId ? healthRecipes[snackId] : null;
+  const options = healthSnackOptions.map((id) => {
+    const optionRecipe = healthRecipes[id];
+    if (!optionRecipe) return "";
+    const isSelected = id === snackId;
+    return `<option value="${escapeHtml(id)}"${isSelected ? " selected" : ""}>${escapeHtml(optionRecipe.name)} · ${optionRecipe.calories} cal · ${optionRecipe.protein} g</option>`;
+  }).join("");
+  const noneSelected = snackId === null ? " selected" : "";
+  const cookSteps = recipe
+    ? (Array.isArray(recipe.cook) ? recipe.cook : [recipe.cook]).filter(Boolean).map((step) => `<li>${escapeHtml(step)}</li>`).join("")
+    : "";
+
+  const mediaHtml = recipe && recipe.image
+    ? `<figure class="food-snack-media"><img src="${escapeHtml(recipe.image)}" alt="${escapeHtml(recipe.name)}" loading="lazy"></figure>`
+    : "";
+
+  return `
+                    <section class="food-snack${recipe ? "" : " food-snack--empty"}" aria-label="${escapeHtml(day.day)} snack">
+                      ${mediaHtml}
+                      <div class="food-snack-main">
+                        <span class="section-label">Snack</span>
+                        <h5>${escapeHtml(recipe ? recipe.name : "No snack")}</h5>
+                        ${recipe ? `<p>${escapeHtml(recipe.detail)}</p>` : `<p>Pick a snack to bump cal &amp; protein.</p>`}
+                        ${recipe && cookSteps ? `<ol class="food-snack-cook">${cookSteps}</ol>` : ""}
+                        <small>${recipe ? `${recipe.protein}g protein · ${recipe.calories} cal · ${escapeHtml(recipe.source || "")}` : "0g protein · 0 cal"}</small>
+                      </div>
+                      <label class="food-snack-picker">
+                        <span class="section-label">Swap</span>
+                        <select class="health-text-input" data-health-snack-week="${escapeHtml(weekId)}" data-health-snack-day="${escapeHtml(day.id)}" aria-label="${escapeHtml(day.day)} snack picker">
+                          <option value="none"${noneSelected}>No snack</option>
+                          ${options}
+                        </select>
+                      </label>
+                    </section>`;
 }
 
 function renderFoodMealCards(recipeIds) {
@@ -1262,14 +1711,276 @@ function renderFoodMealCards(recipeIds) {
                             <span>${escapeHtml(healthMealLabels[index] || "Meal")}</span>
                             <h5>${escapeHtml(recipe.name)}</h5>
                             <p>${escapeHtml(recipe.detail)}</p>
-                            <details class="food-cook">
-                            <summary>Cook steps</summary>
+                            <div class="food-cook">
+                              <span class="food-cook-label">Cook steps</span>
                               <ol>${cookSteps}</ol>
-                            </details>
+                            </div>
                             <small>${escapeHtml(recipe.protein)}g protein - ${escapeHtml(recipe.calories)} cal - ${escapeHtml(recipe.source)}</small>
                           </div>
                         </article>`;
   }).filter(Boolean).join("");
+}
+
+function parseHealthNumber(value) {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const normalized = value.replace(",", ".").trim();
+
+  if (!normalized) {
+    return null;
+  }
+
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function getLatestMeasurement(state, metricId) {
+  const values = state.measurements?.[metricId] || {};
+
+  for (let index = healthMeasurementCheckpoints.length - 1; index >= 0; index -= 1) {
+    const checkpoint = healthMeasurementCheckpoints[index];
+    const parsed = parseHealthNumber(values[checkpoint.id]);
+
+    if (parsed !== null) {
+      return { value: parsed, checkpointId: checkpoint.id, checkpointLabel: checkpoint.label };
+    }
+  }
+
+  return null;
+}
+
+function formatHealthNumber(value, fractionDigits) {
+  if (!Number.isFinite(value)) {
+    return "—";
+  }
+
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  });
+}
+
+function renderHealthProfile(root, state) {
+  const profile = state.profile || getDefaultHealthProfile();
+  const baseFields = healthProfileFields.map((field) => `
+                <label class="profile-field">
+                  <span>${escapeHtml(field.label)}</span>
+                  <input class="health-text-input" type="${escapeHtml(field.type)}" inputmode="${escapeHtml(field.inputmode)}" autocomplete="off" placeholder="${escapeHtml(field.placeholder)}" value="${escapeHtml(profile[field.id])}" data-health-profile-field="${escapeHtml(field.id)}">
+                </label>`).join("");
+
+  const sexOptions = healthProfileSexOptions.map((option) => `
+                  <label class="profile-segment-option${option.id === profile.sex ? " is-selected" : ""}">
+                    <input type="radio" name="profile-sex" value="${escapeHtml(option.id)}" data-health-profile-field="sex"${option.id === profile.sex ? " checked" : ""}>
+                    <span>${escapeHtml(option.label)}</span>
+                  </label>`).join("");
+
+  const activityOptions = healthProfileActivityOptions.map((option) => `<option value="${escapeHtml(option.id)}"${option.id === profile.activity ? " selected" : ""}>${escapeHtml(option.label)} · ${escapeHtml(option.hint)}</option>`).join("");
+
+  const goalFields = healthProfileGoalFields.map((field) => `
+                <label class="profile-field">
+                  <span>${escapeHtml(field.label)}</span>
+                  <input class="health-text-input" type="text" inputmode="decimal" autocomplete="off" placeholder="${escapeHtml(field.placeholder)}" value="${escapeHtml(profile[field.id])}" data-health-profile-field="${escapeHtml(field.id)}">
+                </label>`).join("");
+
+  root.innerHTML = `
+              ${baseFields}
+                <label class="profile-field profile-field--segmented">
+                  <span>Sex</span>
+                  <div class="profile-segment">${sexOptions}
+                  </div>
+                </label>
+                <label class="profile-field">
+                  <span>Activity</span>
+                  <select class="health-text-input profile-select" data-health-profile-field="activity">${activityOptions}</select>
+                </label>
+              ${goalFields}`;
+}
+
+function buildHealthInsights(state) {
+  const profile = state.profile || getDefaultHealthProfile();
+  const height = parseHealthNumber(profile.height);
+  const age = parseHealthNumber(profile.age);
+  const goalWeight = parseHealthNumber(profile.goalWeight);
+  const goalBodyFat = parseHealthNumber(profile.goalBodyFat);
+  const latestWeight = getLatestMeasurement(state, "weight");
+  const latestBodyFat = getLatestMeasurement(state, "bodyFat");
+  const latestWaist = getLatestMeasurement(state, "waist");
+  const latestShoulders = getLatestMeasurement(state, "shoulders");
+  const activity = healthProfileActivityOptions.find((option) => option.id === profile.activity) || healthProfileActivityOptions[2];
+
+  const stats = [];
+  const coachNotes = [];
+
+  if (latestWeight) {
+    stats.push({ label: "Current weight", value: `${formatHealthNumber(latestWeight.value, 1)} kg`, hint: latestWeight.checkpointLabel });
+  }
+
+  if (latestBodyFat) {
+    stats.push({ label: "Body fat", value: `${formatHealthNumber(latestBodyFat.value, 1)}%`, hint: latestBodyFat.checkpointLabel });
+  }
+
+  if (height && latestWeight) {
+    const meters = height / 100;
+    const bmi = latestWeight.value / (meters * meters);
+    let band = "—";
+    if (bmi < 18.5) band = "Underweight";
+    else if (bmi < 25) band = "Healthy range";
+    else if (bmi < 30) band = "Above range";
+    else band = "High";
+
+    stats.push({ label: "BMI", value: formatHealthNumber(bmi, 1), hint: band });
+  }
+
+  if (latestWeight && latestBodyFat) {
+    const leanMass = latestWeight.value * (1 - latestBodyFat.value / 100);
+    stats.push({ label: "Lean mass", value: `${formatHealthNumber(leanMass, 1)} kg`, hint: "estimate" });
+  }
+
+  if (height && age && latestWeight) {
+    const sexOffset = profile.sex === "female" ? -161 : 5;
+    const bmr = 10 * latestWeight.value + 6.25 * height - 5 * age + sexOffset;
+    const tdee = bmr * activity.factor;
+    const proteinTarget = Math.round(latestWeight.value * 2);
+    const cutCalories = Math.round(tdee - 400);
+    const bulkCalories = Math.round(tdee + 250);
+
+    stats.push({ label: "Maintenance cal", value: `${formatHealthNumber(Math.round(tdee), 0)} kcal`, hint: activity.label.toLowerCase() });
+    stats.push({ label: "Protein target", value: `${proteinTarget} g`, hint: "2 g per kg" });
+    stats.push({ label: "Cut · Bulk", value: `${formatHealthNumber(cutCalories, 0)} · ${formatHealthNumber(bulkCalories, 0)}`, hint: "kcal/day" });
+  }
+
+  if (latestShoulders && latestWaist && latestShoulders.value && latestWaist.value) {
+    const ratio = latestShoulders.value / latestWaist.value;
+    let band = "Building";
+    if (ratio >= 1.618) band = "Greek god";
+    else if (ratio >= 1.5) band = "Aesthetic";
+    else if (ratio >= 1.4) band = "Strong base";
+
+    stats.push({ label: "Shoulder · waist", value: formatHealthNumber(ratio, 2), hint: band });
+  }
+
+  if (latestWeight && goalWeight) {
+    const delta = latestWeight.value - goalWeight;
+    const absDelta = Math.abs(delta);
+
+    if (absDelta < 0.4) {
+      coachNotes.push("You're sitting on your goal weight. Hold here and let composition catch up.");
+    } else if (delta > 0) {
+      coachNotes.push(`${formatHealthNumber(absDelta, 1)} kg above goal. Stay in a small deficit (~400 kcal) and keep protein high.`);
+    } else {
+      coachNotes.push(`${formatHealthNumber(absDelta, 1)} kg under goal. Eat above maintenance, prioritize hard sets.`);
+    }
+  }
+
+  if (latestBodyFat && goalBodyFat) {
+    const deltaBf = latestBodyFat.value - goalBodyFat;
+
+    if (deltaBf > 1) {
+      coachNotes.push(`Body fat ${formatHealthNumber(deltaBf, 1)}% above goal. Cut leads the lift right now.`);
+    } else if (deltaBf < -1) {
+      coachNotes.push("Body fat below goal — you have room to add lean mass.");
+    } else {
+      coachNotes.push("Body fat is on target. Focus on quality of lifts, not the scale.");
+    }
+  }
+
+  if (latestWeight) {
+    const deltaXaryu = latestWeight.value - healthXaryuReference.weight;
+    if (Math.abs(deltaXaryu) > 0.4) {
+      const direction = deltaXaryu > 0 ? "above" : "below";
+      coachNotes.push(`${formatHealthNumber(Math.abs(deltaXaryu), 1)} kg ${direction} Xaryu reference (80 kg).`);
+    }
+  }
+
+  if (!stats.length) {
+    coachNotes.push("Fill in your height, age, and one measurement to see calories, protein, and progress.");
+  }
+
+  return { stats, coachNotes };
+}
+
+function buildProgressChart(state) {
+  const profile = state.profile || getDefaultHealthProfile();
+  const goalWeight = parseHealthNumber(profile.goalWeight);
+  const points = healthMeasurementCheckpoints.map((checkpoint) => {
+    const value = parseHealthNumber(state.measurements?.weight?.[checkpoint.id]);
+    return value === null ? null : { checkpoint, value };
+  });
+  const realPoints = points.filter(Boolean);
+  const allValues = realPoints.map((point) => point.value);
+
+  if (goalWeight !== null) {
+    allValues.push(goalWeight);
+  }
+
+  allValues.push(healthXaryuReference.weight);
+
+  if (realPoints.length < 1) {
+    return `
+                <div class="progress-chart progress-chart--empty">
+                  <p>Log a Start weight in the measurements card to see your line.</p>
+                </div>`;
+  }
+
+  const minValue = Math.min(...allValues) - 1;
+  const maxValue = Math.max(...allValues) + 1;
+  const range = maxValue - minValue || 1;
+  const width = 640;
+  const height = 220;
+  const paddingX = 48;
+  const paddingY = 28;
+  const innerWidth = width - paddingX * 2;
+  const innerHeight = height - paddingY * 2;
+
+  const xFor = (index) => paddingX + (innerWidth * index) / (healthMeasurementCheckpoints.length - 1);
+  const yFor = (value) => paddingY + innerHeight - ((value - minValue) / range) * innerHeight;
+
+  const linePoints = points.map((point, index) => point ? `${xFor(index)},${yFor(point.value)}` : null).filter(Boolean).join(" ");
+  const dots = points.map((point, index) => point ? `<circle cx="${xFor(index)}" cy="${yFor(point.value)}" r="6" class="progress-chart-dot"/>
+                      <text x="${xFor(index)}" y="${yFor(point.value) - 12}" class="progress-chart-value" text-anchor="middle">${formatHealthNumber(point.value, 1)}</text>` : "").join("");
+
+  const xLabels = healthMeasurementCheckpoints.map((checkpoint, index) => `<text x="${xFor(index)}" y="${height - 6}" class="progress-chart-label" text-anchor="middle">${escapeHtml(checkpoint.label)}</text>`).join("");
+
+  const goalLine = goalWeight !== null ? `
+                  <line x1="${paddingX}" x2="${width - paddingX}" y1="${yFor(goalWeight)}" y2="${yFor(goalWeight)}" class="progress-chart-goal"/>
+                  <text x="${width - paddingX}" y="${yFor(goalWeight) - 6}" class="progress-chart-goal-label" text-anchor="end">Goal ${formatHealthNumber(goalWeight, 1)} kg</text>` : "";
+
+  const xaryuLine = `
+                  <line x1="${paddingX}" x2="${width - paddingX}" y1="${yFor(healthXaryuReference.weight)}" y2="${yFor(healthXaryuReference.weight)}" class="progress-chart-xaryu"/>
+                  <text x="${paddingX}" y="${yFor(healthXaryuReference.weight) - 6}" class="progress-chart-xaryu-label" text-anchor="start">Xaryu ${healthXaryuReference.weight} kg</text>`;
+
+  return `
+                <div class="progress-chart" aria-label="Weight progress chart">
+                  <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" role="img" aria-label="Weight progress over checkpoints">
+                    ${xaryuLine}
+                    ${goalLine}
+                    ${realPoints.length > 1 ? `<polyline points="${linePoints}" class="progress-chart-line"/>` : ""}
+                    ${dots}
+                    ${xLabels}
+                  </svg>
+                </div>`;
+}
+
+function renderHealthInsights(root, state) {
+  const { stats, coachNotes } = buildHealthInsights(state);
+  const statHtml = stats.map((stat) => `
+                  <div class="insight-stat">
+                    <span>${escapeHtml(stat.label)}</span>
+                    <strong>${escapeHtml(stat.value)}</strong>
+                    <small>${escapeHtml(stat.hint)}</small>
+                  </div>`).join("");
+
+  const notesHtml = coachNotes.length ? `
+                <ul class="insight-notes">${coachNotes.map((note) => `<li>${escapeHtml(note)}</li>`).join("")}
+                </ul>` : "";
+
+  root.innerHTML = `
+              <div class="insight-stats">${statHtml}
+              </div>
+              ${notesHtml}
+              ${buildProgressChart(state)}`;
 }
 
 function renderHealthMeasurements(root, state) {
@@ -1346,9 +2057,48 @@ function renderHealthFood(root, state) {
   const weekMeta = healthWeeks.find((week) => week.id === foodWeek.id) || healthWeeks[activeIndex];
   const weekButtons = healthFoodPlans.map((navWeek, index) => `
                     <button class="workout-week-pill${index === activeIndex ? " is-selected" : ""}" type="button" data-health-food-week-select="${escapeHtml(navWeek.id)}" aria-label="${escapeHtml(healthWeeks[index].label)} ${escapeHtml(healthWeeks[index].dates)}" aria-current="${index === activeIndex ? "true" : "false"}">W${index + 1}</button>`).join("");
+  const targets = getHealthDailyTargets(state);
   const days = foodWeek.days.map((day) => {
-    const plannedProtein = getFoodPlanProtein(day);
-    const plannedCalories = getFoodPlanCalories(day);
+    const augmentedDay = augmentDayWithSnack(day, state, foodWeek.id);
+    const plannedProtein = getFoodPlanProtein(augmentedDay);
+    const plannedCalories = getFoodPlanCalories(augmentedDay);
+    const snackId = getDaySnackId(state, foodWeek.id, day.id);
+    const snackHtml = renderFoodSnackCard(foodWeek.id, day, snackId);
+
+    let proteinHtml;
+    let calorieHtml;
+
+    if (targets.hasProfile) {
+      const proteinDelta = plannedProtein - targets.proteinTarget;
+      const proteinBand = getFoodTargetBand(plannedProtein, targets.proteinTarget, 15);
+      proteinHtml = `
+                        <div class="food-day-stat food-day-stat--${escapeHtml(proteinBand)}">
+                          <strong>${plannedProtein} g</strong>
+                          <span>target ${targets.proteinTarget} g · ${escapeHtml(formatDelta(proteinDelta, "g"))}</span>
+                        </div>`;
+    } else {
+      proteinHtml = `
+                        <div class="food-day-stat">
+                          <strong>${plannedProtein} g protein</strong>
+                          <span>fill profile for target</span>
+                        </div>`;
+    }
+
+    if (targets.hasCalorieTarget) {
+      const calorieDelta = plannedCalories - targets.calorieTarget;
+      const calorieBand = getFoodTargetBand(plannedCalories, targets.calorieTarget, 150);
+      const directionLabel = targets.direction === "maintain" ? "maintenance" : targets.direction;
+      calorieHtml = `
+                        <div class="food-day-stat food-day-stat--${escapeHtml(calorieBand)}">
+                          <strong>${plannedCalories} kcal</strong>
+                          <span>${escapeHtml(directionLabel)} ${targets.calorieTarget} · ${escapeHtml(formatDelta(calorieDelta, "kcal"))}</span>
+                        </div>`;
+    } else {
+      calorieHtml = `
+                        <div class="food-day-stat">
+                          <strong>${plannedCalories} kcal</strong>
+                        </div>`;
+    }
 
     return `
                   <section class="food-day">
@@ -1357,13 +2107,14 @@ function renderHealthFood(root, state) {
                         <span class="food-day-kicker">${escapeHtml(day.day)}</span>
                         <h4>${escapeHtml(day.title)}</h4>
                       </div>
-                      <div class="food-day-protein">
-                        <strong>${plannedProtein}g protein</strong>
-                        <span>${plannedCalories} cal</span>
+                      <div class="food-day-stats">
+                        ${proteinHtml}
+                        ${calorieHtml}
                       </div>
                     </header>
                     <div class="food-meal-grid">${renderFoodMealCards(day.meals)}
                     </div>
+                    ${snackHtml}
                   </section>`;
   }).join("");
 
@@ -1388,6 +2139,38 @@ ${renderFoodPrep(foodWeek, activeIndex, state)}
                 </div>`;
 }
 
+function renderWorkoutSetGrid(week, day, dayState) {
+  const sets = dayState.sets || {};
+  const headerCells = Array.from({ length: workoutSetCount }, (_, index) => `<span class="workout-set-head">Set ${index + 1}</span>`).join("");
+
+  const rows = day.items.map((item, exerciseIndex) => {
+    const exerciseSets = sets[exerciseIndex] || [];
+    const setCells = Array.from({ length: workoutSetCount }, (_, setIndex) => {
+      const entry = exerciseSets[setIndex] || { reps: "", weight: "" };
+      return `
+                        <div class="workout-set-cell">
+                          <input class="workout-set-input workout-set-input--reps" type="text" inputmode="decimal" autocomplete="off" placeholder="reps" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} ${escapeHtml(item.label)} set ${setIndex + 1} reps" value="${escapeHtml(entry.reps)}" data-health-set-week="${escapeHtml(week.id)}" data-health-set-day="${escapeHtml(day.id)}" data-health-set-exercise="${exerciseIndex}" data-health-set-index="${setIndex}" data-health-set-field="reps">
+                          <input class="workout-set-input workout-set-input--weight" type="text" inputmode="decimal" autocomplete="off" placeholder="kg" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} ${escapeHtml(item.label)} set ${setIndex + 1} weight" value="${escapeHtml(entry.weight)}" data-health-set-week="${escapeHtml(week.id)}" data-health-set-day="${escapeHtml(day.id)}" data-health-set-exercise="${exerciseIndex}" data-health-set-index="${setIndex}" data-health-set-field="weight">
+                        </div>`;
+    }).join("");
+
+    return `
+                    <div class="workout-set-row" role="row">
+                      <span class="workout-set-label">${escapeHtml(item.label)}</span>
+                      ${setCells}
+                    </div>`;
+  }).join("");
+
+  return `
+                  <div class="workout-set-grid" role="table" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} sets">
+                    <div class="workout-set-row workout-set-row--head" role="row">
+                      <span class="workout-set-label-head">Exercise</span>
+                      ${headerCells}
+                    </div>
+                    ${rows}
+                  </div>`;
+}
+
 function renderHealthProgram(root, state) {
   const activeIndex = getActiveWorkoutWeekIndex(state);
   const week = healthWeeks[activeIndex];
@@ -1396,7 +2179,6 @@ function renderHealthProgram(root, state) {
                     <button class="workout-week-pill${index === activeIndex ? " is-selected" : ""}" type="button" data-health-week-select="${escapeHtml(navWeek.id)}" aria-label="${escapeHtml(navWeek.label)} ${escapeHtml(navWeek.dates)}" aria-current="${index === activeIndex ? "true" : "false"}">W${index + 1}</button>`).join("");
   const days = healthWorkoutDays.map((day) => {
     const dayState = weekState.days[day.id];
-    const logValue = dayState.log || [dayState.result, dayState.notes].filter((value) => value && value.trim()).join(" | ");
     const image = day.image ? `
                       <figure class="workout-day-media">
                         <img src="${escapeHtml(day.image)}" alt="${escapeHtml(day.imageAlt)}" loading="lazy">
@@ -1412,11 +2194,10 @@ ${image}
                         <div class="workout-day-title">
                           <h4>${escapeHtml(day.title)}</h4>
                         </div>
-                        <p class="workout-day-summary">${renderWorkoutItems(day.items)}</p>
                       </div>
                     </div>
                     <div class="workout-day-fields">
-                      <textarea class="health-textarea workout-day-log" rows="2" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} log" data-health-day-log="${escapeHtml(day.id)}" data-health-week="${escapeHtml(week.id)}" placeholder="Log: 5/5/4. Clean. Next +1.">${escapeHtml(logValue)}</textarea>
+                      ${renderWorkoutSetGrid(week, day, dayState)}
                     </div>
                   </section>`;
   }).join("");
@@ -1499,23 +2280,76 @@ function resizeHealthPhoto(file) {
 }
 
 function setupHealthTracker() {
+  const profileRoot = document.querySelector("[data-health-profile]");
+  const insightsRoot = document.querySelector("[data-health-insights]");
   const measurementRoot = document.querySelector("[data-health-measurements]");
   const photoRoot = document.querySelector("[data-health-photos]");
   const foodRoot = document.querySelector("[data-health-food]");
   const programRoot = document.querySelector("[data-health-program]");
   const modeButtons = document.querySelectorAll("[data-health-mode-button]");
 
-  if (!measurementRoot && !photoRoot && !foodRoot && !programRoot && !modeButtons.length) {
+  if (!profileRoot && !insightsRoot && !measurementRoot && !photoRoot && !foodRoot && !programRoot && !modeButtons.length) {
     return;
   }
 
   setupHealthModeNavigation();
 
-  if (!measurementRoot && !photoRoot && !foodRoot && !programRoot) {
+  if (!profileRoot && !insightsRoot && !measurementRoot && !photoRoot && !foodRoot && !programRoot) {
     return;
   }
 
   const state = readHealthState();
+
+  const refreshInsights = () => {
+    if (insightsRoot) {
+      renderHealthInsights(insightsRoot, state);
+    }
+    if (foodRoot) {
+      renderHealthFood(foodRoot, state);
+    }
+  };
+
+  if (profileRoot) {
+    renderHealthProfile(profileRoot, state);
+
+    const handleProfileChange = (event) => {
+      const field = event.target;
+
+      if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement)) {
+        return;
+      }
+
+      const key = field.dataset.healthProfileField;
+
+      if (!key) {
+        return;
+      }
+
+      if (key === "sex") {
+        if (field instanceof HTMLInputElement && field.checked) {
+          state.profile.sex = field.value;
+          renderHealthProfile(profileRoot, state);
+          saveHealthState(state);
+          refreshInsights();
+        }
+        return;
+      }
+
+      if (key === "activity") {
+        state.profile.activity = field.value;
+        saveHealthState(state);
+        refreshInsights();
+        return;
+      }
+
+      state.profile[key] = field.value;
+      saveHealthState(state);
+      refreshInsights();
+    };
+
+    profileRoot.addEventListener("input", handleProfileChange);
+    profileRoot.addEventListener("change", handleProfileChange);
+  }
 
   if (measurementRoot) {
     renderHealthMeasurements(measurementRoot, state);
@@ -1529,7 +2363,12 @@ function setupHealthTracker() {
 
       state.measurements[input.dataset.healthMeasurement][input.dataset.healthCheckpoint] = input.value;
       saveHealthState(state);
+      refreshInsights();
     });
+  }
+
+  if (insightsRoot) {
+    refreshInsights();
   }
 
   if (photoRoot) {
@@ -1598,6 +2437,25 @@ function setupHealthTracker() {
         return;
       }
 
+      const copyButton = event.target.closest("[data-health-shopping-copy]");
+
+      if (copyButton instanceof HTMLButtonElement) {
+        const [weekId, journeyId] = (copyButton.dataset.healthShoppingCopy || "").split("|");
+        const activeIndex = healthFoodPlans.findIndex((week) => week.id === weekId);
+        const foodWeek = healthFoodPlans[activeIndex];
+
+        if (foodWeek) {
+          const journey = getFoodPrepJourneys(foodWeek, activeIndex, state).find((entry) => entry.id === journeyId);
+
+          if (journey) {
+            const text = buildFoodJourneyCopyText(journey);
+            copyShoppingTextToClipboard(text, copyButton);
+          }
+        }
+
+        return;
+      }
+
       const navButton = event.target.closest("[data-health-food-week-nav]");
       const weekButton = event.target.closest("[data-health-food-week-select]");
 
@@ -1618,18 +2476,34 @@ function setupHealthTracker() {
     });
 
     foodRoot.addEventListener("change", (event) => {
-      const checkbox = event.target;
+      const target = event.target;
 
-      if (!(checkbox instanceof HTMLInputElement) || !checkbox.dataset.healthShoppingWeek || !checkbox.dataset.healthShoppingItem) {
+      if (target instanceof HTMLSelectElement && target.dataset.healthSnackWeek && target.dataset.healthSnackDay) {
+        const weekId = target.dataset.healthSnackWeek;
+        const dayId = target.dataset.healthSnackDay;
+        state.snacks[weekId] = state.snacks[weekId] || {};
+
+        if (target.value === "none") {
+          state.snacks[weekId][dayId] = null;
+        } else if (validHealthSnackIds.has(target.value)) {
+          state.snacks[weekId][dayId] = target.value;
+        }
+
+        saveHealthState(state);
+        renderHealthFood(foodRoot, state);
         return;
       }
 
-      const weekId = checkbox.dataset.healthShoppingWeek;
-      const itemKey = checkbox.dataset.healthShoppingItem;
+      if (!(target instanceof HTMLInputElement) || !target.dataset.healthShoppingWeek || !target.dataset.healthShoppingItem) {
+        return;
+      }
+
+      const weekId = target.dataset.healthShoppingWeek;
+      const itemKey = target.dataset.healthShoppingItem;
 
       state.shopping[weekId] = state.shopping[weekId] || {};
 
-      if (checkbox.checked) {
+      if (target.checked) {
         state.shopping[weekId][itemKey] = true;
       } else {
         delete state.shopping[weekId][itemKey];
@@ -1671,6 +2545,31 @@ function setupHealthTracker() {
       const field = event.target;
 
       if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) {
+        return;
+      }
+
+      if (field.dataset.healthSetWeek && field.dataset.healthSetDay && field.dataset.healthSetField) {
+        const weekId = field.dataset.healthSetWeek;
+        const dayId = field.dataset.healthSetDay;
+        const exerciseIndex = Number(field.dataset.healthSetExercise);
+        const setIndex = Number(field.dataset.healthSetIndex);
+        const fieldName = field.dataset.healthSetField;
+
+        if (!Number.isInteger(exerciseIndex) || !Number.isInteger(setIndex) || !["reps", "weight"].includes(fieldName)) {
+          return;
+        }
+
+        const dayState = state.workouts[weekId]?.days[dayId];
+
+        if (!dayState) {
+          return;
+        }
+
+        dayState.sets = dayState.sets || {};
+        dayState.sets[exerciseIndex] = dayState.sets[exerciseIndex] || Array.from({ length: workoutSetCount }, () => ({ reps: "", weight: "" }));
+        dayState.sets[exerciseIndex][setIndex] = dayState.sets[exerciseIndex][setIndex] || { reps: "", weight: "" };
+        dayState.sets[exerciseIndex][setIndex][fieldName] = field.value;
+        saveHealthState(state);
         return;
       }
 
