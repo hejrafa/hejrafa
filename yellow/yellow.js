@@ -2141,7 +2141,14 @@ ${renderFoodPrep(foodWeek, activeIndex, state)}
 
 function renderWorkoutSetGrid(week, day, dayState) {
   const sets = dayState.sets || {};
-  const headerCells = Array.from({ length: workoutSetCount }, (_, index) => `<span class="workout-set-head">Set ${index + 1}</span>`).join("");
+  const headerCells = Array.from({ length: workoutSetCount }, (_, index) => `
+                      <div class="workout-set-head-cell">
+                        <span class="workout-set-head">Set ${index + 1}</span>
+                        <div class="workout-set-head-sub">
+                          <span>reps</span>
+                          <span>kg</span>
+                        </div>
+                      </div>`).join("");
 
   const rows = day.items.map((item, exerciseIndex) => {
     const exerciseSets = sets[exerciseIndex] || [];
@@ -2149,8 +2156,8 @@ function renderWorkoutSetGrid(week, day, dayState) {
       const entry = exerciseSets[setIndex] || { reps: "", weight: "" };
       return `
                         <div class="workout-set-cell">
-                          <input class="workout-set-input workout-set-input--reps" type="text" inputmode="decimal" autocomplete="off" placeholder="reps" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} ${escapeHtml(item.label)} set ${setIndex + 1} reps" value="${escapeHtml(entry.reps)}" data-health-set-week="${escapeHtml(week.id)}" data-health-set-day="${escapeHtml(day.id)}" data-health-set-exercise="${exerciseIndex}" data-health-set-index="${setIndex}" data-health-set-field="reps">
-                          <input class="workout-set-input workout-set-input--weight" type="text" inputmode="decimal" autocomplete="off" placeholder="kg" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} ${escapeHtml(item.label)} set ${setIndex + 1} weight" value="${escapeHtml(entry.weight)}" data-health-set-week="${escapeHtml(week.id)}" data-health-set-day="${escapeHtml(day.id)}" data-health-set-exercise="${exerciseIndex}" data-health-set-index="${setIndex}" data-health-set-field="weight">
+                          <input class="workout-set-input" type="text" inputmode="decimal" autocomplete="off" placeholder="reps" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} ${escapeHtml(item.label)} set ${setIndex + 1} reps" value="${escapeHtml(entry.reps)}" data-health-set-week="${escapeHtml(week.id)}" data-health-set-day="${escapeHtml(day.id)}" data-health-set-exercise="${exerciseIndex}" data-health-set-index="${setIndex}" data-health-set-field="reps">
+                          <input class="workout-set-input" type="text" inputmode="decimal" autocomplete="off" placeholder="kg" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} ${escapeHtml(item.label)} set ${setIndex + 1} weight" value="${escapeHtml(entry.weight)}" data-health-set-week="${escapeHtml(week.id)}" data-health-set-day="${escapeHtml(day.id)}" data-health-set-exercise="${exerciseIndex}" data-health-set-index="${setIndex}" data-health-set-field="weight">
                         </div>`;
     }).join("");
 
@@ -2187,13 +2194,10 @@ function renderHealthProgram(root, state) {
     return `
                   <section class="workout-day${day.image ? " has-media" : ""}">
                     <div class="workout-day-main">
-                      <input class="health-checkbox" type="checkbox" aria-label="${escapeHtml(week.label)} ${escapeHtml(day.title)} done" data-health-day-done="${escapeHtml(day.id)}" data-health-week="${escapeHtml(week.id)}"${dayState.done ? " checked" : ""}>
 ${image}
                       <div class="workout-day-info">
                         <span class="workout-day-kicker">${escapeHtml(day.day)}</span>
-                        <div class="workout-day-title">
-                          <h4>${escapeHtml(day.title)}</h4>
-                        </div>
+                        <h4>${escapeHtml(day.title)}</h4>
                       </div>
                     </div>
                     <div class="workout-day-fields">
@@ -2593,16 +2597,6 @@ function setupHealthTracker() {
       saveHealthState(state);
     });
 
-    programRoot.addEventListener("change", (event) => {
-      const checkbox = event.target;
-
-      if (!(checkbox instanceof HTMLInputElement) || !checkbox.dataset.healthDayDone || !checkbox.dataset.healthWeek) {
-        return;
-      }
-
-      state.workouts[checkbox.dataset.healthWeek].days[checkbox.dataset.healthDayDone].done = checkbox.checked;
-      saveHealthState(state);
-    });
   }
 }
 
