@@ -669,7 +669,26 @@ document.addEventListener("click", (event) => {
 
   const video = embed.querySelector(".youtube-video");
 
-  if (!video || embed.classList.contains("is-playing")) {
+  if (!video) {
+    return;
+  }
+
+  if (embed.classList.contains("is-playing")) {
+    const rect = video.getBoundingClientRect();
+    const nativeControlsHeight = 44;
+    const clickInControls = event.clientY > rect.bottom - nativeControlsHeight;
+
+    if (clickInControls) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (video.paused) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
     return;
   }
 
