@@ -25,8 +25,8 @@
   <link rel="shortcut icon" href="/favicon.ico?v=20260526a">
   <link rel="icon" href="/favicon.svg?v=20260526a" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/icons/hej-logo.svg">
-  <link rel="stylesheet" href="/style.css?v=20260606-ai-search">
-  <script src="/script.js?v=20260606-path-routes-4" defer></script>
+  <link rel="stylesheet" href="/style.css?v=20260630-cards-16">
+  <script src="/script.js?v=20260630-cards-16" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -408,6 +408,12 @@
                     <img class="episode-cover episode-cover--148" src="/assets/images/daumenkino_ep_148.png" alt="">
                   </div>
                   <img class="project-cover" src="/assets/images/daumenkino_cover_04_a.png" alt="Daumenkino podcast cover">
+                  <button class="daumenkino-play" type="button" data-cover-audio="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2020-02-28/3fbac31dbec9936e1f5009012cd4c7dc.m4a" aria-label="Play Daumenkino trailer">
+                    <span class="daumenkino-play-disc" aria-hidden="true">
+                      <svg class="daumenkino-play-icon daumenkino-play-icon--play" viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+                      <svg class="daumenkino-play-icon daumenkino-play-icon--pause" viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+                    </span>
+                  </button>
                   <div class="project-info">
                     <span>2019–2025</span>
                     <h2>Daumenkino</h2>
@@ -427,7 +433,17 @@
             <article class="project-card" data-layout="youtube" tabindex="0">
               <div class="project-card-inner">
                 <div class="project-face project-face--front">
-                  <img class="youtube-thumb" src="/assets/images/youtube_--cbM0G5ffU.jpg" alt="">
+                  <div class="youtube-embed" data-draggable-card>
+                    <video class="youtube-video" poster="/assets/images/youtube_--cbM0G5ffU.jpg" preload="metadata" playsinline>
+                      <source src="/assets/videos/youtube_--cbM0G5ffU.mp4" type="video/mp4">
+                    </video>
+                    <button class="youtube-play" type="button" aria-label="Play video on the card">
+                      <svg class="youtube-play-icon" viewBox="0 0 68 48" aria-hidden="true">
+                        <path class="youtube-play-bg" d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74 0 13.05 0 24 0 24s0 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C68 34.95 68 24 68 24s0-10.95-1.48-16.26z"/>
+                        <path class="youtube-play-arrow" d="M45 24L27 14v20z" fill="#fff"/>
+                      </svg>
+                    </button>
+                  </div>
                   <div class="project-summary">
                     <span>Side Project</span>
                     <h2>YouTube</h2>
@@ -471,11 +487,37 @@
               <div class="project-card-inner">
                 <div class="project-face project-face--front">
                   <div class="hejhub-bento" aria-hidden="true">
-                    <span class="hejhub-tile hejhub-tile--large"></span>
-                    <span class="hejhub-tile hejhub-tile--tall"></span>
-                    <span class="hejhub-tile hejhub-tile--wide"></span>
-                    <span class="hejhub-tile hejhub-tile--small"></span>
-                    <span class="hejhub-tile hejhub-tile--short"></span>
+                    <span class="hejhub-tile hejhub-tile--large">
+                      <span class="hejhub-tile-stage hejhub-tile-stage--posters">
+                        <img class="hejhub-poster hejhub-poster--a" src="/assets/images/hejhub/poster-1.jpg" alt="">
+                        <img class="hejhub-poster hejhub-poster--b" src="/assets/images/hejhub/poster-2.jpg" alt="">
+                        <img class="hejhub-poster hejhub-poster--c" src="/assets/images/hejhub/poster-3.jpg" alt="">
+                        <img class="hejhub-poster hejhub-poster--d" src="/assets/images/hejhub/poster-4.jpg" alt="">
+                      </span>
+                    </span>
+                    <span class="hejhub-tile hejhub-tile--tall">
+                      <span class="hejhub-tile-stage hejhub-tile-stage--thumb">
+                        <img class="hejhub-tile-thumb" src="/assets/images/hejhub/creator.jpg" alt="">
+                      </span>
+                    </span>
+                    <span class="hejhub-tile hejhub-tile--pinterest">
+                      <img class="hejhub-tile-mark hejhub-tile-mark--pinterest" src="/assets/images/hejhub/pinterest.svg" alt="">
+                    </span>
+                    <span class="hejhub-tile hejhub-tile--twitch">
+                      <img class="hejhub-tile-mark hejhub-tile-mark--twitch" src="/assets/images/hejhub/twitch.svg" alt="">
+                    </span>
+                    <span class="hejhub-tile hejhub-tile--wide">
+                      <img class="hejhub-tile-mark hejhub-tile-mark--bsky" src="/assets/images/hejhub/bluesky.svg" alt="">
+                    </span>
+                    <span class="hejhub-tile hejhub-tile--small">
+                      <img class="hejhub-tile-mark hejhub-tile-mark--reddit" src="/assets/images/hejhub/reddit-logo.png" alt="">
+                    </span>
+                    <span class="hejhub-tile hejhub-tile--short">
+                      <img class="hejhub-tile-mark hejhub-tile-mark--album" src="/assets/images/hejhub/album.jpg?v=20260630" alt="">
+                    </span>
+                    <span class="hejhub-tile hejhub-tile--books">
+                      <img class="hejhub-tile-mark hejhub-tile-mark--book" src="/assets/images/hejhub/book.jpg?v=20260630" alt="">
+                    </span>
                   </div>
                   <div class="project-summary">
                     <span>Side Project</span>

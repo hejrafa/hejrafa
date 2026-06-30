@@ -582,6 +582,124 @@ projectCards.forEach((card) => {
   });
 });
 
+const coverAudioButtons = document.querySelectorAll("[data-cover-audio]");
+
+if (coverAudioButtons.length) {
+  const coverAudio = new Audio();
+  coverAudio.preload = "none";
+  let activeCoverBtn = null;
+
+  const resetButton = (btn) => {
+    btn?.classList.remove("is-playing", "is-loading");
+  };
+
+  coverAudio.addEventListener("playing", () => {
+    activeCoverBtn?.classList.add("is-playing");
+    activeCoverBtn?.classList.remove("is-loading");
+  });
+
+  coverAudio.addEventListener("pause", () => {
+    activeCoverBtn?.classList.remove("is-playing");
+  });
+
+  coverAudio.addEventListener("ended", () => {
+    resetButton(activeCoverBtn);
+  });
+
+  coverAudio.addEventListener("error", () => {
+    resetButton(activeCoverBtn);
+  });
+
+  coverAudioButtons.forEach((btn) => {
+    const stopBubble = (event) => {
+      if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+
+      event.stopPropagation();
+    };
+
+    btn.addEventListener("pointerdown", stopBubble);
+    btn.addEventListener("mousedown", stopBubble);
+    btn.addEventListener("keydown", stopBubble);
+
+    btn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+      const src = btn.dataset.coverAudio;
+
+      if (!src) {
+        return;
+      }
+
+      if (activeCoverBtn === btn && !coverAudio.paused) {
+        coverAudio.pause();
+        return;
+      }
+
+      if (activeCoverBtn && activeCoverBtn !== btn) {
+        resetButton(activeCoverBtn);
+      }
+
+      activeCoverBtn = btn;
+      btn.classList.add("is-loading");
+
+      if (coverAudio.src !== src) {
+        coverAudio.src = src;
+      }
+
+      const playback = coverAudio.play();
+
+      if (playback && typeof playback.catch === "function") {
+        playback.catch(() => {
+          resetButton(btn);
+        });
+      }
+    });
+  });
+}
+
+document.addEventListener("click", (event) => {
+  const embed = event.target.closest?.(".youtube-embed");
+
+  if (!embed) {
+    return;
+  }
+
+  const video = embed.querySelector(".youtube-video");
+
+  if (!video || embed.classList.contains("is-playing")) {
+    return;
+  }
+
+  event.preventDefault();
+  embed.classList.add("is-playing");
+  video.controls = true;
+
+  const playback = video.play();
+
+  if (playback && typeof playback.catch === "function") {
+    playback.catch(() => {
+      embed.classList.remove("is-playing");
+      video.controls = false;
+    });
+  }
+}, true);
+
+document.querySelectorAll(".youtube-embed").forEach((embed) => {
+  const video = embed.querySelector(".youtube-video");
+
+  if (!video) {
+    return;
+  }
+
+  video.addEventListener("ended", () => {
+    embed.classList.remove("is-playing");
+    video.controls = false;
+  });
+});
+
 cardField.dataset.activeCard = "work";
 setTimezoneLabel();
 setActiveView(getViewFromLocation(), { animate: false });
