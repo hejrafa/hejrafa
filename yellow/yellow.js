@@ -2849,17 +2849,27 @@ function setupNavigation() {
 }
 
 function parseFinanceAmount(text) {
-  if (!text.includes("€")) {
+  if (typeof text !== "string") {
     return null;
   }
 
-  const match = text.replace(/\s/g, "").match(/-?\d[\d.]*,\d{2}€/);
+  const cleaned = text.replace(/[\s€]/g, "");
 
-  if (!match) {
+  if (!cleaned) {
     return null;
   }
 
-  const value = Number(match[0].replace("€", "").replace(/\./g, "").replace(",", "."));
+  let normalized;
+
+  if (cleaned.includes(",")) {
+    normalized = cleaned.replace(/\./g, "").replace(",", ".");
+  } else if ((cleaned.match(/\./g) || []).length === 1 && /\.\d{1,2}$/.test(cleaned)) {
+    normalized = cleaned;
+  } else {
+    normalized = cleaned.replace(/\./g, "");
+  }
+
+  const value = Number(normalized);
   return Number.isFinite(value) ? Math.round(value * 100) : null;
 }
 
@@ -2939,6 +2949,39 @@ function setupFinanceTotals() {
     characterData: true,
     subtree: true,
   }));
+
+  flows.forEach((flow) => {
+    flow.querySelectorAll(".finance-entry-amount").forEach((el) => {
+      if (parseFinanceAmount(el.textContent) === null) {
+        return;
+      }
+
+      el.setAttribute("contenteditable", "plaintext-only");
+      el.setAttribute("inputmode", "decimal");
+      el.setAttribute("spellcheck", "false");
+      el.setAttribute("autocorrect", "off");
+      el.setAttribute("autocapitalize", "off");
+
+      el.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          el.blur();
+        }
+      });
+
+      el.addEventListener("blur", () => {
+        const cents = parseFinanceAmount(el.textContent);
+        if (cents === null) {
+          return;
+        }
+
+        const formatted = formatFinanceAmount(cents);
+        if (el.textContent !== formatted) {
+          el.textContent = formatted;
+        }
+      });
+    });
+  });
 }
 
 function getLetterFields() {
