@@ -1,0 +1,308 @@
+/* Case study — inherits the about-page paper/serif language.
+   Editorial sections + placeholder image layouts (bento, wide,
+   quad, stack) that the author swaps for real imagery. */
+
+.start[data-view="case-study"] {
+  overflow-y: auto;
+  padding-bottom: 160px;
+}
+
+.case-study {
+  --case-accent: #005478; /* SHARE NOW blue by default */
+  width: min(100%, 1080px);
+  margin: 0 auto;
+  padding: 0 24px;
+  color: #28231f;
+}
+
+.start[data-case="syntax"] .case-study {
+  --case-accent: #0c4a3b; /* dark Syntax green */
+}
+
+.case-accent {
+  color: var(--case-accent);
+  font-style: normal;
+}
+
+/* HERO — centered headline, meta strip below. */
+.case-hero {
+  width: min(100%, 900px);
+  margin: clamp(20px, 4vh, 40px) auto clamp(40px, 6vh, 72px);
+  text-align: center;
+}
+
+.case-hero h1 {
+  margin: 0;
+  color: #28231f;
+  font-family: var(--display);
+  font-size: clamp(30px, 3.6vw, 46px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.case-hero-meta {
+  margin: clamp(28px, 4vh, 44px) auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(32px, 5vw, 72px);
+  text-align: left;
+}
+
+.case-hero-meta > div {
+  min-width: 0;
+}
+
+.case-hero-meta dt {
+  color: #8b7b70;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.case-hero-meta dd {
+  margin: 8px 0 0;
+  color: #28231f;
+  font-family: var(--display);
+  font-size: clamp(18px, 1.8vw, 22px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* SECTIONS — left-aligned, single heading, about-text width. */
+.case-section {
+  width: min(100%, 720px);
+  margin: clamp(52px, 8vh, 96px) auto;
+}
+
+.case-section h2 {
+  margin: 0 0 22px;
+  color: #28231f;
+  font-family: var(--display);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 700;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.case-section > p {
+  margin: 0;
+  color: #28231f;
+  font-family: var(--display);
+  font-size: clamp(19px, 1.7vw, 23px);
+  line-height: 1.32;
+}
+
+.case-section > p + p {
+  margin-top: 16px;
+}
+
+.case-section p em {
+  color: var(--case-accent);
+  font-style: normal;
+}
+
+.case-section p strong {
+  font-weight: 700;
+}
+
+/* IMAGE TILE — real image inside a layout slot. */
+.case-tile {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #fffdf6;
+  box-shadow:
+    0 8px 0 rgba(45, 5, 4, 0.09),
+    0 22px 46px rgba(45, 5, 4, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.62);
+}
+
+.case-tile img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PLACEHOLDER — visual stand-in for a real image. */
+.case-placeholder {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  border: 2px dashed rgba(20, 19, 19, 0.22);
+  border-radius: 22px;
+  background: rgba(255, 253, 246, 0.36);
+  color: #8b7b70;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.case-placeholder span {
+  display: block;
+  color: #6b5c53;
+  font-size: 13px;
+}
+
+.case-placeholder small {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+/* BENTO — 5 tiles, tile 1 tall in the center, two on each side. */
+.case-bento {
+  width: 100%;
+  margin: 0 0 clamp(72px, 12vh, 128px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  grid-template-rows: minmax(200px, 260px) minmax(200px, 260px);
+  gap: 16px;
+}
+
+.case-bento > *:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* WIDE — single full-width image slot. */
+.case-wide {
+  width: 100%;
+  margin: clamp(48px, 8vh, 96px) 0;
+  aspect-ratio: 16 / 9;
+}
+
+/* QUAD — 2x2 image grid. */
+.case-quad {
+  width: 100%;
+  margin: clamp(48px, 8vh, 96px) 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.case-quad > * {
+  aspect-ratio: 4 / 3;
+}
+
+/* STACK — one wide image with two half-width images beneath. */
+.case-stack {
+  width: 100%;
+  margin: clamp(48px, 8vh, 96px) 0;
+  display: grid;
+  gap: 16px;
+}
+
+.case-stack-primary {
+  aspect-ratio: 16 / 9;
+}
+
+.case-stack-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.case-stack-row > * {
+  aspect-ratio: 4 / 3;
+}
+
+/* OUTCOME NUMBERS — 2x2 tile grid, each number big and blue. */
+.case-numbers {
+  width: 100%;
+  margin: clamp(24px, 4vh, 40px) 0 clamp(48px, 8vh, 88px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.case-numbers > div {
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 22px;
+  background: #fffdf6;
+  box-shadow:
+    0 8px 0 rgba(45, 5, 4, 0.09),
+    0 22px 46px rgba(45, 5, 4, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.62);
+}
+
+.case-numbers dt {
+  color: var(--case-accent);
+  font-family: var(--display);
+  font-size: clamp(44px, 5.6vw, 74px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.case-numbers dd {
+  margin: 16px 0 0;
+  color: #6b5c53;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+@media (max-width: 760px) {
+  .case-study {
+    padding: 0 18px;
+  }
+
+  .case-hero-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+  }
+
+  .case-bento {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, minmax(160px, 200px));
+  }
+
+  .case-bento > *:nth-child(1) {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+  }
+
+  .case-quad {
+    grid-template-columns: 1fr;
+  }
+
+  .case-quad > * {
+    aspect-ratio: 16 / 10;
+  }
+
+  .case-stack-row {
+    grid-template-columns: 1fr;
+  }
+
+  .case-stack-row > * {
+    aspect-ratio: 16 / 10;
+  }
+
+  .case-numbers {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}

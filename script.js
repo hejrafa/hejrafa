@@ -535,6 +535,61 @@ aboutStickerLinks.forEach((link) => {
   });
 });
 
+const FLIPPED_CARDS_KEY = "hejrafa:flipped-project-cards";
+
+function readFlippedCards() {
+  try {
+    const raw = sessionStorage.getItem(FLIPPED_CARDS_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function writeFlippedCards(set) {
+  try {
+    sessionStorage.setItem(FLIPPED_CARDS_KEY, JSON.stringify([...set]));
+  } catch {
+    /* storage may be unavailable — ignore */
+  }
+}
+
+function cardStorageKey(card) {
+  return card.dataset.layout || null;
+}
+
+function applyFlippedState(card, isFlipped, { animate = true } = {}) {
+  const wasFlipped = card.classList.contains("is-flipped");
+
+  if (wasFlipped === isFlipped) {
+    return;
+  }
+
+  if (!animate) {
+    const inner = card.querySelector(".project-card-inner");
+    const previousTransition = inner?.style.transition;
+
+    if (inner) {
+      inner.style.transition = "none";
+    }
+
+    card.classList.toggle("is-flipped", isFlipped);
+    card.setAttribute("aria-pressed", String(isFlipped));
+
+    if (inner) {
+      // force reflow so the transition disable takes effect for this frame
+      void inner.offsetWidth;
+      inner.style.transition = previousTransition || "";
+    }
+    return;
+  }
+
+  card.classList.toggle("is-flipped", isFlipped);
+  card.setAttribute("aria-pressed", String(isFlipped));
+}
+
+const persistedFlippedCards = readFlippedCards();
+
 projectCards.forEach((card) => {
   if (card.classList.contains("project-card--empty")) {
     return;
@@ -542,6 +597,12 @@ projectCards.forEach((card) => {
 
   card.setAttribute("role", "button");
   card.setAttribute("aria-pressed", "false");
+
+  const storageKey = cardStorageKey(card);
+
+  if (storageKey && persistedFlippedCards.has(storageKey)) {
+    applyFlippedState(card, true, { animate: false });
+  }
 
   function eventStartedOnLink(event) {
     const path = event.composedPath?.() || [];
@@ -560,8 +621,20 @@ projectCards.forEach((card) => {
   });
 
   function toggleCard() {
-    const isFlipped = card.classList.toggle("is-flipped");
-    card.setAttribute("aria-pressed", String(isFlipped));
+    const nextFlipped = !card.classList.contains("is-flipped");
+    applyFlippedState(card, nextFlipped);
+
+    if (storageKey) {
+      const set = readFlippedCards();
+
+      if (nextFlipped) {
+        set.add(storageKey);
+      } else {
+        set.delete(storageKey);
+      }
+
+      writeFlippedCards(set);
+    }
   }
 
   card.addEventListener("click", (event) => {
