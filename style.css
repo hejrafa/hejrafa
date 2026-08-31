@@ -1166,7 +1166,10 @@ img {
   inset: 0;
   z-index: 1;
   overflow: hidden;
+  border-radius: inherit;
   background: #1e2611;
+  -webkit-clip-path: inset(0 round 18px);
+  clip-path: inset(0 round 18px);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   pointer-events: none;
@@ -1626,6 +1629,7 @@ img {
   height: 100%;
   min-height: inherit;
   border-radius: inherit;
+  cursor: pointer;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   transition: transform 620ms cubic-bezier(0.2, 0.84, 0.18, 1);
@@ -1648,6 +1652,7 @@ img {
   overflow: hidden;
   padding: clamp(28px, 4vw, 46px);
   border-radius: inherit;
+  cursor: pointer;
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.22), transparent 46%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 24%),
