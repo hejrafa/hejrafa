@@ -1145,6 +1145,119 @@ img {
   transform: translateX(-50%) rotate(2.5deg) translateY(10px) scale(0.96);
 }
 
+.project-card[data-layout="akari"] {
+  --project-bg: #1e2611;
+  --project-text: #f8ebbc;
+  --project-title: #f8ebbc;
+  --project-cta: #f8ebbc;
+  --project-shadow: rgba(17, 24, 8, 0.4);
+}
+
+.project-card[data-layout="akari"] .project-face {
+  background: #1e2611;
+}
+
+.project-card[data-layout="akari"] .project-link {
+  color: var(--project-cta);
+}
+
+.akari-art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: #1e2611;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+}
+
+.akari-art::before,
+.akari-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.akari-art::before {
+  inset: 0 0 30%;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(30, 38, 17, 0.04), rgba(30, 38, 17, 0.34) 72%),
+    linear-gradient(180deg, rgba(30, 38, 17, 0.2), transparent 30%);
+}
+
+.akari-art::after {
+  background: linear-gradient(180deg, transparent 29%, rgba(30, 38, 17, 0.5) 49%, #1e2611 66%, #1e2611 100%);
+}
+
+.akari-image {
+  display: block;
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  object-position: 50% 51%;
+  opacity: 0.92;
+  transform: scale(1.01);
+  transition: transform 500ms cubic-bezier(0.2, 0.84, 0.18, 1), opacity 180ms ease;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+.akari-symbol-slot {
+  position: absolute;
+  top: clamp(78px, 10.5vw, 112px);
+  left: clamp(28px, 4vw, 46px);
+  z-index: 3;
+  display: flex;
+  width: min(calc(100% - (2 * clamp(28px, 4vw, 46px))), 350px);
+  justify-content: center;
+  pointer-events: none;
+  transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 160ms ease;
+}
+
+.akari-symbol {
+  display: block;
+  width: clamp(76px, 9vw, 96px);
+  height: auto;
+  filter: drop-shadow(0 8px 18px rgba(30, 38, 17, 0.32));
+}
+
+.project-card[data-layout="akari"]:hover .akari-image,
+.project-card[data-layout="akari"]:focus-visible .akari-image,
+.project-card[data-layout="akari"]:focus-within .akari-image {
+  transform: scale(1.045);
+}
+
+.project-card[data-layout="akari"]:hover .akari-symbol-slot,
+.project-card[data-layout="akari"]:focus-visible .akari-symbol-slot,
+.project-card[data-layout="akari"]:focus-within .akari-symbol-slot {
+  transform: translateY(-5px);
+}
+
+.project-card[data-layout="akari"].is-flipped .akari-art,
+.project-card[data-layout="akari"].is-flipped .akari-symbol-slot {
+  opacity: 0;
+}
+
+.project-card[data-layout="draftship"] {
+  --project-bg: #ffffff;
+  --project-text: #111111;
+  --project-title: #111111;
+  --project-cta: #111111;
+  --project-shadow: rgba(0, 0, 0, 0.22);
+}
+
+.project-card[data-layout="draftship"] .project-face {
+  background: #ffffff;
+}
+
+.project-card[data-layout="draftship"] .project-link {
+  color: var(--project-cta);
+}
+
 .project-card[data-layout="leadership"] {
   --project-bg: #080607;
   --project-text: #fffdf5;
