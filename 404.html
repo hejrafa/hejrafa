@@ -123,6 +123,33 @@
       animation: error-rise 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
 
+    .error-inner {
+      display: grid;
+      justify-items: center;
+      gap: clamp(18px, 3vh, 28px);
+    }
+
+    .error-copy {
+      margin: 0;
+      font-size: clamp(17px, 1.6vw, 21px);
+      line-height: 1.4;
+      text-align: center;
+      pointer-events: auto;
+      animation: error-rise 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms both;
+    }
+
+    .error-copy a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.18em;
+    }
+
+    .error-copy a:hover,
+    .error-copy a:focus-visible {
+      text-decoration-color: #ffd600;
+    }
+
     @keyframes error-rise {
       from {
         opacity: 0;
@@ -164,7 +191,10 @@
     </header>
 
     <section class="error-stage" aria-label="Page not found">
-      <h1>Error 404</h1>
+      <div class="error-inner">
+        <h1>Nothing here.</h1>
+        <p class="error-copy">The good bits are on <a href="/">the home page</a>.</p>
+      </div>
     </section>
   </main>
 </body>
