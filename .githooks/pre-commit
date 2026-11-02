@@ -1,0 +1,15 @@
+#!/bin/sh
+# Installed via `npm run prepare` (sets core.hooksPath to .githooks).
+# 1. If a public page or the CV is staged, stamp sitemap.xml and dateModified and stage them too.
+# 2. Run the test suite; a failing test aborts the commit.
+set -e
+
+staged=$(git diff --cached --name-only)
+
+if printf '%s\n' "$staged" | grep -qE '^(index\.html|about/index\.html|projects/[^/]+/index\.html|projects/index\.html|assets/files/.*\.pdf)$'; then
+  node scripts/seo-dates.mjs --staged
+  git add sitemap.xml
+  printf '%s\n' "$staged" | grep -E '\.html$' | xargs git add --
+fi
+
+npm test --silent

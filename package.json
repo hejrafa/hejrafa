@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node scripts/dev-server.mjs",
     "test": "node --test tests/*.test.mjs",
-    "seo:dates": "node scripts/seo-dates.mjs"
+    "seo:dates": "node scripts/seo-dates.mjs",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "engines": {
     "node": ">=20"

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-// Keeps the "last modified" signals Google reads in sync with git:
+// Keeps the "last modified" signals Google reads in sync with the work:
 //   - <lastmod> for every URL in sitemap.xml
 //   - "dateModified" on the page node (ProfilePage / CollectionPage / Article) of each page's JSON-LD
 //
-// A file with uncommitted changes gets "now"; a clean file gets its last commit date.
-// Run it right before committing:  npm run seo:dates
+// A changed page gets "now"; an unchanged page keeps the stamp it already has.
+// "Changed" means uncommitted by default, or staged with --staged (used by the pre-commit hook).
 //
 // Google requires ISO 8601 date-times WITH a timezone offset for ProfilePage.dateModified
 // (a bare "2026-08-31" shows up in Search Console as "Invalid datetime value").
@@ -16,6 +16,7 @@ import { fileURLToPath } from "node:url";
 import { PAGES, SITE, DATETIME_RE } from "./seo-pages.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const STAGED_ONLY = process.argv.includes("--staged");
 
 function git(...args) {
   return execFileSync("git", args, { cwd: ROOT, encoding: "utf8" }).trim();
@@ -33,18 +34,24 @@ function localIso(date = new Date()) {
   );
 }
 
-function lastModified(file) {
-  const dirty = git("status", "--porcelain", "--", file) !== "";
-  if (dirty) return localIso();
-  const committed = git("log", "-1", "--format=%aI", "--", file);
-  return committed || localIso();
+const changed = new Set(
+  (STAGED_ONLY ? git("diff", "--cached", "--name-only") : git("status", "--porcelain").replace(/^.{3}/gm, ""))
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+);
+
+const now = localIso();
+
+function currentStamp(page) {
+  if (page.file.endsWith(".html")) {
+    const match = readFileSync(resolve(ROOT, page.file), "utf8").match(/"dateModified": "([^"]*)"/);
+    if (match && DATETIME_RE.test(match[1])) return match[1];
+  }
+  return git("log", "-1", "--format=%aI", "--", page.file) || now;
 }
 
-const stamps = new Map(PAGES.map((page) => [page.file, lastModified(page.file)]));
-
-for (const stamp of stamps.values()) {
-  if (!DATETIME_RE.test(stamp)) throw new Error(`Unexpected date format: ${stamp}`);
-}
+const stamps = new Map(PAGES.map((page) => [page.file, changed.has(page.file) ? now : currentStamp(page)]));
 
 // 1. sitemap.xml
 const sitemap =
@@ -55,8 +62,11 @@ const sitemap =
       `  <url>\n    <loc>${SITE}${page.path}</loc>\n    <lastmod>${stamps.get(page.file)}</lastmod>\n  </url>\n`
   ).join("") +
   `</urlset>\n`;
-writeFileSync(resolve(ROOT, "sitemap.xml"), sitemap);
-console.log("sitemap.xml  rewritten");
+const sitemapPath = resolve(ROOT, "sitemap.xml");
+if (readFileSync(sitemapPath, "utf8") !== sitemap) {
+  writeFileSync(sitemapPath, sitemap);
+  console.log("sitemap.xml  updated");
+}
 
 // 2. dateModified on each HTML page's own node (first node in the @graph).
 for (const page of PAGES) {
@@ -64,12 +74,14 @@ for (const page of PAGES) {
   const path = resolve(ROOT, page.file);
   const html = readFileSync(path, "utf8");
   const stamp = stamps.get(page.file);
-  let replaced = false;
+  let found = false;
   const next = html.replace(/"dateModified": "[^"]*"/, () => {
-    replaced = true;
+    found = true;
     return `"dateModified": "${stamp}"`;
   });
-  if (!replaced) throw new Error(`${page.file}: no "dateModified" found in JSON-LD`);
-  if (next !== html) writeFileSync(path, next);
-  console.log(`${page.file.padEnd(32)} dateModified = ${stamp}`);
+  if (!found) throw new Error(`${page.file}: no "dateModified" found in JSON-LD`);
+  if (next !== html) {
+    writeFileSync(path, next);
+    console.log(`${page.file.padEnd(32)} dateModified = ${stamp}`);
+  }
 }

@@ -58,8 +58,7 @@ Rewind lives inside the password-protected Yellow section as its fourth navigati
 
 ### Before publishing
 
-1. Run `npm run seo:dates` to stamp `sitemap.xml` and each page's `dateModified` from git (Google wants full ISO 8601 date-times with a timezone).
-2. Run `npm test` to check structured data, canonicals, sitemap, and social meta before pushing.
+A pre-commit hook (installed by `npm install` via the `prepare` script, or manually with `git config core.hooksPath .githooks`) stamps `sitemap.xml` and each staged page's `dateModified` with full ISO 8601 date-times, then runs `npm test`. A failing test blocks the commit. To stamp by hand, run `npm run seo:dates`.
 
 The local server proxies browser requests to the official TMDB v3 movie search, movie details, and movie credits endpoints. The access token stays on the server and is never written into client code or localStorage.
 
