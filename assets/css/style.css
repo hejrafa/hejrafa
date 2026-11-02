@@ -1388,8 +1388,8 @@ img {
   width: clamp(150px, 48%, 220px);
   aspect-ratio: 399 / 112;
   background: #0c4a3b;
-  mask: url("/assets/images/syntax.svg") center / contain no-repeat;
-  -webkit-mask: url("/assets/images/syntax.svg") center / contain no-repeat;
+  mask: url("/assets/images/syntax/mark.svg") center / contain no-repeat;
+  -webkit-mask: url("/assets/images/syntax/mark.svg") center / contain no-repeat;
   transform: translateX(-50%);
   transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 160ms ease;
 }

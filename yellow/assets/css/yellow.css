@@ -2338,7 +2338,7 @@ th {
   z-index: 40;
   display: flex;
   align-items: center;
-  width: min(372px, calc(100vw - 36px));
+  width: min(496px, calc(100vw - 36px));
   min-height: 48px;
   padding: 6px;
   border-radius: 20px;
@@ -2382,7 +2382,7 @@ th {
   z-index: 1;
   top: 6px;
   left: 6px;
-  width: calc((100% - 12px) / 3);
+  width: calc((100% - 12px) / 4);
   height: calc(100% - 12px);
   border-radius: 15px;
   background:
@@ -2400,6 +2400,10 @@ th {
 
 .yellow-dock[data-selected="letter"] .yellow-dock-thumb {
   transform: translateX(200%);
+}
+
+.yellow-dock[data-selected="rewind"] .yellow-dock-thumb {
+  transform: translateX(300%);
 }
 
 .yellow-gate {
@@ -2746,7 +2750,7 @@ body.is-unlocked .yellow-gate {
   }
 
   .yellow-dock {
-    width: min(350px, calc(100vw - 28px));
+    width: min(460px, calc(100vw - 28px));
   }
 
   .yellow-dock-item {

@@ -5,7 +5,7 @@ const panels = document.querySelectorAll("[data-yellow-page]");
 const passwordInput = document.querySelector("[data-yellow-password]");
 const gateForm = document.querySelector("[data-yellow-gate]");
 const viewTransitionDuration = 460;
-const validViews = new Set(["health", "finance", "finance-yearly", "finance-debt", "letter"]);
+const validViews = new Set(["health", "finance", "finance-yearly", "finance-debt", "letter", "rewind"]);
 const routePaths = new Map([
   ["/yellow", "health"],
   ["/yellow/index.html", "health"],
@@ -19,6 +19,8 @@ const routePaths = new Map([
   ["/yellow/finance-debt/index.html", "finance-debt"],
   ["/yellow/letter", "letter"],
   ["/yellow/letter/index.html", "letter"],
+  ["/yellow/rewind", "rewind"],
+  ["/yellow/rewind/index.html", "rewind"],
 ]);
 const unlockStorageKey = "hejrafa-yellow-unlocked";
 const healthStorageKey = "hejrafa-yellow-health-v1";
@@ -149,25 +151,25 @@ const healthWarmupItems = [
   {
     title: "Dead hang",
     detail: "1 min",
-    image: "/assets/images/health/warmup-dead-hang.jpg",
+    image: "/yellow/assets/images/health/warmup-dead-hang.jpg",
     alt: "Dead hang warm-up from the bodyweight program",
   },
   {
     title: "Deep squat",
     detail: "1 min",
-    image: "/assets/images/health/warmup-deep-squat.jpg",
+    image: "/yellow/assets/images/health/warmup-deep-squat.jpg",
     alt: "Deep squat warm-up from the bodyweight program",
   },
   {
     title: "Leg swings",
     detail: "10 each leg",
-    image: "/assets/images/health/warmup-leg-swings.jpg",
+    image: "/yellow/assets/images/health/warmup-leg-swings.jpg",
     alt: "Leg swings warm-up from the bodyweight program",
   },
   {
     title: "Arm swings",
     detail: "10 each arm",
-    image: "/assets/images/health/warmup-arm-swings.jpg",
+    image: "/yellow/assets/images/health/warmup-arm-swings.jpg",
     alt: "Arm swings warm-up from the bodyweight program",
   },
 ];
@@ -177,7 +179,7 @@ const healthWorkoutDays = [
     day: "Mon",
     title: "Upper I",
     description: "Pull-ups, push-ups, bodyweight rows, ring chest fly, ring back fly.",
-    image: "/assets/images/health/program-upper-1.jpg",
+    image: "/yellow/assets/images/health/program-upper-1.jpg",
     imageAlt: "Upper I pull-up photo from the bodyweight program",
     items: [
       { label: "Pull-ups", tooltip: "Pull yourself up until your chin clears the bar. Use assistance if needed." },
@@ -193,7 +195,7 @@ const healthWorkoutDays = [
     day: "Tue",
     title: "Mobility",
     description: "Active stretching, dynamic stretching, intuitive movement.",
-    image: "/assets/images/health/program-mobility.jpg",
+    image: "/yellow/assets/images/health/program-mobility.jpg",
     imageAlt: "Mobility photo from the bodyweight program",
     items: [
       { label: "Active stretching", tooltip: "Move into a stretch using your own strength." },
@@ -207,7 +209,7 @@ const healthWorkoutDays = [
     day: "Wed",
     title: "Lower",
     description: "Pistols, hinge or nordics, split squats, hips, calves, toe raises.",
-    image: "/assets/images/health/program-lower.jpg",
+    image: "/yellow/assets/images/health/program-lower.jpg",
     imageAlt: "Lower-body mobility photo from the bodyweight program",
     items: [
       { label: "Pistols", tooltip: "Single-leg squat. Use a box, wall, or support if needed." },
@@ -224,7 +226,7 @@ const healthWorkoutDays = [
     day: "Thu",
     title: "Core",
     description: "Hanging leg raises, L-sits, oblique raises, hollow body holds.",
-    image: "/assets/images/health/program-core.jpg",
+    image: "/yellow/assets/images/health/program-core.jpg",
     imageAlt: "Core hanging leg raise photo from the bodyweight program",
     items: [
       { label: "Hanging raises", tooltip: "Hang and lift your knees or legs without swinging." },
@@ -239,7 +241,7 @@ const healthWorkoutDays = [
     day: "Fri",
     title: "Upper II",
     description: "Pike or HSPU, dips, curls, triceps, face pulls.",
-    image: "/assets/images/health/program-upper-2.jpg",
+    image: "/yellow/assets/images/health/program-upper-2.jpg",
     imageAlt: "Upper II dips photo from the bodyweight program",
     items: [
       { label: "Pike/HSPU", tooltip: "Push like an overhead press. Start with pike push-ups if handstand work is too hard." },
@@ -255,7 +257,7 @@ const healthWorkoutDays = [
     day: "Sat",
     title: "Skill work",
     description: "Skills, mobility, core, outside work, sport, or play.",
-    image: "/assets/images/health/program-modular.jpg",
+    image: "/yellow/assets/images/health/program-modular.jpg",
     imageAlt: "Skill day movement photo from the bodyweight program",
     items: [
       { label: "Skills", tooltip: "Practice handstands, rings, L-sit, or another skill slowly." },
@@ -295,7 +297,7 @@ const healthRecipes = {
     name: "Go-to breakfast",
     calories: 640,
     protein: 54,
-    image: "/assets/images/health/food-breakfast-classic.jpg",
+    image: "/yellow/assets/images/health/food-breakfast-classic.jpg",
     detail: "2 toasts, eggs, turkey, avocado, cottage cheese, espresso, fresh lime shot.",
     cook: [
       "Toast the bread and cook the eggs how you like them.",
@@ -317,7 +319,7 @@ const healthRecipes = {
     name: "The Stir Fry",
     calories: 1192,
     protein: 90,
-    image: "/assets/images/health/food-stir-fry.jpg",
+    image: "/yellow/assets/images/health/food-stir-fry.jpg",
     detail: "Chicken, jasmine rice, broccoli, carrots, mushrooms, sprouts.",
     cook: [
       "Cook rice first so it is ready.",
@@ -345,7 +347,7 @@ const healthRecipes = {
     name: "All American",
     calories: 1079,
     protein: 88,
-    image: "/assets/images/health/food-all-american.jpg",
+    image: "/yellow/assets/images/health/food-all-american.jpg",
     detail: "Sirloin, russet potato, asparagus, butter, parmesan.",
     cook: [
       "Bake or microwave the potato until soft.",
@@ -365,7 +367,7 @@ const healthRecipes = {
     name: "Salmon + Guac",
     calories: 1047,
     protein: 85,
-    image: "/assets/images/health/food-salmon-guac.jpg",
+    image: "/yellow/assets/images/health/food-salmon-guac.jpg",
     detail: "Salmon, sweet potato, avocado, cilantro, lime.",
     cook: [
       "Bake the sweet potato until soft.",
@@ -385,7 +387,7 @@ const healthRecipes = {
     name: "Los Pollos",
     calories: 826,
     protein: 86,
-    image: "/assets/images/health/food-pollos.jpg",
+    image: "/yellow/assets/images/health/food-pollos.jpg",
     detail: "Chicken tacos with black beans, peppers, onion, salsa.",
     cook: [
       "Season chicken with lime, salt, and hot sauce.",
@@ -410,7 +412,7 @@ const healthRecipes = {
     name: "Chipotle Bowl",
     calories: 1406,
     protein: 95,
-    image: "/assets/images/health/food-chipotle-bowl.jpg",
+    image: "/yellow/assets/images/health/food-chipotle-bowl.jpg",
     detail: "Steak bowl with rice, peppers, onion, beans, lime, salsa.",
     cook: [
       "Cook rice and warm the beans.",
@@ -434,7 +436,7 @@ const healthRecipes = {
     name: "G-Pie Pesto Pizza",
     calories: 1280,
     protein: 89,
-    image: "/assets/images/health/food-pesto-pizza.jpg",
+    image: "/yellow/assets/images/health/food-pesto-pizza.jpg",
     detail: "Cauliflower crust, chicken, spinach, mozzarella, pesto.",
     cook: [
       "Cook or use pre-cooked chicken.",
@@ -457,7 +459,7 @@ const healthRecipes = {
     name: "Big Bison",
     calories: 610,
     protein: 55,
-    image: "/assets/images/health/food-big-bison.jpg",
+    image: "/yellow/assets/images/health/food-big-bison.jpg",
     detail: "Bison or lean beef, sourdough, egg, avocado.",
     cook: [
       "Form the meat into patties and salt both sides.",
@@ -476,7 +478,7 @@ const healthRecipes = {
     name: "Xar Salad",
     calories: 527,
     protein: 58,
-    image: "/assets/images/health/food-xar-salad.jpg",
+    image: "/yellow/assets/images/health/food-xar-salad.jpg",
     detail: "Chicken, spring mix, avocado, feta, pine nuts.",
     cook: [
       "Use pre-cooked chicken or sear a quick chicken breast.",
@@ -500,7 +502,7 @@ const healthRecipes = {
     name: "Beef Broc",
     calories: 829,
     protein: 63,
-    image: "/assets/images/health/food-beef-broc.jpg",
+    image: "/yellow/assets/images/health/food-beef-broc.jpg",
     detail: "Lean beef, broccoli, egg, jasmine rice, soy sauce.",
     cook: [
       "Cook rice while you steam or saute the broccoli.",
@@ -523,7 +525,7 @@ const healthRecipes = {
     name: "The Omega",
     calories: 710,
     protein: 47,
-    image: "/assets/images/health/food-omega.jpg",
+    image: "/yellow/assets/images/health/food-omega.jpg",
     detail: "Salmon, potatoes, carrots, broccoli, Brussels sprouts.",
     cook: [
       "Roast potatoes and vegetables on a tray.",
@@ -544,7 +546,7 @@ const healthRecipes = {
     name: "Xar-Shake",
     calories: 155,
     protein: 20,
-    image: "/assets/images/health/food-snack-xar-shake.jpg",
+    image: "/yellow/assets/images/health/food-snack-xar-shake.jpg",
     detail: "Berry collagen shake with coconut milk and maca.",
     cook: [
       "Blend frozen berries, water, ice, collagen, maca, and stevia.",
@@ -562,7 +564,7 @@ const healthRecipes = {
     name: "The Dilla",
     calories: 227,
     protein: 19,
-    image: "/assets/images/health/food-snack-dilla.jpg",
+    image: "/yellow/assets/images/health/food-snack-dilla.jpg",
     detail: "Mini chicken-mozzarella quesadilla, crisp and fast.",
     cook: [
       "Heat skillet. Crisp one tortilla, then add cheese.",
@@ -579,7 +581,7 @@ const healthRecipes = {
     name: "Banana Pancakes",
     calories: 286,
     protein: 13,
-    image: "/assets/images/health/food-snack-banana-pancakes.jpg",
+    image: "/yellow/assets/images/health/food-snack-banana-pancakes.jpg",
     detail: "Banana + egg pancakes. Two ingredients, mini-stack.",
     cook: [
       "Mash banana, whisk in eggs.",
@@ -595,7 +597,7 @@ const healthRecipes = {
     name: "Roasted Chickies",
     calories: 506,
     protein: 25,
-    image: "/assets/images/health/food-snack-roasted-chickies.jpg",
+    image: "/yellow/assets/images/health/food-snack-roasted-chickies.jpg",
     detail: "Crispy roasted chickpeas, big-batch snack jar.",
     cook: [
       "Dry chickpeas thoroughly, toss with oil and seasoning.",
@@ -611,7 +613,7 @@ const healthRecipes = {
     name: "Fireball Nachos",
     calories: 506,
     protein: 40,
-    image: "/assets/images/health/food-snack-fireball-nachos.jpg",
+    image: "/yellow/assets/images/health/food-snack-fireball-nachos.jpg",
     detail: "Nut-thin nachos with chicken, beans, mozzarella, hot sauce.",
     cook: [
       "Layer crackers with cheese on a microwave-safe plate, melt 30s.",
@@ -631,7 +633,7 @@ const healthRecipes = {
     name: "Hunger Hack",
     calories: 133,
     protein: 2,
-    image: "/assets/images/health/food-snack-hunger-hack.jpg",
+    image: "/yellow/assets/images/health/food-snack-hunger-hack.jpg",
     detail: "One medjool date + a teaspoon of nut butter. Pre-workout fuel.",
     cook: [
       "Pit a medjool date and stuff with nut butter. That's it.",
@@ -646,7 +648,7 @@ const healthRecipes = {
     name: "Popeye Effect",
     calories: 325,
     protein: 21,
-    image: "/assets/images/health/food-snack-popeye-effect.jpg",
+    image: "/yellow/assets/images/health/food-snack-popeye-effect.jpg",
     detail: "Green smoothie: spinach, banana, peanut butter, collagen.",
     cook: [
       "Blend coconut milk, ice, spinach, banana, collagen, and nut butter.",
@@ -666,7 +668,7 @@ const healthRecipes = {
     name: "Buffalo Chicken",
     calories: 671,
     protein: 64,
-    image: "/assets/images/health/food-buffalo-chicken.jpg",
+    image: "/yellow/assets/images/health/food-buffalo-chicken.jpg",
     detail: "Buffalo chicken, potato wedges, carrots, celery, yogurt dip.",
     cook: [
       "Cut potatoes into wedges and bake until crisp.",
