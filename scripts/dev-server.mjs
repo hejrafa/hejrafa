@@ -12,6 +12,7 @@ const imageBaseUrl = "https://image.tmdb.org/t/p";
 
 const mimeTypes = new Map([
   [".css", "text/css; charset=utf-8"],
+  [".enc", "application/json; charset=utf-8"],
   [".html", "text/html; charset=utf-8"],
   [".ico", "image/x-icon"],
   [".jpeg", "image/jpeg"],
@@ -249,7 +250,7 @@ function serveStatic(pathname, response) {
   const safePath = normalize(requestedPath).replace(/^(\.\.(\/|\\|$))+/, "");
   let filePath = resolve(workspaceRoot, `.${safePath}`);
 
-  if (!filePath.startsWith(workspaceRoot) || filePath.includes(`${join(workspaceRoot, ".git")}`) || /\/(?:\.env|scripts\/dev-server\.mjs|package(?:-lock)?\.json)$/.test(filePath)) {
+  if (!filePath.startsWith(workspaceRoot) || filePath.includes(`${join(workspaceRoot, ".git")}`) || /\/(?:\.env|scripts\/dev-server\.mjs|package(?:-lock)?\.json)$/.test(filePath) || filePath.startsWith(join(workspaceRoot, "yellow", "private"))) {
     sendText(response, 404, "Not found");
     return;
   }

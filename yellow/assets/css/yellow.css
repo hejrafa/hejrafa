@@ -2440,6 +2440,11 @@ body.is-unlocked .yellow-gate {
   animation: yellow-shake 260ms ease both;
 }
 
+.yellow-gate-form.is-checking input {
+  opacity: 0.62;
+  cursor: progress;
+}
+
 .yellow-gate input {
   width: min(280px, 74vw);
   height: 58px;

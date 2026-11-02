@@ -51,6 +51,7 @@ test("no stray files at the site root", () => {
     ".env", ".env.example", ".gitignore", "404.html", "CNAME", "README.md", "favicon.ico", "favicon.svg",
     "index.html", "llms.txt", "package.json", "package-lock.json", "robots.txt", "sitemap.xml",
   ]);
-  const stray = readdirSync(ROOT).filter((name) => name !== ".DS_Store" && !statSync(join(ROOT, name)).isDirectory() && !allowed.has(name));
+  // .git is a directory in a normal checkout but a pointer file inside a git worktree.
+  const stray = readdirSync(ROOT).filter((name) => name !== ".DS_Store" && name !== ".git" && !statSync(join(ROOT, name)).isDirectory() && !allowed.has(name));
   assert.deepEqual(stray, [], `unexpected root files: ${stray}`);
 });

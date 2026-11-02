@@ -34,7 +34,9 @@ Two World of Warcraft addons. Carpenter keeps Blizzard's interface and sands it 
                    share-now/ and syntax/ hold both the card images and the case-study images
 /assets/files/     the CV (public URL, do not move)
 /yellow/           private dashboard (noindex, robots-blocked) with its own assets/ folder
-/scripts/          tooling: dev-server.mjs (TMDB proxy), seo-dates.mjs, seo-pages.mjs
+/yellow/private/   plaintext Yellow content, ignored by git (see "Yellow" below)
+/yellow/assets/data/yellow.enc   the encrypted Yellow content, the only form that is committed
+/scripts/          tooling: dev-server.mjs (TMDB proxy), seo-dates.mjs, seo-pages.mjs, yellow-encrypt.mjs, yellow-sync.mjs
 /tests/            node:test suites, run with `npm test`
 ```
 
@@ -43,6 +45,20 @@ Public URLs (pages, the CV, og:images) stay where they are. Everything else can 
 ## Elsewhere
 
 [hejrafa.com](https://hejrafa.com) is the long version: portfolio, notebook, tiny internet home.
+
+## Yellow
+
+`/yellow/` is a private dashboard behind a password. The host is static and the repo is public, so the private content (the health, finance, and letter panels plus the health and letter data) is not in the pages at all: it ships as ciphertext in `yellow/assets/data/yellow.enc`, and the browser decrypts it after the password is typed.
+
+- **How it is locked.** `npm run yellow:encrypt` derives a 256-bit key from the password with PBKDF2-SHA256 (600,000 iterations, random 16-byte salt), gzips the content, and encrypts it with AES-GCM (random 12-byte IV). The pages keep only the shell, the password form, and Rewind. On unlock the browser derives the same key with WebCrypto, decrypts, injects the panels, and starts the panel scripts. A wrong password just fails to decrypt and shakes the form; there is no password anywhere in the code.
+- **Remembered unlock.** Only the derived AES key is kept, in `sessionStorage`, so a reload in the same tab stays unlocked. It cannot reveal the password and it is gone when the tab closes. Nothing goes to `localStorage`.
+- **Where the plaintext lives.** `yellow/private/panels.html` (the five `<section data-yellow-page>` panels, in order) and `yellow/private/data.mjs` (the health programme, recipes, food plans, and letter drafts as JSON-serialisable exports). The folder is in `.gitignore`; never commit it.
+- **Editing.** Change the files in `yellow/private/`, run `npm run yellow:encrypt`, commit the new `yellow.enc`. The password comes from `YELLOW_PASSWORD` in `.env` (ignored by git) or an interactive prompt. Passwords are normalised (Unicode NFKC, trimmed, lower-cased) before use, on both sides.
+- **Fresh checkout.** The plaintext is not in git. Run `npm run yellow:decrypt` with the password to rebuild `yellow/private/` from `yellow.enc` (formatting and comments in `data.mjs` are not preserved).
+- **Entry points.** Yellow routes on real paths, so `yellow/{health,finance,finance-yearly,finance-debt,letter}/index.html` must be byte-identical copies of `yellow/index.html`. `npm run yellow:encrypt` refreshes them; after editing the shell alone, run `npm run yellow:sync`.
+- **Changing the password.** Set the new one and run `npm run yellow:encrypt`; the old ciphertext is simply replaced. Note that git history before November 2026 still holds the old plaintext pages.
+
+`npm test` fails if any committed Yellow file contains a euro amount, health or letter copy, or a panel, if the entry points drift from the shell, or if `yellow/private/` is ever tracked.
 
 ## Rewind
 

@@ -1,7 +1,7 @@
 const body = document.body;
 const dock = document.querySelector(".yellow-dock");
 const dockItems = document.querySelectorAll("[data-yellow-nav]");
-const panels = document.querySelectorAll("[data-yellow-page]");
+let panels = document.querySelectorAll("[data-yellow-page]");
 const passwordInput = document.querySelector("[data-yellow-password]");
 const gateForm = document.querySelector("[data-yellow-gate]");
 const viewTransitionDuration = 460;
@@ -22,7 +22,10 @@ const routePaths = new Map([
   ["/yellow/rewind", "rewind"],
   ["/yellow/rewind/index.html", "rewind"],
 ]);
-const unlockStorageKey = "hejrafa-yellow-unlocked";
+const payloadUrl = "/yellow/assets/data/yellow.enc";
+const payloadFormat = "hejrafa-yellow/1";
+const unlockKeyStorageKey = "hejrafa-yellow-key-v1";
+const legacyUnlockStorageKey = "hejrafa-yellow-unlocked";
 const healthStorageKey = "hejrafa-yellow-health-v1";
 const healthModeStorageKey = "hejrafa-yellow-health-mode-v1";
 const healthTitleStorageKey = "hejrafa-yellow-health-title-v1";
@@ -30,829 +33,68 @@ const letterStorageKey = "hejrafa-yellow-letter-v2";
 const html2PdfUrl = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
 let html2PdfLoader = null;
 const validHealthModes = new Set(["track", "cook", "train"]);
-const healthTitleOptions = [
-  ["Two months.", "All in."],
-  ["Build strength.", "Stay human."],
-  ["Fuel ready.", "Train clean."],
-  ["Small reps.", "Real change."],
-  ["Show up.", "Recover well."],
-  ["Eat enough.", "Get stronger."],
-  ["Clean reps.", "Quiet proof."],
-  ["Future Rafa.", "Earned daily."],
-  ["Track light.", "Move hard."],
-  ["Health.", "No noise."],
-];
-const letterDrafts = [
-  {
-    greeting: "Dear future favorite person,",
-    "paragraph-1": "I hope this letter finds you well, hydrated, and only mildly surrounded by tabs you swear you still need. I am writing to share a thought, make a request, or simply put something important on a page before my brain turns it into seventeen separate notes.",
-    "paragraph-2": "The short version is this: there is an idea here, and it deserves a little room to breathe. The slightly longer version has nuance, context, and at least one sentence that makes me sound more organized than I felt while writing it.",
-    "paragraph-3": "I care about clarity, good timing, and the rare miracle of everyone knowing what happens next. If this page can help move things from vague cloud shape to actual next step, then frankly, it has already earned its keep.",
-    portfolio: "Optional useful detail goes here: a link, a date, a number, or the tiny but crucial thing nobody should miss.",
-    salary: "Another note can live here, provided it behaves itself and does not become a spreadsheet in disguise.",
-    closing: "Thank you for reading. I am looking forward to the next step, ideally one involving fewer open loops and maybe a decent coffee.",
-    signoff: "Warmly",
-  },
-  {
-    greeting: "Hello from the page with margins,",
-    "paragraph-1": "This is a small note with decent posture and no ambition to become a slide deck. I wanted to put the important bit somewhere quiet, where it can sit still long enough for both of us to look at it.",
-    "paragraph-2": "The point is simple: something deserves attention, a decision, or at least a friendly nudge out of the swamp of later. I have tried to keep it concise, which is brave considering my natural habitat is the thoughtful tangent.",
-    "paragraph-3": "If this lands well, wonderful. If it needs a tweak, also wonderful. Progress is often just a fancy word for moving the furniture until nobody walks into it anymore.",
-    portfolio: "Useful detail: add a date, link, number, address, or tiny clue that makes the whole thing easier to act on.",
-    salary: "Optional note: this line is available for context, constraints, or one suspiciously practical sentence.",
-    closing: "Thanks for reading this without making it a meeting first. That already feels like civilization.",
-    signoff: "Best",
-  },
-  {
-    greeting: "Dear person with excellent timing,",
-    "paragraph-1": "I am writing because some thoughts are better behaved on paper. Left unattended, this one would probably start rearranging my brain furniture at 11:47 p.m., and nobody needs that.",
-    "paragraph-2": "Here is the shape of it: there is a thing worth doing, saying, changing, asking, or finally admitting is not going to magically organize itself. I am in favor of giving it a real next step.",
-    "paragraph-3": "I like when things are clear, useful, and just dramatic enough to stay interesting. This letter is attempting all three while wearing sensible shoes.",
-    portfolio: "Small but important detail: place the practical bit here before it escapes.",
-    salary: "Second optional detail: add whatever makes this easier to understand, approve, schedule, or remember.",
-    closing: "Thank you for giving this a proper read. I appreciate attention in a world determined to turn everything into a notification.",
-    signoff: "Cheers",
-  },
-  {
-    greeting: "Hi there,",
-    "paragraph-1": "Consider this a neatly dressed carrier pigeon, except without the pigeon and with better typography. I am sending it because the message deserves more ceremony than a chat bubble, but less ceremony than a committee.",
-    "paragraph-2": "What matters is fairly straightforward: there is a direction, a question, or a little decision waiting to become real. I have put it here so it can stop floating around like a browser tab with emotional leverage.",
-    "paragraph-3": "If the next move is obvious, fantastic. If it is not, we can make it obvious with a little patience, a little taste, and maybe one brutally honest sentence.",
-    portfolio: "Relevant detail: add the link, deadline, amount, name, or tiny logistical gem here.",
-    salary: "Optional context: this space exists for the thing that would otherwise be remembered five minutes too late.",
-    closing: "Thanks for reading. May the next step be clear and the calendar invite mercifully short.",
-    signoff: "Kindly",
-  },
-  {
-    greeting: "Dear sensible human,",
-    "paragraph-1": "I am putting this in letter form because it makes the idea look like it pays rent. There is something pleasantly official about a white page, even when the message is mostly: let us make this easier.",
-    "paragraph-2": "The practical version is this: we have enough information to move, or enough uncertainty to ask a better question. Either way, the next step does not need to be heroic. It just needs to exist.",
-    "paragraph-3": "I am a big believer in clear edges, useful defaults, and removing the little frictions that make everyone silently tired. This letter is, hopefully, one small act in that direction.",
-    portfolio: "Helpful detail: this is where the specific thing goes, ideally before anyone has to hunt for it.",
-    salary: "Optional note: constraints, preferences, and tiny caveats may live here peacefully.",
-    closing: "Thank you for reading and for not turning this into a twelve-tab investigation unless absolutely necessary.",
-    signoff: "All the best",
-  },
-  {
-    greeting: "Dear keeper of the time circuits,",
-    "paragraph-1": "I am writing from a very specific point in the timeline: after the idea became obvious, but before anyone accidentally made it complicated. The dashboard is blinking, the coffee is questionable, and the next step is asking for a little courage.",
-    "paragraph-2": "We may not need roads, but we do need a destination. Ideally one with fewer paradoxes, a working plan, and no dramatic sprint toward a clock tower unless absolutely necessary.",
-    "paragraph-3": "So here is the pitch: let us set the coordinates, hit the right speed, and give this thing enough energy to become real. If a little lightning shows up, great. If not, we can probably use a calendar invite.",
-    portfolio: "Timeline detail: add the date, link, number, or tiny piece of future-saving information here.",
-    salary: "Optional note: constraints, caveats, and suspiciously important side quests may live here.",
-    closing: "Thanks for reading. May the next version of this moment be the one where everything clicks.",
-    signoff: "See you in the future",
-  },
-];
-const healthProfileFields = [
-  { id: "height", label: "Height", placeholder: "cm", inputmode: "decimal", type: "text" },
-  { id: "age", label: "Age", placeholder: "years", inputmode: "numeric", type: "text" },
-];
-const healthProfileSexOptions = [
-  { id: "male", label: "Male" },
-  { id: "female", label: "Female" },
-];
-const healthProfileActivityOptions = [
-  { id: "sedentary", label: "Sedentary", factor: 1.2, hint: "desk + little movement" },
-  { id: "light", label: "Light", factor: 1.375, hint: "1-3 light sessions/wk" },
-  { id: "moderate", label: "Moderate", factor: 1.55, hint: "3-5 real sessions/wk" },
-  { id: "heavy", label: "Heavy", factor: 1.725, hint: "6+ sessions or physical job" },
-];
-const healthProfileGoalFields = [
-  { id: "goalWeight", label: "Goal weight", placeholder: "kg" },
-  { id: "goalBodyFat", label: "Goal body fat", placeholder: "%" },
-];
-const healthXaryuReference = {
-  height: 180,
-  weight: 80,
-  bodyFat: 10,
-};
-const healthMeasurementCheckpoints = [
-  { id: "start", label: "Start", date: "Jun 29" },
-  { id: "week4", label: "W4", date: "Jul 20" },
-  { id: "week8", label: "W8", date: "Aug 17" },
-];
-const healthMeasurementMetrics = [
-  { id: "weight", label: "Weight", hint: "weekly average", placeholder: "kg" },
-  { id: "bodyFat", label: "Body fat", hint: "same method", placeholder: "%" },
-  { id: "waist", label: "Waist", hint: "navel, relaxed", placeholder: "cm" },
-  { id: "chest", label: "Chest", hint: "nipple line", placeholder: "cm" },
-  { id: "shoulders", label: "Shoulders", hint: "widest point", placeholder: "cm" },
-  { id: "hips", label: "Hips", hint: "widest point", placeholder: "cm" },
-  { id: "arm", label: "Arm", hint: "same side, relaxed", placeholder: "cm" },
-  { id: "thigh", label: "Thigh", hint: "mid-thigh", placeholder: "cm" },
-];
-const healthPhotoAngles = [
-  { id: "front", label: "Front" },
-  { id: "side", label: "Side" },
-  { id: "back", label: "Back" },
-];
-const healthWarmupItems = [
-  {
-    title: "Dead hang",
-    detail: "1 min",
-    image: "/yellow/assets/images/health/warmup-dead-hang.jpg",
-    alt: "Dead hang warm-up from the bodyweight program",
-  },
-  {
-    title: "Deep squat",
-    detail: "1 min",
-    image: "/yellow/assets/images/health/warmup-deep-squat.jpg",
-    alt: "Deep squat warm-up from the bodyweight program",
-  },
-  {
-    title: "Leg swings",
-    detail: "10 each leg",
-    image: "/yellow/assets/images/health/warmup-leg-swings.jpg",
-    alt: "Leg swings warm-up from the bodyweight program",
-  },
-  {
-    title: "Arm swings",
-    detail: "10 each arm",
-    image: "/yellow/assets/images/health/warmup-arm-swings.jpg",
-    alt: "Arm swings warm-up from the bodyweight program",
-  },
-];
-const healthWorkoutDays = [
-  {
-    id: "mon",
-    day: "Mon",
-    title: "Upper I",
-    description: "Pull-ups, push-ups, bodyweight rows, ring chest fly, ring back fly.",
-    image: "/yellow/assets/images/health/program-upper-1.jpg",
-    imageAlt: "Upper I pull-up photo from the bodyweight program",
-    items: [
-      { label: "Pull-ups", tooltip: "Pull yourself up until your chin clears the bar. Use assistance if needed." },
-      { label: "Push-ups", tooltip: "Lower your chest, then press back up. Keep your body straight." },
-      { label: "Rows", tooltip: "Lean back holding rings or a bar, then pull your chest toward your hands." },
-      { label: "Chest fly", tooltip: "Open your arms slowly on rings, then squeeze them back together." },
-      { label: "Back fly", tooltip: "Open your arms out to the side to work your upper back." },
-    ],
-    explanation: "Strength day for vertical pull, horizontal pull, and horizontal push. Keep the big moves in the 5-12 clean-rep range, then use the fly work for control and upper-back balance.",
-  },
-  {
-    id: "tue",
-    day: "Tue",
-    title: "Mobility",
-    description: "Active stretching, dynamic stretching, intuitive movement.",
-    image: "/yellow/assets/images/health/program-mobility.jpg",
-    imageAlt: "Mobility photo from the bodyweight program",
-    items: [
-      { label: "Active stretching", tooltip: "Move into a stretch using your own strength." },
-      { label: "Dynamic work", tooltip: "Move joints through range: hips, shoulders, ankles, spine." },
-      { label: "Intuitive movement", tooltip: "Spend time on what feels tight or stiff that day." },
-    ],
-    explanation: "A recovery and range day. Move joints through active control, add dynamic stretches, then spend time in positions that feel stiff without forcing them.",
-  },
-  {
-    id: "wed",
-    day: "Wed",
-    title: "Lower",
-    description: "Pistols, hinge or nordics, split squats, hips, calves, toe raises.",
-    image: "/yellow/assets/images/health/program-lower.jpg",
-    imageAlt: "Lower-body mobility photo from the bodyweight program",
-    items: [
-      { label: "Pistols", tooltip: "Single-leg squat. Use a box, wall, or support if needed." },
-      { label: "Hinge/Nordics", tooltip: "Hamstring work. Bend at the hips or lower slowly from your knees." },
-      { label: "Split squats", tooltip: "One foot forward, one foot back. Lower down and stand up." },
-      { label: "Hip thrusts", tooltip: "Drive your hips up and squeeze your glutes at the top." },
-      { label: "Calves", tooltip: "Raise your heels slowly, pause, then lower with control." },
-      { label: "Toe raises", tooltip: "Lift your toes toward your shins to train the front of your lower leg." },
-    ],
-    explanation: "Single-leg strength plus posterior-chain work. Track the main leg movement, keep the hinge strict, and use calves and toe raises to round out lower-leg durability.",
-  },
-  {
-    id: "thu",
-    day: "Thu",
-    title: "Core",
-    description: "Hanging leg raises, L-sits, oblique raises, hollow body holds.",
-    image: "/yellow/assets/images/health/program-core.jpg",
-    imageAlt: "Core hanging leg raise photo from the bodyweight program",
-    items: [
-      { label: "Hanging raises", tooltip: "Hang and lift your knees or legs without swinging." },
-      { label: "L-sits", tooltip: "Hold yourself up with your legs forward. Tuck your knees if needed." },
-      { label: "Oblique raises", tooltip: "Hang and lift your knees toward each side." },
-      { label: "Hollow holds", tooltip: "Lie on your back, ribs down, arms and legs long." },
-    ],
-    explanation: "Body-control day for compression, bracing, and anti-extension. Regress if the low back or shoulders take over before the abs do.",
-  },
-  {
-    id: "fri",
-    day: "Fri",
-    title: "Upper II",
-    description: "Pike or HSPU, dips, curls, triceps, face pulls.",
-    image: "/yellow/assets/images/health/program-upper-2.jpg",
-    imageAlt: "Upper II dips photo from the bodyweight program",
-    items: [
-      { label: "Pike/HSPU", tooltip: "Push like an overhead press. Start with pike push-ups if handstand work is too hard." },
-      { label: "Dips", tooltip: "Lower between bars or rings, then press back up." },
-      { label: "Curls", tooltip: "Pull your hands toward your face or body to train biceps." },
-      { label: "Triceps", tooltip: "Bend and straighten your elbows to train the back of your arms." },
-      { label: "Face pulls", tooltip: "Pull rings or a band toward your face with elbows high." },
-    ],
-    explanation: "Vertical push, dips, arms, and shoulder health. Progress the hardest push first, then use curls, triceps, and face pulls to build volume without wrecking form.",
-  },
-  {
-    id: "sat",
-    day: "Sat",
-    title: "Skill work",
-    description: "Skills, mobility, core, outside work, sport, or play.",
-    image: "/yellow/assets/images/health/program-modular.jpg",
-    imageAlt: "Skill day movement photo from the bodyweight program",
-    items: [
-      { label: "Skills", tooltip: "Practice handstands, rings, L-sit, or another skill slowly." },
-      { label: "Mobility", tooltip: "Do extra easy stretching or range work." },
-      { label: "Core", tooltip: "Add a little ab work if you feel fresh." },
-      { label: "Outside", tooltip: "Walk, run, play a sport, or just move outside." },
-    ],
-    explanation: "Flexible slot. Pick the thing that helps most this week: skill practice, extra mobility, easy cardio, core, or something playful outside.",
-  },
-  {
-    id: "sun",
-    day: "Sun",
-    title: "Active rest",
-    description: "Walk, yoga, mobility, de-stress, reset.",
-    items: [
-      { label: "Walk", tooltip: "Easy walk. Keep it relaxed." },
-      { label: "Yoga", tooltip: "Gentle yoga or mobility." },
-      { label: "De-stress", tooltip: "Do the recovery basics: sleep, food, water, calm." },
-      { label: "Reset", tooltip: "Look at the week and make Monday easy." },
-    ],
-    explanation: "Recovery that still moves blood. Keep it easy enough that Monday feels better, not like you snuck in another hard workout.",
-  },
-];
-const healthWeeks = [
-  { id: "week1", label: "Week 1", dates: "Jun 29-Jul 5", focus: "Baseline and form" },
-  { id: "week2", label: "Week 2", dates: "Jul 6-Jul 12", focus: "Add one clean rep" },
-  { id: "week3", label: "Week 3", dates: "Jul 13-Jul 19", focus: "Tempo or harder variation" },
-  { id: "week4", label: "Week 4", dates: "Jul 20-Jul 26", focus: "Form check + midpoint photos" },
-  { id: "week5", label: "Week 5", dates: "Jul 27-Aug 2", focus: "Level up one movement" },
-  { id: "week6", label: "Week 6", dates: "Aug 3-Aug 9", focus: "Hold intensity, own the reps" },
-  { id: "week7", label: "Week 7", dates: "Aug 10-Aug 16", focus: "Push clean top sets" },
-  { id: "week8", label: "Week 8", dates: "Aug 17-Aug 23", focus: "Retest + compare" },
-];
-const healthMealLabels = ["Breakfast", "Lunch", "Dinner"];
-const healthRecipes = {
-  goToBreakfast: {
-    name: "Go-to breakfast",
-    calories: 640,
-    protein: 54,
-    image: "/yellow/assets/images/health/food-breakfast-classic.jpg",
-    detail: "2 toasts, eggs, turkey, avocado, cottage cheese, espresso, fresh lime shot.",
-    cook: [
-      "Toast the bread and cook the eggs how you like them.",
-      "Add turkey slices, avocado, and a couple scoops of cottage cheese to the plate.",
-      "Make espresso and squeeze one lime shot fresh.",
-    ],
-    source: "Your default",
-    shopping: [
-      { group: "Breakfast", item: "Toast bread", amount: 2, unit: "slices" },
-      { group: "Breakfast", item: "Eggs", amount: 3, unit: "pcs" },
-      { group: "Breakfast", item: "Turkey slices", amount: 3, unit: "slices" },
-      { group: "Dairy", item: "Cottage cheese", amount: 120, unit: "g" },
-      { group: "Produce", item: "Avocados", amount: 0.5, unit: "pcs" },
-      { group: "Produce", item: "Limes", amount: 1, unit: "pcs" },
-      { group: "Pantry", item: "Espresso coffee", amount: 1, unit: "servings" },
-    ],
-  },
-  stirFry: {
-    name: "The Stir Fry",
-    calories: 1192,
-    protein: 90,
-    image: "/yellow/assets/images/health/food-stir-fry.jpg",
-    detail: "Chicken, jasmine rice, broccoli, carrots, mushrooms, sprouts.",
-    cook: [
-      "Cook rice first so it is ready.",
-      "Cut chicken small, salt it, then sear until browned and cooked through.",
-      "Stir-fry the vegetables fast, add soy sauce, then plate with sesame and green onion.",
-    ],
-    prep: "Dice chicken, salt it, and sear in a hot pan until browned and cooked through. Cool in shallow boxes, then refrigerate. Keep soy, sesame, cashews, sprouts, and green onion separate until eating.",
-    prepCook: "Dice chicken, salt it, then sear until cooked. Stir-fry broccoli, carrots, and mushrooms.",
-    prepLater: "Soy, sesame, cashews, sprouts, green onion.",
-    source: "Cookbook p. 9",
-    shopping: [
-      { group: "Proteins", item: "Chicken breast", amount: 340, unit: "g" },
-      { group: "Carbs", item: "Jasmine rice", amount: 90, unit: "g" },
-      { group: "Produce", item: "Broccoli", amount: 300, unit: "g" },
-      { group: "Produce", item: "Carrots", amount: 3, unit: "pcs" },
-      { group: "Produce", item: "Mushrooms", amount: 150, unit: "g" },
-      { group: "Produce", item: "Mung bean sprouts", amount: 100, unit: "g" },
-      { group: "Produce", item: "Green onion", amount: 1, unit: "bunches" },
-      { group: "Pantry", item: "Cashews", amount: 25, unit: "g" },
-      { group: "Pantry", item: "Soy sauce", amount: 1, unit: "bottles", pantry: true },
-      { group: "Pantry", item: "Sesame seeds", amount: 1, unit: "packs", pantry: true },
-    ],
-  },
-  allAmerican: {
-    name: "All American",
-    calories: 1079,
-    protein: 88,
-    image: "/yellow/assets/images/health/food-all-american.jpg",
-    detail: "Sirloin, russet potato, asparagus, butter, parmesan.",
-    cook: [
-      "Bake or microwave the potato until soft.",
-      "Salt steak, sear both sides hard, then rest it for a few minutes.",
-      "Saute asparagus and finish the plate with butter and parmesan.",
-    ],
-    source: "Cookbook p. 10",
-    shopping: [
-      { group: "Proteins", item: "Sirloin or steak", amount: 340, unit: "g" },
-      { group: "Carbs", item: "Russet potatoes", amount: 1, unit: "pcs" },
-      { group: "Produce", item: "Asparagus", amount: 1, unit: "bunches" },
-      { group: "Dairy", item: "Butter", amount: 10, unit: "g" },
-      { group: "Dairy", item: "Parmesan", amount: 25, unit: "g" },
-    ],
-  },
-  salmonGuac: {
-    name: "Salmon + Guac",
-    calories: 1047,
-    protein: 85,
-    image: "/yellow/assets/images/health/food-salmon-guac.jpg",
-    detail: "Salmon, sweet potato, avocado, cilantro, lime.",
-    cook: [
-      "Bake the sweet potato until soft.",
-      "Salt salmon, then bake or pan-sear until it flakes.",
-      "Mash avocado with cilantro, lime, and salt for quick guac.",
-    ],
-    source: "Cookbook p. 11",
-    shopping: [
-      { group: "Proteins", item: "Salmon", amount: 340, unit: "g" },
-      { group: "Carbs", item: "Sweet potatoes", amount: 1, unit: "pcs" },
-      { group: "Produce", item: "Avocados", amount: 0.5, unit: "pcs" },
-      { group: "Produce", item: "Cilantro", amount: 1, unit: "bunches" },
-      { group: "Produce", item: "Limes", amount: 1, unit: "pcs" },
-    ],
-  },
-  pollos: {
-    name: "Los Pollos",
-    calories: 826,
-    protein: 86,
-    image: "/yellow/assets/images/health/food-pollos.jpg",
-    detail: "Chicken tacos with black beans, peppers, onion, salsa.",
-    cook: [
-      "Season chicken with lime, salt, and hot sauce.",
-      "Sear chicken, then saute peppers and onion in the same pan.",
-      "Warm tortillas and build tacos with beans and salsa.",
-    ],
-    prep: "Season chicken with lime, salt, and hot sauce. Sear it, then saute peppers and onion in the same pan. Cool chicken and peppers in shallow boxes. Store tortillas, beans, salsa, and lime separate.",
-    prepCook: "Season chicken with lime, salt, and hot sauce. Sear it, then saute peppers and onion in the same pan.",
-    prepLater: "Tortillas, beans, salsa, lime.",
-    source: "Cookbook p. 12",
-    shopping: [
-      { group: "Proteins", item: "Chicken breast", amount: 340, unit: "g" },
-      { group: "Carbs", item: "Corn tortillas", amount: 3, unit: "pcs" },
-      { group: "Produce", item: "Mini bell peppers", amount: 3, unit: "pcs" },
-      { group: "Produce", item: "Yellow or white onion", amount: 0.25, unit: "pcs" },
-      { group: "Produce", item: "Limes", amount: 1, unit: "pcs" },
-      { group: "Pantry", item: "Black beans", amount: 0.25, unit: "cans" },
-      { group: "Pantry", item: "Salsa or hot sauce", amount: 1, unit: "jars", pantry: true },
-    ],
-  },
-  chipotleBowl: {
-    name: "Chipotle Bowl",
-    calories: 1406,
-    protein: 95,
-    image: "/yellow/assets/images/health/food-chipotle-bowl.jpg",
-    detail: "Steak bowl with rice, peppers, onion, beans, lime, salsa.",
-    cook: [
-      "Cook rice and warm the beans.",
-      "Sear steak hot, then rest and slice it.",
-      "Saute peppers and onion, then build the bowl with lime and salsa.",
-    ],
-    source: "Cookbook p. 13",
-    shopping: [
-      { group: "Proteins", item: "Flank steak or carne asada", amount: 340, unit: "g" },
-      { group: "Carbs", item: "Jasmine rice", amount: 180, unit: "g" },
-      { group: "Produce", item: "Mini bell peppers", amount: 3, unit: "pcs" },
-      { group: "Produce", item: "Green onion", amount: 1, unit: "bunches" },
-      { group: "Produce", item: "Yellow or white onion", amount: 0.5, unit: "pcs" },
-      { group: "Produce", item: "Limes", amount: 2, unit: "pcs" },
-      { group: "Pantry", item: "Black beans", amount: 0.25, unit: "cans" },
-      { group: "Dairy", item: "Mozzarella", amount: 30, unit: "g" },
-      { group: "Pantry", item: "Salsa or hot sauce", amount: 1, unit: "jars", pantry: true },
-    ],
-  },
-  pestoPizza: {
-    name: "G-Pie Pesto Pizza",
-    calories: 1280,
-    protein: 89,
-    image: "/yellow/assets/images/health/food-pesto-pizza.jpg",
-    detail: "Cauliflower crust, chicken, spinach, mozzarella, pesto.",
-    cook: [
-      "Cook or use pre-cooked chicken.",
-      "Spread pesto on the crust, then add chicken, spinach, and mozzarella.",
-      "Bake until the crust is crisp and the cheese is melted.",
-    ],
-    prep: "Cook the chicken plain or lightly salted, then cool and refrigerate it shredded or sliced in an airtight box. Do not assemble the pizza until eating.",
-    prepCook: "Cook the chicken plain or lightly salted. Shred or slice it once cool.",
-    prepLater: "Assemble and bake the pizza fresh.",
-    source: "Cookbook p. 14",
-    shopping: [
-      { group: "Proteins", item: "Chicken breast", amount: 225, unit: "g" },
-      { group: "Carbs", item: "Cauliflower crust", amount: 1, unit: "pcs" },
-      { group: "Produce", item: "Spinach", amount: 50, unit: "g" },
-      { group: "Dairy", item: "Mozzarella", amount: 110, unit: "g" },
-      { group: "Pantry", item: "Pesto", amount: 60, unit: "g" },
-    ],
-  },
-  bigBison: {
-    name: "Big Bison",
-    calories: 610,
-    protein: 55,
-    image: "/yellow/assets/images/health/food-big-bison.jpg",
-    detail: "Bison or lean beef, sourdough, egg, avocado.",
-    cook: [
-      "Form the meat into patties and salt both sides.",
-      "Sear patties until cooked through, then fry one egg.",
-      "Toast bread and stack with avocado.",
-    ],
-    source: "Cookbook p. 15",
-    shopping: [
-      { group: "Proteins", item: "Lean beef or bison", amount: 225, unit: "g" },
-      { group: "Breakfast", item: "Toast bread", amount: 2, unit: "slices" },
-      { group: "Breakfast", item: "Eggs", amount: 1, unit: "pcs" },
-      { group: "Produce", item: "Avocados", amount: 0.25, unit: "pcs" },
-    ],
-  },
-  xarSalad: {
-    name: "Xar Salad",
-    calories: 527,
-    protein: 58,
-    image: "/yellow/assets/images/health/food-xar-salad.jpg",
-    detail: "Chicken, spring mix, avocado, feta, pine nuts.",
-    cook: [
-      "Use pre-cooked chicken or sear a quick chicken breast.",
-      "Add greens, avocado, feta, and pine nuts to a bowl.",
-      "Toss with vinaigrette right before eating so it stays crisp.",
-    ],
-    prep: "Sear chicken breast with salt and pepper, cool it, then slice it cold for salads. Store chicken airtight. Keep greens, avocado, feta, pine nuts, and vinaigrette separate.",
-    prepCook: "Sear chicken with salt and pepper. Cool it, then slice it for salads.",
-    prepLater: "Greens, avocado, feta, pine nuts, vinaigrette.",
-    source: "Cookbook p. 16",
-    shopping: [
-      { group: "Proteins", item: "Chicken breast", amount: 225, unit: "g" },
-      { group: "Produce", item: "Spring mix", amount: 120, unit: "g" },
-      { group: "Produce", item: "Avocados", amount: 0.5, unit: "pcs" },
-      { group: "Dairy", item: "Feta", amount: 30, unit: "g" },
-      { group: "Pantry", item: "Pine nuts", amount: 15, unit: "g" },
-      { group: "Pantry", item: "Vinaigrette", amount: 1, unit: "bottles", pantry: true },
-    ],
-  },
-  beefBroc: {
-    name: "Beef Broc",
-    calories: 829,
-    protein: 63,
-    image: "/yellow/assets/images/health/food-beef-broc.jpg",
-    detail: "Lean beef, broccoli, egg, jasmine rice, soy sauce.",
-    cook: [
-      "Cook rice while you steam or saute the broccoli.",
-      "Brown the beef with salt and pepper.",
-      "Fry one egg, then serve everything with soy sauce.",
-    ],
-    prep: "Brown lean beef with salt and pepper. Steam or saute broccoli. Cool beef and broccoli in shallow boxes. Keep soy sauce separate and cook the egg fresh.",
-    prepCook: "Brown beef with salt and pepper. Steam or saute broccoli.",
-    prepLater: "Soy sauce. Cook the egg fresh.",
-    source: "Cookbook p. 20",
-    shopping: [
-      { group: "Proteins", item: "Lean ground beef", amount: 225, unit: "g" },
-      { group: "Carbs", item: "Jasmine rice", amount: 90, unit: "g" },
-      { group: "Produce", item: "Broccoli", amount: 250, unit: "g" },
-      { group: "Breakfast", item: "Eggs", amount: 1, unit: "pcs" },
-      { group: "Pantry", item: "Soy sauce", amount: 1, unit: "bottles", pantry: true },
-    ],
-  },
-  omega: {
-    name: "The Omega",
-    calories: 710,
-    protein: 47,
-    image: "/yellow/assets/images/health/food-omega.jpg",
-    detail: "Salmon, potatoes, carrots, broccoli, Brussels sprouts.",
-    cook: [
-      "Roast potatoes and vegetables on a tray.",
-      "Bake or pan-sear salmon while the tray finishes.",
-      "Add butter, lemon or lime, salt, and pepper at the end.",
-    ],
-    source: "Cookbook p. 22",
-    shopping: [
-      { group: "Proteins", item: "Salmon", amount: 170, unit: "g" },
-      { group: "Carbs", item: "Potatoes", amount: 250, unit: "g" },
-      { group: "Produce", item: "Carrots", amount: 2, unit: "pcs" },
-      { group: "Produce", item: "Broccoli", amount: 150, unit: "g" },
-      { group: "Produce", item: "Brussels sprouts", amount: 150, unit: "g" },
-      { group: "Dairy", item: "Butter", amount: 10, unit: "g" },
-    ],
-  },
-  xarShake: {
-    name: "Xar-Shake",
-    calories: 155,
-    protein: 20,
-    image: "/yellow/assets/images/health/food-snack-xar-shake.jpg",
-    detail: "Berry collagen shake with coconut milk and maca.",
-    cook: [
-      "Blend frozen berries, water, ice, collagen, maca, and stevia.",
-      "Pour in coconut milk last and blend smooth.",
-    ],
-    source: "Cookbook p. 37",
-    shopping: [
-      { group: "Produce", item: "Frozen berries", amount: 75, unit: "g" },
-      { group: "Pantry", item: "Collagen powder", amount: 1, unit: "packs", pantry: true },
-      { group: "Pantry", item: "Coconut milk", amount: 1, unit: "cans", pantry: true },
-      { group: "Pantry", item: "Maca powder", amount: 1, unit: "packs", pantry: true },
-    ],
-  },
-  dilla: {
-    name: "The Dilla",
-    calories: 227,
-    protein: 19,
-    image: "/yellow/assets/images/health/food-snack-dilla.jpg",
-    detail: "Mini chicken-mozzarella quesadilla, crisp and fast.",
-    cook: [
-      "Heat skillet. Crisp one tortilla, then add cheese.",
-      "Add shredded chicken, top with second tortilla, flip until melted.",
-    ],
-    source: "Cookbook p. 41",
-    shopping: [
-      { group: "Carbs", item: "Corn tortillas", amount: 2, unit: "pcs" },
-      { group: "Dairy", item: "Mozzarella", amount: 30, unit: "g" },
-      { group: "Proteins", item: "Chicken breast", amount: 30, unit: "g" },
-    ],
-  },
-  bananaPancakes: {
-    name: "Banana Pancakes",
-    calories: 286,
-    protein: 13,
-    image: "/yellow/assets/images/health/food-snack-banana-pancakes.jpg",
-    detail: "Banana + egg pancakes. Two ingredients, mini-stack.",
-    cook: [
-      "Mash banana, whisk in eggs.",
-      "Spoon small pancakes into a hot pan and flip when golden.",
-    ],
-    source: "Cookbook p. 39",
-    shopping: [
-      { group: "Produce", item: "Bananas", amount: 1, unit: "pcs" },
-      { group: "Breakfast", item: "Eggs", amount: 2, unit: "pcs" },
-    ],
-  },
-  roastedChickies: {
-    name: "Roasted Chickies",
-    calories: 506,
-    protein: 25,
-    image: "/yellow/assets/images/health/food-snack-roasted-chickies.jpg",
-    detail: "Crispy roasted chickpeas, big-batch snack jar.",
-    cook: [
-      "Dry chickpeas thoroughly, toss with oil and seasoning.",
-      "Roast at 230°C until crispy, ~25 min, shaking pan halfway.",
-    ],
-    source: "Cookbook p. 43",
-    shopping: [
-      { group: "Pantry", item: "Chickpeas", amount: 1, unit: "cans" },
-      { group: "Pantry", item: "Everything bagel seasoning", amount: 1, unit: "packs", pantry: true },
-    ],
-  },
-  fireballNachos: {
-    name: "Fireball Nachos",
-    calories: 506,
-    protein: 40,
-    image: "/yellow/assets/images/health/food-snack-fireball-nachos.jpg",
-    detail: "Nut-thin nachos with chicken, beans, mozzarella, hot sauce.",
-    cook: [
-      "Layer crackers with cheese on a microwave-safe plate, melt 30s.",
-      "Top with chicken, black beans, salsa, and green onion.",
-    ],
-    source: "Cookbook p. 36",
-    shopping: [
-      { group: "Pantry", item: "Nut-thin crackers", amount: 16, unit: "pcs" },
-      { group: "Dairy", item: "Mozzarella", amount: 30, unit: "g" },
-      { group: "Pantry", item: "Black beans", amount: 0.25, unit: "cans" },
-      { group: "Proteins", item: "Chicken breast", amount: 85, unit: "g" },
-      { group: "Produce", item: "Green onion", amount: 1, unit: "bunches" },
-      { group: "Pantry", item: "Salsa or hot sauce", amount: 1, unit: "jars", pantry: true },
-    ],
-  },
-  hungerHack: {
-    name: "Hunger Hack",
-    calories: 133,
-    protein: 2,
-    image: "/yellow/assets/images/health/food-snack-hunger-hack.jpg",
-    detail: "One medjool date + a teaspoon of nut butter. Pre-workout fuel.",
-    cook: [
-      "Pit a medjool date and stuff with nut butter. That's it.",
-    ],
-    source: "Cookbook p. 46",
-    shopping: [
-      { group: "Pantry", item: "Medjool dates", amount: 1, unit: "pcs" },
-      { group: "Pantry", item: "Nut butter", amount: 1, unit: "jars", pantry: true },
-    ],
-  },
-  popeyeEffect: {
-    name: "Popeye Effect",
-    calories: 325,
-    protein: 21,
-    image: "/yellow/assets/images/health/food-snack-popeye-effect.jpg",
-    detail: "Green smoothie: spinach, banana, peanut butter, collagen.",
-    cook: [
-      "Blend coconut milk, ice, spinach, banana, collagen, and nut butter.",
-      "Add maca and stevia, blend smooth.",
-    ],
-    source: "Cookbook p. 45",
-    shopping: [
-      { group: "Produce", item: "Spinach", amount: 30, unit: "g" },
-      { group: "Produce", item: "Bananas", amount: 1, unit: "pcs" },
-      { group: "Pantry", item: "Collagen powder", amount: 1, unit: "packs", pantry: true },
-      { group: "Pantry", item: "Coconut milk", amount: 1, unit: "cans", pantry: true },
-      { group: "Pantry", item: "Peanut butter", amount: 1, unit: "jars", pantry: true },
-      { group: "Pantry", item: "Maca powder", amount: 1, unit: "packs", pantry: true },
-    ],
-  },
-  buffaloChicken: {
-    name: "Buffalo Chicken",
-    calories: 671,
-    protein: 64,
-    image: "/yellow/assets/images/health/food-buffalo-chicken.jpg",
-    detail: "Buffalo chicken, potato wedges, carrots, celery, yogurt dip.",
-    cook: [
-      "Cut potatoes into wedges and bake until crisp.",
-      "Cook chicken, then toss with buffalo sauce.",
-      "Serve with carrots, celery, and Greek yogurt dip.",
-    ],
-    prep: "Cook chicken plain or lightly salted, then cool and refrigerate airtight. Toss with buffalo sauce when reheating. Bake wedges fresh if you want crisp potatoes.",
-    prepCook: "Cook chicken plain or lightly salted.",
-    prepLater: "Buffalo sauce when reheating. Bake wedges fresh if you want crisp potatoes.",
-    source: "Cookbook p. 24",
-    shopping: [
-      { group: "Proteins", item: "Chicken breast", amount: 225, unit: "g" },
-      { group: "Carbs", item: "Russet potatoes", amount: 1, unit: "pcs" },
-      { group: "Produce", item: "Carrots", amount: 2, unit: "pcs" },
-      { group: "Produce", item: "Celery", amount: 4, unit: "sticks" },
-      { group: "Dairy", item: "Greek yogurt", amount: 60, unit: "g" },
-      { group: "Pantry", item: "Buffalo sauce", amount: 1, unit: "bottles", pantry: true },
-    ],
-  },
-};
-const healthFoodPlans = [
-  {
-    id: "week1",
-    focus: "Hit protein every day",
-    days: [
-      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "stirFry", "xarSalad"] },
-      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "omega"] },
-      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "pollos", "beefBroc"] },
-      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "salmonGuac", "bigBison"] },
-      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "pestoPizza", "buffaloChicken"] },
-      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "bigBison", "pollos"] },
-      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "omega", "xarSalad"] },
-    ],
-  },
-  {
-    id: "week2",
-    focus: "Cook protein in bulk",
-    days: [
-      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "chipotleBowl", "xarSalad"] },
-      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "omega", "bigBison"] },
-      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "allAmerican", "pollos"] },
-      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "xarSalad", "beefBroc"] },
-      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "stirFry", "bigBison"] },
-      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "buffaloChicken", "salmonGuac"] },
-      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "xarSalad"] },
-    ],
-  },
-  {
-    id: "week3",
-    focus: "Add carbs around hard days",
-    days: [
-      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "pollos", "stirFry"] },
-      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "bigBison"] },
-      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "chipotleBowl", "beefBroc"] },
-      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "omega", "xarSalad"] },
-      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "pestoPizza", "bigBison"] },
-      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "buffaloChicken", "pollos"] },
-      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "omega"] },
-    ],
-  },
-  {
-    id: "week4",
-    focus: "Midpoint adjust",
-    days: [
-      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "stirFry", "xarSalad"] },
-      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "omega", "buffaloChicken"] },
-      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "allAmerican", "pollos"] },
-      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "beefBroc", "omega"] },
-      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "chipotleBowl", "bigBison"] },
-      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "pestoPizza", "xarSalad"] },
-      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "bigBison"] },
-    ],
-  },
-  {
-    id: "week5",
-    focus: "Eat enough to progress",
-    days: [
-      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "chipotleBowl", "stirFry"] },
-      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "omega"] },
-      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "stirFry", "allAmerican"] },
-      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "omega", "buffaloChicken"] },
-      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "pollos", "pestoPizza"] },
-      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "bigBison", "buffaloChicken"] },
-      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "xarSalad"] },
-    ],
-  },
-  {
-    id: "week6",
-    focus: "Repeat the meals that work",
-    days: [
-      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "beefBroc", "pollos"] },
-      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "bigBison"] },
-      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "chipotleBowl", "pollos"] },
-      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "omega", "xarSalad"] },
-      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "stirFry", "buffaloChicken"] },
-      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "pestoPizza", "salmonGuac"] },
-      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "beefBroc"] },
-    ],
-  },
-  {
-    id: "week7",
-    focus: "Fuel the hard sets",
-    days: [
-      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "pestoPizza", "stirFry"] },
-      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "xarSalad", "omega"] },
-      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "allAmerican", "chipotleBowl"] },
-      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "omega", "buffaloChicken"] },
-      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "stirFry", "bigBison"] },
-      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "pollos", "xarSalad"] },
-      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "beefBroc"] },
-    ],
-  },
-  {
-    id: "week8",
-    focus: "Retest and compare",
-    days: [
-      { id: "mon", day: "Mon", title: "Upper I fuel", meals: ["goToBreakfast", "stirFry", "xarSalad"] },
-      { id: "tue", day: "Tue", title: "Easy fuel", meals: ["goToBreakfast", "omega", "bigBison"] },
-      { id: "wed", day: "Wed", title: "Leg day fuel", meals: ["goToBreakfast", "chipotleBowl", "beefBroc"] },
-      { id: "thu", day: "Thu", title: "Core fuel", meals: ["goToBreakfast", "salmonGuac", "xarSalad"] },
-      { id: "fri", day: "Fri", title: "Upper II fuel", meals: ["goToBreakfast", "pestoPizza", "buffaloChicken"] },
-      { id: "sat", day: "Sat", title: "Skill fuel", meals: ["goToBreakfast", "allAmerican", "pollos"] },
-      { id: "sun", day: "Sun", title: "Easy reset", meals: ["goToBreakfast", "salmonGuac", "omega"] },
-    ],
-  },
-];
-const healthFoodPrepWindows = [
-  { plan: "Sun Jun 28", shop: "Mon Jun 29", topUp: "Thu Jul 2" },
-  { plan: "Sun Jul 5", shop: "Mon Jul 6", topUp: "Thu Jul 9" },
-  { plan: "Sun Jul 12", shop: "Mon Jul 13", topUp: "Thu Jul 16" },
-  { plan: "Sun Jul 19", shop: "Mon Jul 20", topUp: "Thu Jul 23" },
-  { plan: "Sun Jul 26", shop: "Mon Jul 27", topUp: "Thu Jul 30" },
-  { plan: "Sun Aug 2", shop: "Mon Aug 3", topUp: "Thu Aug 6" },
-  { plan: "Sun Aug 9", shop: "Mon Aug 10", topUp: "Thu Aug 13" },
-  { plan: "Sun Aug 16", shop: "Mon Aug 17", topUp: "Thu Aug 20" },
-];
-const foodShoppingGroupOrder = [
-  "Breakfast",
-  "Proteins",
-  "Carbs",
-  "Produce",
-  "Dairy",
-  "Pantry",
-];
-const foodUnitLabels = {
-  bottles: ["bottle", "bottles"],
-  bunches: ["bunch", "bunches"],
-  cans: ["can", "cans"],
-  jars: ["jar", "jars"],
-  packs: ["pack", "packs"],
-  pcs: ["pc", "pcs"],
-  servings: ["serving", "servings"],
-  slices: ["slice", "slices"],
-  sticks: ["stick", "sticks"],
-};
-const foodReadableItemNames = {
-  "Avocados": ["avocado", "avocados"],
-  "Cauliflower crust": ["cauliflower crust", "cauliflower crusts"],
-  "Carrots": ["carrot", "carrots"],
-  "Celery": ["celery stick", "celery sticks"],
-  "Corn tortillas": ["corn tortilla", "corn tortillas"],
-  "Eggs": ["egg", "eggs"],
-  "Espresso coffee": ["espresso serving", "espresso servings"],
-  "Limes": ["lime", "limes"],
-  "Mini bell peppers": ["mini bell pepper", "mini bell peppers"],
-  "Russet potatoes": ["russet potato", "russet potatoes"],
-  "Sweet potatoes": ["sweet potato", "sweet potatoes"],
-  "Toast bread": ["toast slice", "toast slices"],
-  "Turkey slices": ["turkey slice", "turkey slices"],
-  "Yellow or white onion": ["yellow or white onion", "yellow or white onions"],
-};
-const foodBatchPrepRecipeIds = new Set(["stirFry", "xarSalad", "pollos", "pestoPizza", "beefBroc", "buffaloChicken"]);
-const healthSnackOptions = [
-  "xarShake",
-  "dilla",
-  "bananaPancakes",
-  "roastedChickies",
-  "fireballNachos",
-  "hungerHack",
-  "popeyeEffect",
-];
-const defaultHealthSnackId = "xarShake";
-const validHealthSnackIds = new Set(healthSnackOptions);
-const foodPrepAheadCarbItems = new Set(["Jasmine rice", "Potatoes", "Sweet potatoes"]);
+// Health, food, and letter content ships encrypted in yellow.enc and is assigned here
+// after a successful unlock (see applyPrivateData). Nothing private lives in this file.
+let healthTitleOptions = [];
+let letterDrafts = [];
+let healthProfileFields = [];
+let healthProfileSexOptions = [];
+let healthProfileActivityOptions = [];
+let healthProfileGoalFields = [];
+let healthXaryuReference = {};
+let healthMeasurementCheckpoints = [];
+let healthMeasurementMetrics = [];
+let healthPhotoAngles = [];
+let healthWarmupItems = [];
+let healthWorkoutDays = [];
+let healthWeeks = [];
+let healthMealLabels = [];
+let healthRecipes = {};
+let healthFoodPlans = [];
+let healthFoodPrepWindows = [];
+let foodShoppingGroupOrder = [];
+let foodUnitLabels = {};
+let foodReadableItemNames = {};
+let foodBatchPrepRecipeIds = new Set();
+let healthSnackOptions = [];
+let defaultHealthSnackId = "";
+let validHealthSnackIds = new Set();
+let foodPrepAheadCarbItems = new Set();
+let foodPrepProteinNotes = [];
+let privateContentMounted = false;
+let envelopePromise = null;
+
+function applyPrivateData(data) {
+  const list = (key) => (Array.isArray(data[key]) ? data[key] : []);
+  const record = (key) => (data[key] && typeof data[key] === "object" ? data[key] : {});
+
+  healthTitleOptions = list("healthTitleOptions");
+  letterDrafts = list("letterDrafts");
+  healthProfileFields = list("healthProfileFields");
+  healthProfileSexOptions = list("healthProfileSexOptions");
+  healthProfileActivityOptions = list("healthProfileActivityOptions");
+  healthProfileGoalFields = list("healthProfileGoalFields");
+  healthXaryuReference = record("healthXaryuReference");
+  healthMeasurementCheckpoints = list("healthMeasurementCheckpoints");
+  healthMeasurementMetrics = list("healthMeasurementMetrics");
+  healthPhotoAngles = list("healthPhotoAngles");
+  healthWarmupItems = list("healthWarmupItems");
+  healthWorkoutDays = list("healthWorkoutDays");
+  healthWeeks = list("healthWeeks");
+  healthMealLabels = list("healthMealLabels");
+  healthRecipes = record("healthRecipes");
+  healthFoodPlans = list("healthFoodPlans");
+  healthFoodPrepWindows = list("healthFoodPrepWindows");
+  foodShoppingGroupOrder = list("foodShoppingGroupOrder");
+  foodUnitLabels = record("foodUnitLabels");
+  foodReadableItemNames = record("foodReadableItemNames");
+  foodBatchPrepRecipeIds = new Set(list("foodBatchPrepRecipeIds"));
+  healthSnackOptions = list("healthSnackOptions");
+  defaultHealthSnackId = typeof data.defaultHealthSnackId === "string" ? data.defaultHealthSnackId : healthSnackOptions[0] ?? "";
+  validHealthSnackIds = new Set(healthSnackOptions);
+  foodPrepAheadCarbItems = new Set(list("foodPrepAheadCarbItems"));
+  foodPrepProteinNotes = list("foodPrepProteinNotes");
+}
 
 function escapeHtml(value) {
   const replacements = {
@@ -1503,17 +745,9 @@ function getFoodBatchPrepSummary(days) {
 
 function getFoodPrepProteinSentences(batch) {
   const items = batch.proteinItems || [];
-  const hasChicken = items.some((item) => item.item === "Chicken breast");
-  const hasGroundBeef = items.some((item) => item.item === "Lean ground beef");
-  const sentences = [];
-
-  if (hasChicken) {
-    sentences.push("Chicken: cut into strips or cubes for bowls, salads, tacos, and pizza; salt it, then sear it in a hot pan with a little oil until cooked through.");
-  }
-
-  if (hasGroundBeef) {
-    sentences.push("Beef: brown it loose with salt and pepper for the Beef Broc rice bowl; do not make burger patties.");
-  }
+  const sentences = foodPrepProteinNotes
+    .filter((note) => items.some((item) => item.item === note.item))
+    .map((note) => note.note);
 
   if (!sentences.length && batch.proteins) {
     sentences.push(`Protein: cook ${batch.proteins}.`);
@@ -1892,7 +1126,7 @@ function buildHealthInsights(state) {
     const deltaXaryu = latestWeight.value - healthXaryuReference.weight;
     if (Math.abs(deltaXaryu) > 0.4) {
       const direction = deltaXaryu > 0 ? "above" : "below";
-      coachNotes.push(`${formatHealthNumber(Math.abs(deltaXaryu), 1)} kg ${direction} Xaryu reference (80 kg).`);
+      coachNotes.push(`${formatHealthNumber(Math.abs(deltaXaryu), 1)} kg ${direction} Xaryu reference (${healthXaryuReference.weight} kg).`);
     }
   }
 
@@ -2716,24 +1950,131 @@ function setActiveView(view, { animate = true, updateUrl = false } = {}) {
   });
 }
 
-function isUnlocked() {
+function normalizePassword(value) {
+  return String(value ?? "").normalize("NFKC").trim().toLowerCase();
+}
+
+function base64ToBytes(value) {
+  const binary = atob(value);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+
+  return bytes;
+}
+
+function bytesToBase64(bytes) {
+  let binary = "";
+
+  new Uint8Array(bytes).forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+
+  return btoa(binary);
+}
+
+function getEnvelope() {
+  if (!envelopePromise) {
+    envelopePromise = fetch(payloadUrl, { cache: "no-cache", headers: { accept: "application/json" } })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`The Yellow payload could not be loaded (${response.status}).`);
+        }
+
+        return response.json();
+      })
+      .then((envelope) => {
+        if (envelope?.format !== payloadFormat) {
+          throw new Error("The Yellow payload has an unknown format.");
+        }
+
+        return envelope;
+      })
+      .catch((error) => {
+        envelopePromise = null;
+        throw error;
+      });
+  }
+
+  return envelopePromise;
+}
+
+async function deriveUnlockKey(password, envelope) {
+  const material = await crypto.subtle.importKey("raw", new TextEncoder().encode(normalizePassword(password)), "PBKDF2", false, ["deriveKey"]);
+
+  return crypto.subtle.deriveKey(
+    { name: "PBKDF2", hash: envelope.kdf.hash, salt: base64ToBytes(envelope.kdf.salt), iterations: envelope.kdf.iterations },
+    material,
+    { name: "AES-GCM", length: envelope.cipher.length },
+    true,
+    ["decrypt"],
+  );
+}
+
+async function decryptEnvelope(envelope, key) {
+  const plaintext = await crypto.subtle.decrypt({ name: "AES-GCM", iv: base64ToBytes(envelope.cipher.iv) }, key, base64ToBytes(envelope.ciphertext));
+  let bytes = plaintext;
+
+  if (envelope.compression === "gzip") {
+    bytes = await new Response(new Blob([plaintext]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+  }
+
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+function mountPrivateContent(payload) {
+  if (privateContentMounted) {
+    return;
+  }
+
+  const stage = document.querySelector("[data-yellow-stage]");
+
+  if (!stage || typeof payload?.panels !== "string") {
+    throw new Error("The Yellow payload is incomplete.");
+  }
+
+  applyPrivateData(payload.data && typeof payload.data === "object" ? payload.data : {});
+  stage.insertAdjacentHTML("afterbegin", payload.panels);
+  panels = document.querySelectorAll("[data-yellow-page]");
+  privateContentMounted = true;
+
+  setupFinanceTotals();
+  applyRandomHealthTitle();
+  setupHealthTracker();
+  setupLetterEditor();
+}
+
+function readStoredUnlockKey() {
   try {
-    return sessionStorage.getItem(unlockStorageKey) === "true";
+    sessionStorage.removeItem(legacyUnlockStorageKey);
+    const stored = sessionStorage.getItem(unlockKeyStorageKey);
+    return stored ? base64ToBytes(stored) : null;
   } catch {
-    return false;
+    return null;
   }
 }
 
-function rememberUnlock() {
+async function rememberUnlock(key) {
+  // Only the derived AES key is kept, in sessionStorage, so a reload in this tab stays
+  // unlocked. It cannot reveal the password, and it is gone when the tab closes.
   try {
-    sessionStorage.setItem(unlockStorageKey, "true");
+    sessionStorage.setItem(unlockKeyStorageKey, bytesToBase64(await crypto.subtle.exportKey("raw", key)));
   } catch {
     // If storage is blocked, the page still unlocks for this load.
   }
 }
 
+function forgetUnlock() {
+  try {
+    sessionStorage.removeItem(unlockKeyStorageKey);
+  } catch {
+    // Nothing to clear.
+  }
+}
+
 function unlockYellow() {
-  rememberUnlock();
   body.classList.remove("is-locked");
   body.classList.add("is-unlocked");
 
@@ -2757,38 +2098,77 @@ function rejectPassword() {
   passwordInput.focus();
 }
 
-function checkPassword() {
-  const entered = passwordInput?.value.trim().toLowerCase();
+async function unlockWithPassword(password) {
+  const envelope = await getEnvelope();
+  const key = await deriveUnlockKey(password, envelope);
+  const payload = await decryptEnvelope(envelope, key);
 
-  if (entered === "black") {
-    unlockYellow();
-    return true;
+  mountPrivateContent(payload);
+  await rememberUnlock(key);
+  unlockYellow();
+}
+
+async function restoreUnlock() {
+  const storedKey = readStoredUnlockKey();
+
+  if (!storedKey) {
+    return false;
   }
 
-  return false;
+  try {
+    const envelope = await getEnvelope();
+    const key = await crypto.subtle.importKey("raw", storedKey, "AES-GCM", false, ["decrypt"]);
+    const payload = await decryptEnvelope(envelope, key);
+
+    mountPrivateContent(payload);
+    unlockYellow();
+    return true;
+  } catch {
+    forgetUnlock();
+    return false;
+  }
 }
 
 function setupGate() {
-  if (isUnlocked()) {
-    unlockYellow();
-    return;
-  }
+  let checking = false;
 
   setActiveView("health", { animate: false });
 
-  requestAnimationFrame(() => {
-    passwordInput?.focus();
-  });
-
-  passwordInput?.addEventListener("input", () => {
-    checkPassword();
-  });
-
-  gateForm?.addEventListener("submit", (event) => {
+  gateForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    if (!checkPassword()) {
+    if (checking || !passwordInput) {
+      return;
+    }
+
+    const password = passwordInput.value;
+
+    if (!normalizePassword(password)) {
       rejectPassword();
+      return;
+    }
+
+    checking = true;
+    gateForm.classList.add("is-checking");
+    passwordInput.readOnly = true;
+
+    try {
+      await unlockWithPassword(password);
+    } catch (error) {
+      console.warn("Yellow stayed locked:", error?.message || error?.name || error);
+      rejectPassword();
+    } finally {
+      checking = false;
+      gateForm.classList.remove("is-checking");
+      passwordInput.readOnly = false;
+    }
+  });
+
+  restoreUnlock().then((restored) => {
+    if (!restored) {
+      requestAnimationFrame(() => {
+        passwordInput?.focus();
+      });
     }
   });
 }
@@ -3322,8 +2702,4 @@ function setupLetterEditor() {
 }
 
 setupNavigation();
-setupFinanceTotals();
-applyRandomHealthTitle();
-setupHealthTracker();
-setupLetterEditor();
 setupGate();
