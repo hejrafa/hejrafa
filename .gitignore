@@ -4,5 +4,5 @@ dist/
 .vite/
 .claude/
 .env
-# Yellow plaintext source; only yellow/assets/data/yellow.enc is committed (see README).
+# Yellow plaintext source; only yellow/assets/data/yellow.enc is committed (see docs/DEVELOPMENT.md).
 yellow/private/
