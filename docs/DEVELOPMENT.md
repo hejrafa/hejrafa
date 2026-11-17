@@ -6,8 +6,8 @@ This file holds the technical notes for the site. The repo README is the GitHub 
 
 ```
 /                  public root: index.html, 404.html, robots.txt, sitemap.xml, llms.txt, favicons, CNAME
-/about/            about page (same shell as the home page, different active panel)
-/projects/         projects page plus one folder per case study (share-now/, syntax/)
+/about/            about page
+/projects/         Work page (intro, case studies, side projects) plus one folder per case study (akari/, syntax/, share-now/, car2go/)
 /assets/css/       site stylesheets (style.css, case-study.css)
 /assets/js/        site script
 /assets/images/    one folder per subject: about/, curiosities/, hejhub/, akari/, car2go/, ...
@@ -20,6 +20,10 @@ This file holds the technical notes for the site. The repo README is the GitHub 
 /tests/            node:test suites, run with `npm test`
 /docs/             this file; the README is the GitHub profile page and stays non-technical
 ```
+
+Home, Work (`/projects/`) and About are separate pages that share `style.css` and `script.js`. Each page carries only its own panel; the dock links are plain links, and `@view-transition` in `style.css` cross-fades between pages and slides the dock thumb in browsers that support it. Old `#projects`, `#work` and `#about` links are redirected by `script.js`.
+
+Case study gaps are marked in the HTML as `<mark class="needs-input">[NEEDS INPUT: …]</mark>` (or a `.case-placeholder` figure for missing images). Search for `NEEDS INPUT` before publishing.
 
 Public URLs (pages, the CV, og:images) stay where they are. Everything else can move as long as `npm test` passes: it checks every local reference resolves.
 
@@ -74,3 +78,9 @@ The MVP saves records only in this browser's localStorage. Use **Export JSON** r
 Run `npm test` to verify measurement calculations, catalogue-number generation, and collection import/export validation.
 
 For a hosted deployment, route `/api/tmdb/*` to an equivalent server-side function and set `TMDB_ACCESS_TOKEN` in that host's environment. A purely static host cannot keep a TMDB token private.
+
+## Credits
+
+- The 3D camera and motorcycle stickers on the About page (`assets/images/about/sticker-*.png`) are [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) by Microsoft, MIT License. The die-cut edge is drawn in CSS (`.about-sticker-img`).
+- The thought bubble on the 404 page (`assets/images/not-found/thought-balloon.png`) is also Fluent Emoji (MIT). The 404 playground (`assets/js/not-found.js`) is adapted from joinakari.com's 404.
+- The Akari images and stickers in `assets/images/akari/` come from [joinakari.com](https://joinakari.com/) and its die-cut exports.

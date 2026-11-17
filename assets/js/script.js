@@ -1,15 +1,10 @@
 const heroLine = document.querySelector("#hero-line");
-const timezoneLabel = document.querySelector("[data-timezone-label]");
 const start = document.querySelector(".start");
 const cardField = document.querySelector(".card-field");
-const dock = document.querySelector(".dock");
-const dockItems = document.querySelectorAll("[data-nav-link]");
-const viewPanels = document.querySelectorAll("[data-page]");
 const stackCards = document.querySelectorAll(".card-field [data-card]");
 const draggableCards = document.querySelectorAll("[data-draggable-card]");
-const projectCards = document.querySelectorAll(".project-card");
+const projectCards = document.querySelectorAll(".project-card:not(.project-card--case)");
 const aboutStickerLinks = document.querySelectorAll(".about-sticker");
-const viewTransitionDuration = 460;
 let scrollBounceFrame = null;
 let scrollBounce = 0;
 let touchStartY = null;
@@ -28,39 +23,37 @@ const heroLines = [
   ["Grow", "in silence"],
   ["Every second", "counts"],
 ];
-const legacyViewAliases = new Map([["work", "projects"]]);
-const validViews = new Set(["home", "projects", "about"]);
-const routePaths = new Map([
-  ["/", "home"],
-  ["/index.html", "home"],
-  ["/projects", "projects"],
-  ["/projects/index.html", "projects"],
-  ["/about", "about"],
-  ["/about/index.html", "about"],
+
+// Home, Work and About used to be panels on one page, reached with #projects, #work or #about.
+// They are separate pages now; old hash links still land in the right place.
+const legacyHashRoutes = new Map([
+  ["home", "/"],
+  ["projects", "/projects/"],
+  ["work", "/projects/"],
+  ["about", "/about/"],
 ]);
-const routeMeta = new Map([
-  ["home", {
-    title: "Rafael Polutta - Product Designer in Hamburg | hejrafa",
-    metaTitle: "Rafael Polutta - Product Designer in Hamburg",
-    description: "Portfolio of Rafael Polutta, a Hamburg-based product designer with 11 years of experience designing useful, mindful products, design systems, and mobile apps.",
-    socialDescription: "Product designer with 11 years of experience across design systems, mobile apps, useful products, and mindful side projects.",
-    canonical: "https://hejrafa.com/",
-  }],
-  ["projects", {
-    title: "Projects - Rafael Polutta | Product Designer",
-    metaTitle: "Projects - Rafael Polutta",
-    description: "Selected product design, design system, mobility, side project, video, and podcast work by Rafael Polutta.",
-    socialDescription: "Selected product design, design system, mobility, side project, video, and podcast work by Rafael Polutta.",
-    canonical: "https://hejrafa.com/projects/",
-  }],
-  ["about", {
-    title: "About Rafael Polutta | Product Designer in Hamburg",
-    metaTitle: "About Rafael Polutta",
-    description: "About Rafael Polutta, a Hamburg-based product designer focused on clear, useful, ethical, and human digital products.",
-    socialDescription: "About Rafael Polutta, a Hamburg-based product designer focused on clear, useful, ethical, and human digital products.",
-    canonical: "https://hejrafa.com/about/",
-  }],
-]);
+
+function redirectLegacyHash() {
+  const target = legacyHashRoutes.get(window.location.hash.slice(1));
+
+  if (!target) {
+    return;
+  }
+
+  if (target !== window.location.pathname) {
+    window.location.replace(target);
+  } else {
+    window.history.replaceState(null, "", target);
+  }
+}
+
+// Page-to-page transitions are a nicety. When the browser skips one (a background tab,
+// a slow load), it rejects the transition promise; that is not an error worth logging.
+["pageswap", "pagereveal"].forEach((type) => {
+  window.addEventListener(type, (event) => {
+    event.viewTransition?.ready.catch(() => {});
+  });
+});
 
 function setRandomHeroLine() {
   const [firstLine, secondLine] = heroLines[Math.floor(Math.random() * heroLines.length)];
@@ -68,158 +61,6 @@ function setRandomHeroLine() {
     Object.assign(document.createElement("span"), { textContent: firstLine }),
     Object.assign(document.createElement("span"), { textContent: secondLine }),
   );
-}
-
-function setTimezoneLabel() {
-  if (!timezoneLabel) {
-    return;
-  }
-
-  const offset = -new Date().getTimezoneOffset();
-  const sign = offset >= 0 ? "+" : "-";
-  const hours = String(Math.floor(Math.abs(offset) / 60));
-  const minutes = String(Math.abs(offset) % 60).padStart(2, "0");
-  timezoneLabel.textContent = `GMT ${sign}${hours}:${minutes}`;
-}
-
-function normalizePathname(pathname) {
-  if (pathname !== "/" && pathname.endsWith("/")) {
-    return pathname.slice(0, -1);
-  }
-
-  return pathname;
-}
-
-function getPathForView(view) {
-  if (view === "home") {
-    return "/";
-  }
-
-  return `/${view}/`;
-}
-
-function getRoutedViewFromUrl(url) {
-  const hashView = url.hash.replace("#", "");
-  const hashAlias = legacyViewAliases.get(hashView) ?? hashView;
-
-  if (validViews.has(hashAlias)) {
-    return hashAlias;
-  }
-
-  return routePaths.get(normalizePathname(url.pathname)) ?? null;
-}
-
-function getViewFromUrl(url) {
-  return getRoutedViewFromUrl(url) ?? "home";
-}
-
-function replaceRoute(view) {
-  const url = new URL(window.location.href);
-  url.pathname = getPathForView(view);
-  url.hash = "";
-  url.search = "";
-
-  window.history.replaceState({ view }, "", url);
-}
-
-function getViewFromLocation() {
-  const url = new URL(window.location.href);
-  const view = getViewFromUrl(url);
-  const hashView = url.hash.replace("#", "");
-  const hashAlias = legacyViewAliases.get(hashView) ?? hashView;
-  const normalizedPath = normalizePathname(url.pathname);
-
-  if ((validViews.has(hashAlias) && hashView) || routePaths.get(normalizedPath) !== view) {
-    replaceRoute(view);
-  }
-
-  return view;
-}
-
-function updateRoute(view) {
-  const url = new URL(window.location.href);
-  url.pathname = getPathForView(view);
-  url.hash = "";
-  url.search = "";
-
-  if (url.href !== window.location.href) {
-    window.history.pushState({ view }, "", url);
-  }
-}
-
-function updateMetaContent(selector, value) {
-  const element = document.querySelector(selector);
-
-  if (element) {
-    element.setAttribute("content", value);
-  }
-}
-
-function setRouteMetadata(view) {
-  const meta = routeMeta.get(view) ?? routeMeta.get("home");
-  const canonical = document.querySelector('link[rel="canonical"]');
-
-  document.title = meta.title;
-
-  if (canonical) {
-    canonical.href = meta.canonical;
-  }
-
-  updateMetaContent('meta[name="description"]', meta.description);
-  updateMetaContent('meta[property="og:title"]', meta.metaTitle);
-  updateMetaContent('meta[property="og:description"]', meta.socialDescription);
-  updateMetaContent('meta[property="og:url"]', meta.canonical);
-  updateMetaContent('meta[name="twitter:title"]', meta.metaTitle);
-  updateMetaContent('meta[name="twitter:description"]', meta.socialDescription);
-}
-
-function setActiveView(view, { animate = true, updateUrl = false } = {}) {
-  const normalizedView = legacyViewAliases.get(view) ?? view;
-  const nextView = validViews.has(normalizedView) ? normalizedView : "home";
-  const previousPanel = getActivePanel();
-  const shouldAnimateLeaving = animate && previousPanel && previousPanel.dataset.page !== nextView;
-
-  if (updateUrl) {
-    updateRoute(nextView);
-  }
-
-  setRouteMetadata(nextView);
-  setScrollBounce(0);
-  start.dataset.view = nextView;
-  dock.dataset.selected = nextView;
-  start.scrollTo({ top: 0, behavior: "instant" });
-
-  dockItems.forEach((item) => {
-    const isSelected = item.dataset.navLink === nextView;
-    item.classList.toggle("is-selected", isSelected);
-
-    if (isSelected) {
-      item.setAttribute("aria-current", "page");
-    } else {
-      item.removeAttribute("aria-current");
-    }
-  });
-
-  viewPanels.forEach((panel) => {
-    const isSelected = panel.dataset.page === nextView;
-    const isLeaving = shouldAnimateLeaving && panel === previousPanel;
-
-    if (panel.leaveTimer) {
-      clearTimeout(panel.leaveTimer);
-      panel.leaveTimer = null;
-    }
-
-    panel.classList.toggle("is-leaving", isLeaving);
-    panel.classList.toggle("is-active", isSelected);
-    panel.setAttribute("aria-hidden", String(!isSelected));
-
-    if (isLeaving) {
-      panel.leaveTimer = setTimeout(() => {
-        panel.classList.remove("is-leaving");
-        panel.leaveTimer = null;
-      }, viewTransitionDuration);
-    }
-  });
 }
 
 function getActivePanel() {
@@ -287,49 +128,6 @@ function nudgeScrollBounce(delta) {
   setScrollBounce(direction * Math.min(28, Math.abs(scrollBounce) * 0.42 + strength));
   releaseScrollBounce();
 }
-
-dockItems.forEach((item) => {
-  item.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setActiveView(item.dataset.navLink, { updateUrl: true });
-  });
-});
-
-document.addEventListener("click", (event) => {
-  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-    return;
-  }
-
-  const link = event.target.closest("a[href]");
-
-  if (!link || link.target || link.hasAttribute("download")) {
-    return;
-  }
-
-  const url = new URL(link.href, window.location.href);
-
-  if (url.origin !== window.location.origin) {
-    return;
-  }
-
-  const view = getRoutedViewFromUrl(url);
-
-  if (!view) {
-    return;
-  }
-
-  event.preventDefault();
-  setActiveView(view, { updateUrl: true });
-});
-
-window.addEventListener("popstate", () => {
-  setActiveView(getViewFromLocation());
-});
-
-window.addEventListener("hashchange", () => {
-  setActiveView(getViewFromLocation());
-});
 
 start.addEventListener("wheel", (event) => {
   nudgeScrollBounce(event.deltaY);
@@ -558,10 +356,19 @@ function cardStorageKey(card) {
   return card.dataset.layout || null;
 }
 
+// The hidden face of a card is inert, so keyboard and screen reader users only reach what they can see.
+function syncCardFaces(card) {
+  const isFlipped = card.classList.contains("is-flipped");
+  card.querySelector(".project-face--front")?.toggleAttribute("inert", isFlipped);
+  card.querySelector(".project-face--back")?.toggleAttribute("inert", !isFlipped);
+  card.querySelector(".project-flip")?.setAttribute("aria-pressed", String(isFlipped));
+}
+
 function applyFlippedState(card, isFlipped, { animate = true } = {}) {
   const wasFlipped = card.classList.contains("is-flipped");
 
   if (wasFlipped === isFlipped) {
+    syncCardFaces(card);
     return;
   }
 
@@ -574,7 +381,7 @@ function applyFlippedState(card, isFlipped, { animate = true } = {}) {
     }
 
     card.classList.toggle("is-flipped", isFlipped);
-    card.setAttribute("aria-pressed", String(isFlipped));
+    syncCardFaces(card);
 
     if (inner) {
       // force reflow so the transition disable takes effect for this frame
@@ -585,7 +392,7 @@ function applyFlippedState(card, isFlipped, { animate = true } = {}) {
   }
 
   card.classList.toggle("is-flipped", isFlipped);
-  card.setAttribute("aria-pressed", String(isFlipped));
+  syncCardFaces(card);
 }
 
 const persistedFlippedCards = readFlippedCards();
@@ -595,8 +402,15 @@ projectCards.forEach((card) => {
     return;
   }
 
-  card.setAttribute("role", "button");
-  card.setAttribute("aria-pressed", "false");
+  // A real button turns the card, so links on the card are never nested inside another control.
+  const title = card.querySelector(".project-face--front :is(h2, h3)")?.textContent.trim() || "this";
+  const flip = document.createElement("button");
+  flip.type = "button";
+  flip.className = "project-flip";
+  flip.textContent = `Turn the ${title} card`;
+  card.prepend(flip);
+  card.removeAttribute("tabindex");
+  syncCardFaces(card);
 
   const storageKey = cardStorageKey(card);
 
@@ -643,14 +457,6 @@ projectCards.forEach((card) => {
       return;
     }
 
-    toggleCard();
-  });
-  card.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" && event.key !== " ") {
-      return;
-    }
-
-    event.preventDefault();
     toggleCard();
   });
 });
@@ -766,6 +572,11 @@ document.addEventListener("click", (event) => {
   }
 
   event.preventDefault();
+
+  if (!video.getAttribute("src") && video.dataset.src) {
+    video.src = video.dataset.src;
+  }
+
   embed.classList.add("is-playing");
   video.controls = true;
 
@@ -792,7 +603,12 @@ document.querySelectorAll(".youtube-embed").forEach((embed) => {
   });
 });
 
-cardField.dataset.activeCard = "work";
-setTimezoneLabel();
-setActiveView(getViewFromLocation(), { animate: false });
-setRandomHeroLine();
+redirectLegacyHash();
+
+if (cardField) {
+  cardField.dataset.activeCard = "work";
+}
+
+if (heroLine) {
+  setRandomHeroLine();
+}

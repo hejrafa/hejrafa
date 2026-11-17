@@ -135,7 +135,19 @@ img {
   pointer-events: none;
 }
 
-.top-mark a {
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.top-mark > a {
   display: block;
   width: clamp(84px, 6vw, 110px);
   color: var(--ink);
@@ -158,13 +170,13 @@ img {
   -webkit-user-drag: none;
 }
 
-.top-mark a:hover,
-.top-mark a:focus-visible {
+.top-mark > a:hover,
+.top-mark > a:focus-visible {
   transform: translateY(-4px) rotate(-7deg) scale(1.1);
   filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.16));
 }
 
-.top-mark a:active {
+.top-mark > a:active {
   transform: translateY(-1px) rotate(-4deg) scale(1.04);
   filter: drop-shadow(0 10px 0 rgba(45, 5, 4, 0.13));
 }
@@ -1560,10 +1572,6 @@ img {
   transition: opacity 150ms ease, transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.project-card.is-flipped::after {
-  content: "Click to turn back";
-}
-
 .project-card:hover::after,
 .project-card:focus-visible::after,
 .project-card:focus-within::after {
@@ -1721,7 +1729,7 @@ img {
   text-wrap: balance;
 }
 
-.project-face h2 {
+.project-face :is(h2, h3) {
   max-width: min(100%, 330px);
   margin: 0;
   color: var(--project-title, var(--project-text));
@@ -1770,7 +1778,7 @@ img {
   margin-bottom: 12px;
 }
 
-.project-summary h2 {
+.project-summary :is(h2, h3) {
   margin-bottom: 20px;
 }
 
@@ -2089,7 +2097,7 @@ img {
   line-height: 1.1;
 }
 
-.project-info h2 {
+.project-info :is(h2, h3) {
   max-width: min(100%, 330px);
   margin-top: 12px;
   margin-bottom: 20px;
@@ -2193,7 +2201,7 @@ img {
   transform: translate(4px, -0.03em);
 }
 
-.project-card .project-face h2 {
+.project-card .project-face :is(h2, h3) {
   font-weight: 700;
 }
 
@@ -2548,7 +2556,7 @@ img {
 }
 
 .about-note span {
-  color: #8b7b70;
+  color: #6b5c53;
   font-family: var(--mono);
   font-size: 13px;
   font-weight: 800;
@@ -2796,7 +2804,7 @@ img {
 
 .note-type {
   display: inline-block;
-  color: #8b7b70;
+  color: #6b5c53;
   font-size: 13px;
   font-weight: 850;
 }
@@ -3009,7 +3017,7 @@ img {
 .note-card small {
   display: block;
   margin-top: 28px;
-  color: #8f837a;
+  color: #6b5c53;
   font-size: 14px;
   font-weight: 750;
 }
@@ -3203,7 +3211,7 @@ img {
     padding-top: 28px;
   }
 
-  .top-mark a {
+  .top-mark > a {
     width: 76px;
   }
 
@@ -3246,7 +3254,7 @@ img {
     padding-inline: 18px;
   }
 
-  .top-mark a {
+  .top-mark > a {
     width: 84px;
   }
 
@@ -3523,4 +3531,213 @@ img {
     left: 50%;
     top: 50%;
   }
+}
+
+/* HOME INTRO — one line on the note card that leads to the case studies. */
+.note-card .designer-work {
+  display: block;
+  width: min(100%, 248px);
+  margin: 18px 0 0;
+  color: inherit;
+  font-family: var(--hand);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.04;
+  text-align: left;
+}
+
+.note-card .designer-work a {
+  display: inline-block;
+  text-decoration: underline;
+  text-decoration-color: #ffd600;
+  text-decoration-thickness: 0.16em;
+  text-underline-offset: 0.14em;
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.note-card .designer-work a:hover,
+.note-card .designer-work a:focus-visible {
+  transform: translateY(-2px);
+}
+
+/* WORK PAGE — short intro, case studies, then side projects. */
+.work-section + .work-section {
+  margin-top: clamp(72px, 11vh, 120px);
+}
+
+/* Section titles as handwritten notes, like the home card: tilted, yellow underline, an arrow down to the cards. */
+.work-note {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  width: fit-content;
+  margin: 0 0 clamp(40px, 5vw, 64px) clamp(4px, 1.5vw, 18px);
+  color: var(--ink);
+  font-family: var(--hand);
+  font-size: clamp(38px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1;
+  rotate: -3deg;
+}
+
+.work-note span {
+  text-decoration: underline;
+  text-decoration-color: #ffd600;
+  text-decoration-thickness: 0.16em;
+  text-underline-offset: 0.14em;
+}
+
+.work-note-arrow {
+  width: 0.9em;
+  height: 0.9em;
+  margin-bottom: -0.32em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* CASE STUDY CARDS — the whole card is the link, nothing to turn. */
+.project-card--case {
+  display: block;
+  color: inherit;
+}
+
+/* These cards open a page instead of flipping, so the hint says so. */
+.project-card--case::after {
+  content: "Read the case study";
+}
+
+.project-card--case:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 6px;
+}
+
+/* CASE STUDY GAPS — visible markers for content still to come. */
+.needs-input {
+  padding: 0.04em 0.36em 0.08em;
+  border: 1.5px dashed rgba(20, 19, 19, 0.34);
+  border-radius: 6px;
+  background: rgba(255, 214, 0, 0.3);
+  color: #5f564b;
+  font-family: var(--mono);
+  font-size: 0.7em;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* PAGE TRANSITIONS — pages cross-fade and the dock thumb slides, like the old in-page panels. */
+@view-transition {
+  navigation: auto;
+}
+
+.dock {
+  view-transition-name: dock;
+}
+
+.dock-thumb {
+  view-transition-name: dock-thumb;
+}
+
+.dock-item[data-nav-link="home"] {
+  view-transition-name: dock-home;
+}
+
+.dock-item[data-nav-link="projects"] {
+  view-transition-name: dock-work;
+}
+
+.dock-item[data-nav-link="about"] {
+  view-transition-name: dock-about;
+}
+
+::view-transition-group(dock-thumb) {
+  animation-duration: 360ms;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* On phones the front card must stay within the card behind it (390px). */
+@media (max-width: 640px) {
+  .note-card {
+    padding: 28px 26px 22px;
+  }
+
+  .note-card .designer-copy {
+    margin-top: 16px;
+  }
+
+  .note-card .designer-work {
+    margin-top: 12px;
+    font-size: 21px;
+  }
+
+  .note-card .designer-email {
+    margin-top: 18px;
+  }
+}
+
+/* 3D STICKERS — die-cut images in place of emoji. Sized in em, so the sticker rules' font sizes still set them. */
+.about-sticker-img {
+  display: block;
+  width: 1.3em;
+  height: auto;
+  filter:
+    drop-shadow(3px 0 0 #fffdf6)
+    drop-shadow(-3px 0 0 #fffdf6)
+    drop-shadow(0 3px 0 #fffdf6)
+    drop-shadow(0 -3px 0 #fffdf6)
+    drop-shadow(0 8px 10px rgba(45, 5, 4, 0.24));
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The card hints sit to the left of each card. When the window is too narrow for that, they would run off
+   screen, so they sit in the card's top-left corner instead. */
+@media (max-width: 1339px) {
+  .project-card::after {
+    top: 16px;
+    right: auto;
+    left: 16px;
+    z-index: 6;
+    transform: translate(0, 6px) rotate(-2deg);
+  }
+
+  .project-card:hover::after,
+  .project-card:focus-visible::after,
+  .project-card:focus-within::after {
+    transform: translate(0, 0) rotate(-2deg);
+  }
+}
+
+/* FLIP CARDS — the turn control is a real button, hidden until it has keyboard focus; the card shows the ring. */
+.project-flip {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.project-card:has(.project-flip:focus-visible) {
+  outline: 3px solid var(--ink);
+  outline-offset: 6px;
+}
+
+.dock-item:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
 }

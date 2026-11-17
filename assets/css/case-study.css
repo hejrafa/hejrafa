@@ -56,7 +56,7 @@
 }
 
 .case-hero-meta dt {
-  color: #8b7b70;
+  color: #6b5c53;
   font-family: var(--mono);
   font-size: 12px;
   font-weight: 800;
@@ -144,7 +144,7 @@
   border: 2px dashed rgba(20, 19, 19, 0.22);
   border-radius: 22px;
   background: rgba(255, 253, 246, 0.36);
-  color: #8b7b70;
+  color: #6b5c53;
   font-family: var(--mono);
   font-size: 12px;
   font-weight: 800;
@@ -304,5 +304,431 @@
   .case-numbers {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+}
+
+.start[data-case="akari"] .case-study {
+  --case-accent: #b84a00; /* Akari orange, darkened for text on paper */
+}
+
+.start[data-case="car2go"] .case-study {
+  --case-accent: #00698f; /* car2go blue, darkened for text on paper */
+}
+
+/* MARK TILE — a logo centred on its brand colour instead of a full-bleed image. */
+.case-tile--mark {
+  background: var(--mark-bg, #000000);
+}
+
+.case-tile--mark img {
+  inset: 22% 30%;
+  width: auto;
+  height: auto;
+  max-width: 28%;
+  max-height: 44%;
+  margin: auto;
+  object-fit: contain;
+}
+
+/* Syntax: the wordmark from the Work card, drawn from the vector mark so it stays sharp this big. */
+.case-tile--syntax {
+  --mark-bg: #03eab3;
+  display: grid;
+  place-items: center;
+}
+
+.case-mark-syntax {
+  display: block;
+  width: min(44%, 460px);
+  aspect-ratio: 399 / 112;
+  background: #0c4a3b;
+  -webkit-mask: url("/assets/images/syntax/mark.svg") center / contain no-repeat;
+  mask: url("/assets/images/syntax/mark.svg") center / contain no-repeat;
+}
+
+.case-tile--gif {
+  background: #0aa3d3;
+}
+
+/* PLACEHOLDER inside a tile layout — keeps the grid shape until real images arrive. */
+.case-quad > .case-placeholder,
+.case-bento > .case-placeholder {
+  min-height: 200px;
+}
+
+.case-wide.case-placeholder {
+  border-radius: 22px;
+}
+
+/* AKARI ART — the app's pieces as joinakari.com shows them: die-cut tiles, tilted and stacked, with 3D
+   stickers around them. Ported from joinakari.com/styles.css; every class carries an ak- prefix so it
+   cannot touch the rest of the site. The cream die-cut edge and shadow are baked into each file: the piece
+   sits on a transparent margin (20 left and right, 10 above, 30 below, at 1x), and .ak-cut__image spills
+   out of its box by exactly that margin. --w and --h are the bare piece's 1x size. */
+.ak-band {
+  --cut-side: 20;
+  --cut-top: 10;
+  --cut-bottom: 30;
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin: clamp(40px, 7vh, 80px) 0;
+  padding: clamp(28px, 5vw, 64px) clamp(16px, 4vw, 48px);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 214, 10, 0.16), transparent 60%),
+    #141414;
+  box-shadow:
+    0 8px 0 rgba(45, 5, 4, 0.09),
+    0 22px 46px rgba(45, 5, 4, 0.14);
+}
+
+.ak-duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: clamp(40px, 7vh, 80px) 0;
+}
+
+.ak-duo > .ak-band {
+  margin: 0;
+}
+
+.ak-cut {
+  --w: 72;
+  --h: 72;
+  display: flow-root;
+  aspect-ratio: var(--w) / var(--h);
+  min-height: 0;
+}
+
+.ak-cut__image {
+  display: block;
+  width: calc(100% + 2 * var(--cut-side) / var(--w) * 100%);
+  max-width: none;
+  height: auto;
+  aspect-ratio: calc(var(--w) + 2 * var(--cut-side)) / calc(var(--h) + var(--cut-top) + var(--cut-bottom));
+  margin:
+    calc(var(--cut-top) / var(--w) * -100%) 0
+    calc(var(--cut-bottom) / var(--w) * -100%) calc(var(--cut-side) / var(--w) * -100%);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Readiness: the file is 434 x 150 at 1x, the bar plus 40 of glow on every side. The box is the bar. */
+.ak-readiness {
+  position: relative;
+  width: min(354px, 100%);
+  aspect-ratio: 354 / 70;
+  margin: 0 0 22px;
+  rotate: -3deg;
+}
+
+.ak-readiness__bar {
+  position: absolute;
+  top: -57.143%;
+  left: -11.299%;
+  width: 122.599%;
+  max-width: none;
+  height: auto;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 6%, #000 9.2%, #000 90.8%, transparent 94%),
+    linear-gradient(transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 6%, #000 9.2%, #000 90.8%, transparent 94%),
+    linear-gradient(transparent, #000 18%, #000 82%, transparent);
+  mask-composite: intersect;
+}
+
+.ak-collage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(430px, 100%);
+  padding: 44px 0 28px;
+}
+
+.ak-collage__card,
+.ak-collage__tile,
+.ak-food__sentence,
+.ak-food__row {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.ak-collage__card {
+  width: min(370px, 100%);
+  margin-bottom: 18px;
+  rotate: -3deg;
+}
+
+.ak-collage__row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ak-collage__tile {
+  width: min(179px, calc(50% - 2px));
+}
+
+.ak-collage__tile--left {
+  z-index: 1;
+  rotate: -6deg;
+  translate: 6px 10px;
+}
+
+.ak-collage__tile--right {
+  rotate: 5deg;
+  translate: -6px -4px;
+}
+
+.ak-collage__sticker {
+  position: absolute;
+  z-index: 2;
+  width: clamp(60px, 7vw, 92px);
+  height: auto;
+}
+
+.ak-collage__sticker--sun { top: 0; left: -6%; rotate: -14deg; }
+.ak-collage__sticker--fire { top: 44%; right: -7%; rotate: 10deg; }
+.ak-collage__sticker--apple { bottom: 0; left: -3%; rotate: -8deg; }
+.ak-collage__sticker--fish { top: 0; right: -6%; rotate: 14deg; }
+.ak-collage__sticker--orange { top: 46%; left: -3%; rotate: -10deg; }
+.ak-collage__sticker--salad { right: 0; bottom: -2%; rotate: 8deg; }
+
+/* Privacy: Apple Health and Akari leaning apart, the padlock between them. */
+.ak-privacy {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(46px, 6vw, 86px);
+  padding: 12px 0 20px;
+}
+
+.ak-privacy__app {
+  display: block;
+  width: clamp(92px, 11vw, 150px);
+  height: auto;
+}
+
+.ak-privacy__app--health { rotate: -8deg; }
+.ak-privacy__app--akari { rotate: 7deg; }
+
+.ak-privacy__lock {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: clamp(76px, 8.6vw, 118px);
+  height: auto;
+  translate: -50% -42%;
+  rotate: 4deg;
+}
+
+/* Food: the meal sentence with the foods it became under it, each row tilted and placed as in the app. */
+.ak-food {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  width: min(560px, 100%);
+  padding: clamp(20px, 3vw, 36px) 20px;
+}
+
+.ak-food__sentence {
+  width: 100%;
+  max-width: 354px;
+  rotate: -2deg;
+}
+
+.ak-food__rows {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: min(354px, 100%);
+}
+
+.ak-food__row {
+  --h: 59.33;
+  --row-width: var(--row-1x);
+  width: var(--row-width);
+  margin-left: clamp(-8px, calc(var(--row-x) * 100% - var(--row-width) / 2), calc(100% - var(--row-width) + 8px));
+  rotate: var(--row-tilt);
+}
+
+.ak-food__row:nth-child(1) { --row-x: 0.30; --row-tilt: -5deg; --row-1x: 129.33px; --w: 129.33; }
+.ak-food__row:nth-child(2) { --row-x: 0.72; --row-tilt: 4deg; --row-1x: 137.33px; --w: 137.33; }
+.ak-food__row:nth-child(3) { --row-x: 0.34; --row-tilt: -3deg; --row-1x: 156.33px; --w: 156.33; }
+
+.ak-food__sticker {
+  position: absolute;
+  z-index: 2;
+  width: clamp(76px, 9vw, 128px);
+  height: auto;
+}
+
+.ak-food__sticker--strawberry { top: -6%; left: -5%; rotate: -14deg; }
+.ak-food__sticker--croissant { right: -6%; bottom: 2%; rotate: 12deg; }
+
+/* Drift: every piece rises and falls up to 4px and turns up to 0.6deg, each a little out of step. */
+@keyframes ak-drift {
+  from { transform: translateY(-4px) rotate(-0.6deg); }
+  to { transform: translateY(4px) rotate(0.6deg); }
+}
+
+.ak-band :is(.ak-cut, .ak-readiness) {
+  --drift-phase: 0s;
+  animation: ak-drift 3.5s ease-in-out var(--drift-phase) infinite alternate;
+}
+
+.ak-collage__tile--right,
+.ak-collage__sticker--fire,
+.ak-collage__sticker--orange,
+.ak-privacy__lock,
+.ak-food__row:nth-child(2),
+.ak-food__sticker--croissant { --drift-phase: -1.9s; }
+
+.ak-collage__sticker--sun,
+.ak-collage__sticker--fish,
+.ak-privacy__app--akari,
+.ak-food__row:nth-child(3) { --drift-phase: -3.8s; }
+
+.ak-collage__tile--left,
+.ak-collage__sticker--apple,
+.ak-collage__sticker--salad,
+.ak-food__sentence { --drift-phase: -5.7s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ak-band :is(.ak-cut, .ak-readiness) {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .ak-duo {
+    grid-template-columns: 1fr;
+  }
+
+  .ak-readiness {
+    width: min(354px, calc(100% - 56px));
+  }
+
+  .ak-collage__sticker { width: 56px; }
+  .ak-collage__sticker--sun { left: -2%; }
+  .ak-collage__sticker--fire { right: -2%; }
+  .ak-collage__sticker--apple { left: 0; }
+  .ak-collage__sticker--fish { right: -2%; }
+  .ak-collage__sticker--orange { left: -2%; }
+
+  .ak-food__sticker--strawberry { top: -26px; left: -4px; }
+  .ak-food__sticker--croissant { right: -8px; bottom: -28px; }
+}
+
+/* WORD in place of a number, e.g. "Stayed level". */
+.case-numbers dt.is-word {
+  font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1.02;
+}
+
+/* NUMBERS NOTE — where each number comes from. */
+.case-numbers-note {
+  width: min(100%, 720px);
+  margin: calc(-1 * clamp(16px, 4vh, 48px)) auto clamp(48px, 8vh, 88px);
+  color: #4a413a;
+  font-family: var(--display);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.4;
+}
+
+.case-numbers-note p {
+  margin: 0;
+}
+
+.case-numbers-note p + p {
+  margin-top: 8px;
+}
+
+.case-section a {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+}
+
+/* A section that carries on after an image, without a heading of its own. */
+.case-section--cont {
+  margin-top: clamp(28px, 5vh, 56px);
+}
+
+/* SUMMARY — the whole case in three short answers, readable in thirty seconds. */
+.case-summary {
+  width: 100%;
+  margin: 0 0 clamp(48px, 8vh, 88px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.case-summary > div {
+  padding: clamp(20px, 2.4vw, 30px);
+  border-radius: 20px;
+  background: #fffdf6;
+  box-shadow:
+    0 6px 0 rgba(45, 5, 4, 0.08),
+    0 18px 38px rgba(45, 5, 4, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.62);
+}
+
+.case-summary dt {
+  color: var(--case-accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.case-summary dd {
+  margin: 10px 0 0;
+  color: #28231f;
+  font-family: var(--display);
+  font-size: clamp(18px, 1.5vw, 20px);
+  line-height: 1.3;
+}
+
+/* KICKER — the plain section name above a statement heading. */
+.case-section h2 .case-kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--case-accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* QUOTE — one line per case, in the About page's quote style, with marks in the case colour. */
+.case-quote p::before {
+  content: "“";
+  color: var(--case-accent);
+}
+
+.case-quote p::after {
+  content: "”";
+  color: var(--case-accent);
+}
+
+@media (max-width: 760px) {
+  .case-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
