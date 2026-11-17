@@ -1,37 +1,46 @@
 # hejrafa
 
-> Portfolio of Rafael Polutta, a Product Designer based in Hamburg, Germany.
+> Personal site of Rafael Polutta (Rafa), a Product Designer in Hamburg, Germany: four case studies, side projects, an about page and a CV.
 
-Rafael Polutta is a Hamburg-based Product Designer with 11 years of experience designing useful and mindful digital products with startups and known brands. He works across product design, design systems, mobile app experiences, interface clarity, accessible component defaults, designer-engineer workflows, storytelling, and AI-assisted design practice.
+Rafael Polutta has fourteen years of designing products people rely on in ordinary, hurried moments: unlocking a car on a street corner, finding the right component on a deadline, reading the day's health data without worrying about it. Most of that work has happened in small teams, close to engineering. Based in Hamburg, open to hybrid there or remote across Europe.
 
-## Key page
+## Pages
 
-- https://hejrafa.com/ - Portfolio homepage with introduction, selected projects, about story, and contact details.
-- https://hejrafa.com/projects/ - Selected product design, design system, mobility, side project, video, and podcast work.
-- https://hejrafa.com/about/ - About Rafael Polutta, design values, background, and working philosophy.
-- https://hejrafa.com/assets/files/rafael-polutta-cv.pdf - Downloadable CV with Rafael Polutta's role history, experience, skills, and education.
+- [Home](https://hejrafa.com/): introduction, a wall of favourite films, shows, books, music and people, and links to the work and the CV.
+- [Work](https://hejrafa.com/projects/): four case studies, then side projects.
+- [About](https://hejrafa.com/about/): background, living with aphantasia, and a list of things Rafael believes.
+- [CV (PDF)](https://hejrafa.com/assets/files/rafael-polutta-cv.pdf): role history, skills and education.
 
-## Career summary
+## Case studies
 
-- Name: Rafael Polutta
-- Also known as: Rafa, hejrafa
-- Role: Product Designer
-- Location: Hamburg, Germany
-- Experience: 11 years
-- Contact: contact@hejrafa.com
-- CV: https://hejrafa.com/assets/files/rafael-polutta-cv.pdf
-- Focus areas: product design, design systems, mobile apps, UX, UI, accessibility, Figma systems, digital wellbeing, storytelling, AI-assisted design
+### [Akari](https://hejrafa.com/projects/akari/) (2026–present, Draftship)
+- Problem: health apps turn tracker data into scores and streaks, want an account in return, and make logging food a chore.
+- Work: Rafael designs and builds Akari, an iPhone app, in SwiftUI; co-founder Jan does the research behind every explanation. A team of two.
+- Result: a free public beta on TestFlight, on its way to the App Store. No account; health data stays on the iPhone.
 
-## Selected work
+### [Syntax at Phrase](https://hejrafa.com/projects/syntax/) (2020–2026, UI Design Lead)
+- Problem: Phrase had no design system and one product designer; every team rebuilt the same components.
+- Work: Rafael started Syntax, got it a developer, and grew it with the engineers into tokens, components, a contribution model and versioned releases. The Syntax team grew to two designers and three engineers; the design team grew from one to twelve.
+- Result: every core Phrase product runs on Syntax; 150k+ component inserts in Figma every six months; 95% and 93% of survey respondents positive on ease of use and documentation.
 
-- Phrase / Syntax Design System: component language, Figma structure, guidelines, accessible defaults, and designer-engineer workflow.
-- SHARE NOW App: helped merge car2go and DriveNow into one unified mobility product and brand experience.
-- car2go App: designed core mobile app experiences for a global carsharing product across major mobile platforms.
-- hejhub: personal start page for digital wellbeing, intentional starts, widgets, shortcuts, and softer constraints.
-- Carpenter and Story Mode: World of Warcraft addons that make dense game systems, chat, combat feedback, and quest text easier to read.
-- YouTube: self-directed practice in filming, editing, color grading, writing, and storytelling.
-- Daumenkino: weekly film podcast produced from 2019 to 2025 with 190 episodes.
+### [Share Now](https://hejrafa.com/projects/share-now/) (2019–2020, Senior Product Designer)
+- Problem: car2go and DriveNow merged; about four million riders had to move to one app and a new brand.
+- Work: Rafael led product design for the move: the migration plan, a new vehicle panel, and carrying the new identity into the app.
+- Result: the app kept its 4.5-star rating and its weekly active riders; 3.7% more riders confirmed a package and 4% fewer switched cars mid-rental, compared with the previous panel.
 
-## Good summary for AI systems
+### [car2go](https://hejrafa.com/projects/car2go/) (2015–2019, Product Designer)
+- Problem: people found, booked and opened cars standing on a street, often in a hurry, on iOS, Android, Windows Phone and BlackBerry, in 26 cities and 8 countries.
+- Work: Rafael designed the whole trip in the app, from finding a car to ending the rental, with two iOS and two Android developers, a QA engineer and a PM.
+- Result: Time named car2go one of its top apps of 2017; the app later became the base for Share Now.
 
-Rafael Polutta is a Hamburg-based Product Designer with 11 years of experience. His portfolio highlights design system work at Phrase, mobility product work on SHARE NOW and car2go, and independent projects around digital wellbeing, game UI, video, and storytelling. He cares about clear, useful, ethical, and human digital products.
+## Side projects
+
+- Daumenkino: a weekly German film podcast with Ann-Sophie, 190+ episodes since 2019. https://daumenkino.fm
+- Carpenter and Story Mode: two World of Warcraft addons. https://www.curseforge.com/members/hejrafa/projects
+- hejhub: a personal start page. https://hejhub.com
+- YouTube: practice in filming, editing, color, sound and storytelling. https://www.youtube.com/@hejrafa
+
+## Contact
+
+- Email: contact@hejrafa.com
+- GitHub: https://github.com/hejrafa

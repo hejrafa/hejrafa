@@ -9,8 +9,10 @@ export const SITE_CREATED = "2026-05-04T10:10:54+02:00";
 export const PAGES = [
   { file: "index.html", path: "/" },
   { file: "projects/index.html", path: "/projects/" },
-  { file: "projects/share-now/index.html", path: "/projects/share-now/" },
+  { file: "projects/akari/index.html", path: "/projects/akari/" },
   { file: "projects/syntax/index.html", path: "/projects/syntax/" },
+  { file: "projects/share-now/index.html", path: "/projects/share-now/" },
+  { file: "projects/car2go/index.html", path: "/projects/car2go/" },
   { file: "about/index.html", path: "/about/" },
   { file: "assets/files/rafael-polutta-cv.pdf", path: "/assets/files/rafael-polutta-cv.pdf" },
 ];
